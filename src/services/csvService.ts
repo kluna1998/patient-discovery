@@ -14,7 +14,7 @@ export function parseCsv(file: File): Promise<CsvDataset> {
         if (results.errors.length > 0) {
           reject(
             new Error(
-              `Error al leer CSV: ${results.errors[0].message}`
+              "No se ha podido interpretar el CSV. Comprueba el delimitador, las comillas y el número de campos de cada registro."
             )
           );
           return;
@@ -44,8 +44,8 @@ export function parseCsv(file: File): Promise<CsvDataset> {
         });
       },
 
-      error: (error: Error) => {
-        reject(error);
+      error: () => {
+        reject(new Error("No se ha podido leer el archivo. Comprueba que esté disponible y que tengas permiso para abrirlo."));
       },
     });
   });

@@ -1,5 +1,15 @@
-
+import { reviewStatusLabels } from "../types/review";
 import { useMemo } from "react";
+import {
+  Search,
+  RotateCcw,
+  ChevronLeft,
+  ChevronRight,
+  Columns3,
+  Check,
+  X,
+  Clock3,
+} from "lucide-react";
 
 import {
   useTable,
@@ -49,15 +59,9 @@ const features = tableFeatures({
   },
 });
 
-export default function PatientTable({
-  dataset,
-  decisions,
-  onReview,
-}: Props) {
+export default function PatientTable({ dataset, decisions, onReview }: Props) {
   // Generamos las columnas dinámicamente a partir del CSV.
-  const columns = useMemo<
-    ColumnDef<typeof features, PatientRow>[]
-  >(
+  const columns = useMemo<ColumnDef<typeof features, PatientRow>[]>(
     () => [
       // Columnas originales del CSV.
       ...dataset.columns.map(
@@ -70,13 +74,13 @@ export default function PatientTable({
           cell: (info) => String(info.getValue() ?? ""),
 
           sortFn: "alphanumeric",
-        })
+        }),
       ),
 
       // Columna de revisión.
       {
         id: "__review_actions",
-        header: "Review",
+        header: "Revisión",
         enableSorting: false,
         enableGlobalFilter: false,
         enableHiding: false,
@@ -88,25 +92,25 @@ export default function PatientTable({
 
           return (
             <div className="flex items-center gap-3">
-              <span
-                className={
-                  decision?.status === "accepted"
-                    ? "font-medium text-emerald-700"
-                    : decision?.status === "rejected"
-                      ? "font-medium text-red-700"
-                      : "text-slate-500"
-                }
-              >
-                {decision?.status ?? "pending"}
+              <span className={`review-badge ${decision?.status ?? "pending"}`}>
+                {decision?.status === "accepted" ? (
+                  <Check size={12} />
+                ) : decision?.status === "rejected" ? (
+                  <X size={12} />
+                ) : (
+                  <Clock3 size={12} />
+                )}
+                {reviewStatusLabels[decision?.status ?? "pending"]}
               </span>
 
               <button
                 type="button"
                 onClick={() => onReview(rowId)}
                 disabled={Boolean(decision)}
-                className="rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+                aria-label={`Revisar registro ${rowId + 1}`}
+                className="btn btn-primary min-h-8 px-3 py-1"
               >
-                Review
+                Revisar
               </button>
             </div>
           );
@@ -116,7 +120,7 @@ export default function PatientTable({
       // Columna de justificación.
       {
         id: "__review_reason",
-        header: "Justification",
+        header: "Justificación",
         enableSorting: false,
         enableGlobalFilter: false,
         enableHiding: false,
@@ -135,7 +139,7 @@ export default function PatientTable({
         },
       },
     ],
-    [dataset.columns, decisions, onReview]
+    [dataset.columns, decisions, onReview],
   );
 
   const table = useTable({
@@ -164,11 +168,11 @@ export default function PatientTable({
   const totalPages = table.getPageCount();
 
   return (
-    <section className="mt-6 rounded-xl border border-slate-200 bg-white shadow-sm">
+    <section className="panel table-panel">
       {/* Cabecera */}
-      <div className="border-b border-slate-200 p-5">
-        <h2 className="text-xl font-semibold text-slate-800">
-          Patient cohort
+      <div className="table-heading">
+        <h2 className="text-base font-semibold text-slate-800">
+          Cohorte de pacientes
         </h2>
 
         <p className="mt-1 text-sm text-slate-500">
@@ -177,45 +181,50 @@ export default function PatientTable({
         </p>
       </div>
 
-      <div className="space-y-5 p-5">
+      <div>
         {/* Búsqueda global */}
-        <div>
-          <label
-            htmlFor="patient-search"
-            className="mb-2 block text-sm font-medium text-slate-700"
-          >
-            Buscar registros
-          </label>
+        <div className="table-tools">
+          <div className="w-full max-w-md">
+            <label
+              htmlFor="patient-search"
+              className="block text-xs font-medium text-slate-700"
+            >
+              Buscar registros
+            </label>
 
-          <input
-            id="patient-search"
-            type="search"
-            value={table.state.globalFilter ?? ""}
-            onChange={(event) =>
-              table.setGlobalFilter(event.target.value)
-            }
-            placeholder="Buscar pacientes..."
-            className="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none focus:border-blue-500"
-          />
+            <div className="search-control">
+              <Search size={16} />
+              <input
+                id="patient-search"
+                type="search"
+                value={table.state.globalFilter ?? ""}
+                onChange={(event) => {
+                  table.setGlobalFilter(event.target.value);
+                  table.setPageIndex(0);
+                }}
+                placeholder="Buscar en los registros…"
+                className="text-input"
+              />
+            </div>
+          </div>
+          <button type="button" onClick={resetView} className="btn ml-auto">
+            <RotateCcw size={14} />
+            Restablecer vista
+          </button>
         </div>
 
         {/* Selector de columnas */}
-        <div className="rounded-lg bg-slate-50 p-4">
-          <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-            <h3 className="font-semibold text-slate-700">
-              Columnas visibles
-            </h3>
-
-            <button
-              type="button"
-              onClick={resetView}
-              className="text-sm font-medium text-blue-600 hover:underline"
-            >
-              Restablecer vista
-            </button>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
+        <details className="column-options">
+          <summary>
+            <Columns3 size={14} className="mr-1 inline" /> Columnas visibles ·{" "}
+            {
+              table
+                .getVisibleLeafColumns()
+                .filter((column) => column.getCanHide()).length
+            }{" "}
+            de {dataset.columns.length}
+          </summary>
+          <div className="mt-3 flex flex-wrap gap-2">
             {table
               .getAllLeafColumns()
               .filter((column) => column.getCanHide())
@@ -235,32 +244,43 @@ export default function PatientTable({
                 </label>
               ))}
           </div>
-        </div>
+        </details>
 
         {/* Tabla */}
-        <div className="max-h-[600px] overflow-auto rounded-lg border border-slate-200">
-          <table className="min-w-full text-left text-sm">
-            <thead className="sticky top-0 z-10 bg-slate-100">
+        <div
+          className="table-scroll"
+          tabIndex={0}
+          role="region"
+          aria-label="Tabla de la cohorte de pacientes"
+        >
+          <table className="cohort-table">
+            <caption>Cohorte de pacientes — {dataset.fileName}</caption>
+            <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
-                    const canSort =
-                      header.column.getCanSort();
+                    const canSort = header.column.getCanSort();
 
-                    const sortDirection =
-                      header.column.getIsSorted();
+                    const sortDirection = header.column.getIsSorted();
 
                     return (
                       <th
                         key={header.id}
-                        className="whitespace-nowrap border-b border-slate-200 px-4 py-3 font-semibold text-slate-700"
+                        scope="col"
+                        aria-sort={
+                          sortDirection === "asc"
+                            ? "ascending"
+                            : sortDirection === "desc"
+                              ? "descending"
+                              : canSort
+                                ? "none"
+                                : undefined
+                        }
                       >
                         {header.isPlaceholder ? null : canSort ? (
                           <button
                             type="button"
-                            onClick={
-                              header.column.getToggleSortingHandler()
-                            }
+                            onClick={header.column.getToggleSortingHandler()}
                             className="flex items-center gap-2 hover:text-blue-600"
                           >
                             <table.FlexRender header={header} />
@@ -285,15 +305,9 @@ export default function PatientTable({
 
             <tbody>
               {table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-b border-slate-100 hover:bg-blue-50"
-                >
+                <tr key={row.id}>
                   {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className="max-w-80 px-4 py-3 text-slate-600"
-                    >
+                    <td key={cell.id}>
                       <table.FlexRender cell={cell} />
                     </td>
                   ))}
@@ -304,13 +318,14 @@ export default function PatientTable({
 
           {table.getRowModel().rows.length === 0 && (
             <p className="p-8 text-center text-slate-500">
-              No se encontraron registros.
+              No se encontraron registros. Cambia el estado de revisión o
+              restablece la búsqueda.
             </p>
           )}
         </div>
 
         {/* Paginación */}
-        <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="table-footer">
           <p className="text-sm text-slate-500">
             {filteredCount} registros encontrados
           </p>
@@ -320,9 +335,9 @@ export default function PatientTable({
               type="button"
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+              className="btn"
             >
-              Anterior
+              <ChevronLeft size={14} /> Anterior
             </button>
 
             <span className="text-sm text-slate-600">
@@ -334,9 +349,9 @@ export default function PatientTable({
               type="button"
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
-              className="rounded-lg border border-slate-300 px-3 py-2 text-sm hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+              className="btn"
             >
-              Siguiente
+              Siguiente <ChevronRight size={14} />
             </button>
           </div>
         </div>

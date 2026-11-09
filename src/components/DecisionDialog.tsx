@@ -1,5 +1,5 @@
-
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Check, X, ClipboardCheck } from "lucide-react";
 import type { ReviewDecision } from "../types/review";
 
 interface Props {
@@ -8,14 +8,25 @@ interface Props {
   onClose: () => void;
 }
 
-export default function DecisionDialog({
-  rowId,
-  onSave,
-  onClose,
-}: Props) {
-  const [status, setStatus] = useState<"accepted" | "rejected">(
-    "accepted"
-  );
+export default function DecisionDialog({ rowId, onSave, onClose }: Props) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    const previousFocus =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+    dialog?.showModal();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      dialog?.close();
+      document.body.style.overflow = previousOverflow;
+      if (previousFocus?.isConnected) previousFocus.focus();
+      else document.getElementById("workspace")?.focus();
+    };
+  }, []);
+  const [status, setStatus] = useState<"accepted" | "rejected">("accepted");
   const [reason, setReason] = useState("");
 
   function handleSave() {
@@ -31,50 +42,93 @@ export default function DecisionDialog({
   }
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4"
-      role="presentation"
+    <dialog
+      ref={dialogRef}
+      onKeyDown={(event) => {
+        if (event.key !== "Tab") return;
+        const controls = Array.from(
+          event.currentTarget.querySelectorAll<HTMLElement>(
+            'button:not(:disabled), textarea, input:not(:disabled), select:not(:disabled), a[href], [tabindex="0"]',
+          ),
+        );
+        const first = controls[0];
+        const last = controls[controls.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }}
+      aria-labelledby="decision-title"
+      aria-describedby="decision-description"
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      className="decision-dialog"
     >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="decision-title"
-        className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl"
-      >
+      <div className="border-b border-line p-5">
+        <div className="mb-3 flex items-center justify-between">
+          <span className="icon-tile">
+            <ClipboardCheck size={20} />
+          </span>
+          <button
+            type="button"
+            onClick={onClose}
+            className="btn min-h-8 p-2"
+            aria-label="Cerrar revisión"
+          >
+            <X size={16} />
+          </button>
+        </div>
         <h2
           id="decision-title"
           className="text-xl font-semibold text-slate-900"
         >
-          Review candidate
+          Revisar candidato
         </h2>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p id="decision-description" className="mt-1 text-sm text-slate-500">
           Registro #{rowId + 1}
         </p>
-
-        <div className="mt-6 grid grid-cols-2 gap-3">
+      </div>
+      <div className="p-5">
+        <p className="text-xs text-slate-500">
+          Las decisiones guardadas no se pueden modificar en esta sesión.
+        </p>
+        <div
+          role="group"
+          aria-label="Decisión de revisión"
+          className="mt-4 grid grid-cols-2 gap-3"
+        >
           <button
             type="button"
             onClick={() => setStatus("accepted")}
+            aria-pressed={status === "accepted"}
             className={`rounded-lg border px-4 py-3 font-medium ${
               status === "accepted"
                 ? "border-emerald-600 bg-emerald-50 text-emerald-700"
                 : "border-slate-200 text-slate-600"
             }`}
           >
-            Accept
+            <Check size={16} className="mr-2 inline" />
+            Aceptar
           </button>
 
           <button
             type="button"
             onClick={() => setStatus("rejected")}
+            aria-pressed={status === "rejected"}
             className={`rounded-lg border px-4 py-3 font-medium ${
               status === "rejected"
                 ? "border-red-600 bg-red-50 text-red-700"
                 : "border-slate-200 text-slate-600"
             }`}
           >
-            Reject
+            <X size={16} className="mr-2 inline" />
+            Rechazar
           </button>
         </div>
 
@@ -82,42 +136,40 @@ export default function DecisionDialog({
           htmlFor="decision-reason"
           className="mt-6 block text-sm font-medium text-slate-700"
         >
-          Justification
+          Justificación
         </label>
 
         <textarea
           id="decision-reason"
           value={reason}
           onChange={(event) => setReason(event.target.value)}
+          required
+          aria-describedby="reason-help"
           rows={4}
           maxLength={2000}
-          placeholder="Explain the reason for this decision..."
-          className="mt-2 w-full resize-y rounded-lg border border-slate-300 p-3 text-sm outline-none focus:border-blue-500"
+          placeholder="Describe el motivo de la decisión…"
+          className="text-input mt-2 resize-y"
         />
 
-        <p className="mt-1 text-xs text-slate-400">
-          Required · {reason.length}/2000 characters
+        <p id="reason-help" className="mt-1 text-xs text-slate-500">
+          Obligatorio · {reason.length}/2000 caracteres
         </p>
 
         <div className="mt-6 flex justify-end gap-3">
-          <button
-            type="button"
-            onClick={onClose}
-            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium"
-          >
-            Cancel
+          <button type="button" onClick={onClose} className="btn">
+            Cancelar
           </button>
 
           <button
             type="button"
             onClick={handleSave}
             disabled={!reason.trim()}
-            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="btn btn-primary"
           >
-            Save decision
+            Guardar decisión
           </button>
         </div>
       </div>
-    </div>
+    </dialog>
   );
 }

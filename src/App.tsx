@@ -1,5 +1,14 @@
-
+import { reviewStatusLabels } from "./types/review";
 import { useState } from "react";
+import {
+  Download,
+  ClipboardList,
+  Clock3,
+  Check,
+  X,
+  FileSpreadsheet,
+} from "lucide-react";
+import AppShell from "./components/AppShell";
 
 import CsvUploader from "./components/CsvUploader";
 import PatientTable from "./components/PatientTable";
@@ -17,11 +26,9 @@ import type {
 function App() {
   const [dataset, setDataset] = useState<CsvDataset | null>(null);
   const [decisions, setDecisions] = useState<ReviewDecisions>({});
-  const [activeTab, setActiveTab] =
-    useState<ReviewStatus>("pending");
+  const [activeTab, setActiveTab] = useState<ReviewStatus>("pending");
 
-  const [selectedRowId, setSelectedRowId] =
-    useState<number | null>(null);
+  const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
 
   function handleLoad(newDataset: CsvDataset) {
     setDataset(newDataset);
@@ -30,10 +37,7 @@ function App() {
     setSelectedRowId(null);
   }
 
-  function handleSaveDecision(
-    rowId: number,
-    decision: ReviewDecision
-  ) {
+  function handleSaveDecision(rowId: number, decision: ReviewDecision) {
     if (decisions[rowId]) return;
 
     setDecisions((previous) => ({
@@ -60,8 +64,7 @@ function App() {
     dataset?.rows
       .map((_, index) => index)
       .filter(
-        (index) =>
-          (decisions[index]?.status ?? "pending") === activeTab
+        (index) => (decisions[index]?.status ?? "pending") === activeTab,
       ) ?? [];
 
   const visibleDataset: CsvDataset | null = dataset
@@ -89,7 +92,7 @@ function App() {
     setSelectedRowId(originalIndex);
   }
 
-  const reviewedCount =  counts.accepted + counts.rejected;
+  const reviewedCount = counts.accepted + counts.rejected;
 
   function handleExport() {
     if (!dataset) return;
@@ -98,103 +101,138 @@ function App() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50 p-6 md:p-10">
-      <div className="mx-auto max-w-7xl">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-slate-900">
-            Patient Discovery
-          </h1>
-          <p className="mt-2 text-slate-500">
-            Clinical cohort review platform
+    <AppShell>
+      <div className="page-heading">
+        <div>
+          <p className="eyebrow">PATIENT DISCOVERY</p>
+          <h1>Revisión de cohorte</h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Revisa los registros de la cohorte y documenta las decisiones sobre cada candidato.
           </p>
-        </header>
-
-        <CsvUploader onLoad={handleLoad} />
-
-        {dataset && (
-          <div className="mt-5 flex flex-wrap items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-4">
-            <div>
-              <p className="font-medium text-slate-800">
-                Review progress
+        </div>
+        <div className="flex flex-wrap items-start gap-3">
+          {dataset && <CsvUploader onLoad={handleLoad} compact />}
+          <button
+            type="button"
+            onClick={handleExport}
+            disabled={!dataset}
+            className="btn btn-primary"
+          >
+            <Download size={16} />
+            Exportar revisión en CSV
+          </button>
+        </div>
+      </div>
+      {!dataset && <CsvUploader onLoad={handleLoad} />}
+      {dataset && (
+        <section className="panel progress-panel" aria-label="Progreso de revisión">
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="icon-tile">
+              <FileSpreadsheet size={20} />
+            </span>
+            <div className="min-w-0">
+              <p
+                className="truncate font-semibold text-slate-800"
+                title={dataset.fileName}
+              >
+                {dataset.fileName}
               </p>
-
-              <p className="mt-1 text-sm text-slate-500">
-                {reviewedCount} de {dataset.rows.length} registros revisados
+              <p className="mt-1 text-xs text-slate-500">
+                {dataset.rows.length} registros · {dataset.columns.length}{" "}
+                columnas originales
               </p>
-
-              <div className="mt-2 h-2 w-56 max-w-full overflow-hidden rounded-full bg-slate-200">
-                <div
-                  className="h-full rounded-full bg-blue-600 transition-all"
-                  style={{
-                    width: `${
-                      dataset.rows.length > 0
-                        ? (reviewedCount / dataset.rows.length) * 100
-                        : 0
-                    }%`,
-                  }}
-                />
-              </div>
             </div>
-
-            <button
-              type="button"
-              onClick={handleExport}
-              className="rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700"
-            >
-              Export review CSV
-            </button>
           </div>
-        )}
-
-
-        {dataset && visibleDataset ? (
-          <>
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              {(
-                ["pending", "accepted", "rejected"] as const
-              ).map((status) => (
+          <div className="progress-summary">
+            <div className="mb-2 flex justify-between gap-6 text-xs">
+              <span className="font-medium text-slate-700">
+                Progreso de revisión
+              </span>
+              <span>
+                {reviewedCount} de {dataset.rows.length} revisados
+              </span>
+            </div>
+            <progress
+              className="review-progress"
+              value={reviewedCount}
+              max={Math.max(dataset.rows.length, 1)}
+              aria-label="Registros revisados"
+            />
+          </div>
+        </section>
+      )}
+      {dataset && visibleDataset ? (
+        <>
+          <div
+            className="status-grid"
+            role="group"
+            aria-label="Filtrar por estado de revisión"
+          >
+            {(["pending", "accepted", "rejected"] as const).map((status) => {
+              const StatusIcon =
+                status === "pending"
+                  ? Clock3
+                  : status === "accepted"
+                    ? Check
+                    : X;
+              return (
                 <button
                   key={status}
                   type="button"
                   onClick={() => setActiveTab(status)}
-                  className={`rounded-xl border p-4 text-left ${
-                    activeTab === status
-                      ? "border-blue-600 bg-blue-50"
-                      : "border-slate-200 bg-white"
-                  }`}
+                  aria-pressed={activeTab === status}
+                  className={`status-card ${activeTab === status ? "active" : ""}`}
                 >
-                  <p className="text-2xl font-bold">
-                    {counts[status]}
-                  </p>
-                  <p className="mt-1 text-sm capitalize text-slate-600">
-                    {status}
-                  </p>
+                  <span className={`status-icon ${status}`}>
+                    <StatusIcon size={18} />
+                  </span>
+                  <span className="flex-1 text-left">
+                    <span className="block text-xs font-medium capitalize text-slate-600">
+                      {reviewStatusLabels[status]}
+                    </span>
+                    <span className="mt-1 block text-2xl font-semibold tabular-nums text-slate-900">
+                      {counts[status]}
+                    </span>
+                  </span>
+                  <span className="status-indicator" />
                 </button>
-              ))}
-            </div>
-
-            <PatientTable
-              key={`${dataset.fileName}-${activeTab}`}
-              dataset={visibleDataset}
-              decisions={visibleDecisions}
-              onReview={handleReview}
-            />
-          </>
-        ) : (
-          <div className="mt-6 rounded-xl border border-dashed border-slate-300 p-10 text-center text-slate-500">
-            No dataset loaded.
+              );
+            })}
           </div>
-        )}
-
-        {selectedRowId !== null && (
-          <DecisionDialog
-            rowId={selectedRowId}
-            onSave={handleSaveDecision}
-            onClose={() => setSelectedRowId(null)}
+          <PatientTable
+            key={`${dataset.fileName}-${activeTab}`}
+            dataset={visibleDataset}
+            decisions={visibleDecisions}
+            onReview={handleReview}
           />
-        )}
-      </div>
-    </main>
+        </>
+      ) : (
+        <section className="panel empty-state">
+          <span className="empty-icon">
+            <ClipboardList size={28} />
+          </span>
+          <h2>Carga una cohorte para iniciar la revisión</h2>
+          <p>
+            Selecciona un archivo CSV para consultar los registros
+            <br className="hidden sm:block" /> y documentar las decisiones de
+            revisión.
+          </p>
+          <div className="workflow-steps">
+            <span>01 &nbsp; Cargar CSV</span>
+            <span>02 &nbsp; Revisar candidatos</span>
+            <span>03 &nbsp; Exportar decisiones</span>
+          </div>
+        </section>
+      )}
+
+      {selectedRowId !== null && (
+        <DecisionDialog
+          rowId={selectedRowId}
+          onSave={handleSaveDecision}
+          onClose={() => setSelectedRowId(null)}
+        />
+      )}
+    </AppShell>
   );
 }
 
