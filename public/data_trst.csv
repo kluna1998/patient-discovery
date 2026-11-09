@@ -1,0 +1,4 @@
+patient_id,age,diagnosis,biomarker,score
+P001,58,Diabetes,Positive,0.85
+P002,71,Hypertension,Negative,0.42
+P003,45,Asthma,Positive,0.91
