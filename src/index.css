@@ -292,3 +292,53 @@
 .decision-dialog::backdrop {
   background: #10283d80;
 }
+
+.dictionary-scroll {
+  max-height: 480px;
+  overflow: auto;
+}
+.dictionary-table {
+  width: 100%;
+  min-width: 850px;
+  text-align: left;
+}
+.dictionary-table th {
+  position: sticky;
+  top: 0;
+  background: #edf1f5;
+  padding: 10px;
+  z-index: 1;
+}
+.dictionary-table td {
+  padding: 8px;
+  vertical-align: top;
+  border-bottom: 1px solid #dfe5eb;
+}
+.dictionary-table th:nth-child(1) { width: 25%; }
+.dictionary-table th:nth-child(2) { width: 25%; }
+.dictionary-table th:nth-child(3) { width: 45%; }
+.column-help-button {
+  flex-shrink: 0;
+  color: #2a7679;
+  border-radius: 50%;
+  padding: 3px;
+}
+.column-help-tooltip {
+  position: fixed;
+  z-index: 100;
+  padding-block: 6px;
+  width: min(420px, calc(100vw - 32px));
+  max-height: calc(100dvh - 16px);
+}
+.column-help-content {
+  max-height: calc(100dvh - 28px);
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid #dfe5eb;
+  border-radius: 8px;
+  background: white;
+  color: #334155;
+  white-space: normal;
+  text-align: left;
+  box-shadow: 0 8px 32px #102c4533;
+}

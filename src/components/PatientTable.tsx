@@ -1,3 +1,5 @@
+import ColumnHelp from "./ColumnHelp";
+import type { ColumnInfo } from "../services/columnDictionary";
 import { reviewStatusLabels } from "../types/review";
 import { useMemo } from "react";
 import {
@@ -32,6 +34,7 @@ import type { ReviewDecisions } from "../types/review";
 
 interface Props {
   dataset: CsvDataset;
+  dictionary: ColumnInfo[];
   decisions: ReviewDecisions;
   onReview: (rowId: number) => void;
 }
@@ -59,7 +62,8 @@ const features = tableFeatures({
   },
 });
 
-export default function PatientTable({ dataset, decisions, onReview }: Props) {
+export default function PatientTable({ dataset, dictionary, decisions, onReview }: Props) {
+  const columnInfo = useMemo(() => new Map(dictionary.map((entry) => [entry.column_name, entry])), [dictionary]);
   // Generamos las columnas dinámicamente a partir del CSV.
   const columns = useMemo<ColumnDef<typeof features, PatientRow>[]>(
     () => [
@@ -68,7 +72,7 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
         (name): ColumnDef<typeof features, PatientRow> => ({
           id: name,
           accessorFn: (row) => row[name] ?? "",
-          header: name,
+          header: columnInfo.get(name)?.readable_name ?? name,
 
           // TypeScript infiere el tipo de info desde ColumnDef.
           cell: (info) => String(info.getValue() ?? ""),
@@ -139,7 +143,7 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
         },
       },
     ],
-    [dataset.columns, decisions, onReview],
+    [dataset.columns, columnInfo, decisions, onReview],
   );
 
   const table = useTable({
@@ -150,6 +154,9 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
     globalFilterFn: "includesString",
 
     initialState: {
+      columnVisibility: Object.fromEntries(
+        dataset.columns.map((name, index) => [name, index < 5]),
+      ),
       pagination: {
         pageIndex: 0,
         pageSize: 10,
@@ -160,7 +167,7 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
   function resetView() {
     table.resetGlobalFilter(true);
     table.resetSorting(true);
-    table.resetColumnVisibility(true);
+    table.resetColumnVisibility();
     table.setPageIndex(0);
   }
 
@@ -230,7 +237,7 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
               .filter((column) => column.getCanHide())
               .map((column) => (
                 <label
-                  key={column.id}
+                  key={columnInfo.get(column.id)?.readable_name ?? column.id}
                   className="flex items-center gap-2 text-sm text-slate-600"
                 >
                   <input
@@ -259,6 +266,7 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => {
+                    const info = columnInfo.get(header.column.id);
                     const canSort = header.column.getCanSort();
 
                     const sortDirection = header.column.getIsSorted();
@@ -277,6 +285,7 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
                                 : undefined
                         }
                       >
+                        <div className="flex items-center gap-2">
                         {header.isPlaceholder ? null : canSort ? (
                           <button
                             type="button"
@@ -296,6 +305,8 @@ export default function PatientTable({ dataset, decisions, onReview }: Props) {
                         ) : (
                           <table.FlexRender header={header} />
                         )}
+                        {!header.isPlaceholder && info && <ColumnHelp info={info} />}
+                        </div>
                       </th>
                     );
                   })}

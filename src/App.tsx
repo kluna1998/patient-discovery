@@ -8,6 +8,8 @@ import {
   X,
   FileSpreadsheet,
 } from "lucide-react";
+import ColumnDictionaryEditor from "./components/ColumnDictionaryEditor";
+import { useColumnDictionary } from "./hooks/useColumnDictionary";
 import AppShell from "./components/AppShell";
 
 import CsvUploader from "./components/CsvUploader";
@@ -24,6 +26,8 @@ import type {
 } from "./types/review";
 
 function App() {
+  const showDictionaryEditor = new URLSearchParams(window.location.search).get("debug") === "1";
+  const dictionary = useColumnDictionary();
   const [dataset, setDataset] = useState<CsvDataset | null>(null);
   const [decisions, setDecisions] = useState<ReviewDecisions>({});
   const [activeTab, setActiveTab] = useState<ReviewStatus>("pending");
@@ -123,6 +127,9 @@ function App() {
           </button>
         </div>
       </div>
+      {dictionary.loading && <p role="status">Cargando diccionario de columnas…</p>}
+      {dictionary.error && <div role="alert" className="error-message my-3">{dictionary.error}<button type="button" className="btn" onClick={dictionary.retry}>Reintentar carga</button></div>}
+      {showDictionaryEditor && !dictionary.loading && <ColumnDictionaryEditor entries={dictionary.entries} columns={dataset?.columns ?? []} onSave={dictionary.save} />}
       {!dataset && <CsvUploader onLoad={handleLoad} />}
       {dataset && (
         <section className="panel progress-panel" aria-label="Progreso de revisión">
@@ -202,6 +209,7 @@ function App() {
           <PatientTable
             key={`${dataset.fileName}-${activeTab}`}
             dataset={visibleDataset}
+            dictionary={dictionary.entries}
             decisions={visibleDecisions}
             onReview={handleReview}
           />
