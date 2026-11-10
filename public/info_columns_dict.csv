@@ -1,0 +1,33 @@
+﻿column_name,readable_name,meaning
+patient_ref,Patient reference,Patient record identifier. Treat as sensitive and use only in authorized systems.
+birth_date,Date of birth,Patient's date of birth; it can be used to calculate age for protocol criteria.
+lab_sap_ref,Laboratory test code,SAP code used to identify or trace the laboratory test.
+lab_descr,Laboratory test name,Name of the measured analyte; the current records say Apolipoproteina A1.
+ultima_lpa,Latest reported lab value,"Numeric laboratory result. Although the field name suggests Lp(a), verify the analyte against lab_descr before interpreting it."
+lpa_units,Laboratory value units,"Units recorded for the laboratory result, such as mg/dL."
+lpa_extrac_date,Sample collection date,Likely date and time the lab sample was collected; confirm this with the source system.
+lpa_result_date,Result reporting date,Likely date and time the laboratory result was reported; confirm this with the source system.
+fecha_ultima_lpa,Latest Lp(a) test date,Date associated with the latest Lp(a) test; confirm how it relates to the laboratory collection and result dates.
+tiene_visita_24m,Visit in the last 24 months,Indicator for whether a qualifying visit was recorded in the 24-month period; confirm the period's definition.
+fecha_ultima_visita_24m,Latest qualifying visit date,Date of the latest visit counted for the 24-month visit indicator.
+seguimiento_endocrino,Endocrinology follow-up recorded,Indicates recorded endocrinology follow-up; it does not by itself establish a diagnosis or active condition.
+fecha_ultima_visita_endocrino,Latest endocrinology visit date,Date of the most recent recorded endocrinology visit.
+seguimiento_cardio,Cardiology follow-up recorded,Indicates recorded cardiology follow-up; it does not by itself establish a diagnosis or active condition.
+fecha_ultima_visita_cardio,Latest cardiology visit date,Date of the most recent recorded cardiology visit.
+seguimiento_neuro,Neurology follow-up recorded,Indicates recorded neurology follow-up; it does not by itself establish a diagnosis or active condition.
+fecha_ultima_visita_neuro,Latest neurology visit date,Date of the most recent recorded neurology visit.
+seguimiento_cirugia_vascular,Vascular surgery follow-up recorded,Indicates recorded follow-up with vascular surgery; it does not by itself establish a diagnosis or active condition.
+fecha_ultima_visita_cirugia_vascular,Latest vascular surgery visit date,Date of the most recent recorded vascular surgery visit.
+fecha_ultima_visita_especialidad,Latest specialty visit date,Most recent date across the specialty visit(s) included by the source system; confirm which specialties count.
+tiene_especialidad_objetivo,Target specialty visit recorded,Indicates a visit with a designated target specialty; confirm which specialties are included.
+ecocardio_24m,Echocardiogram within 24 months,Likely indicates a recent echocardiogram; confirm the flag's exact time window and rule.
+fecha_ultimo_ecocardio,Latest echocardiogram date,Date of the most recent recorded echocardiogram; review the report for clinical details.
+angiotac_coronario_24m,Coronary CT angiography within 24 months,Likely indicates recent coronary CT angiography; confirm the flag's exact rule.
+fecha_ultimo_angiotac_coronario,Latest coronary CT angiography date,Date of the most recent recorded coronary CT angiography.
+ecografia_vascular_24m,Vascular ultrasound within 24 months,Likely indicates a recent vascular ultrasound; confirm the flag's exact rule.
+fecha_ultima_ecografia_vascular,Latest vascular ultrasound date,Date of the most recent recorded vascular ultrasound.
+cumple_imagen_24m,Imaging criterion within 24 months,Likely a combined recent-imaging indicator; the source-system rule should be documented before relying on it.
+tiene_ir_rx,IR/RX record recorded,Indicator for an IR/RX record or assessment. The acronym's meaning is unclear and should be confirmed with the source system.
+fecha_ultimo_ir_rx,Latest IR/RX record date,Date of the most recent IR/RX record; confirm what IR/RX means in the source system.
+tiene_ir_eco_atr,IR/eco_atr record recorded,Indicator for an IR/eco_atr record or assessment. Confirm the acronym and meaning with the source system.
+fecha_ultimo_ir_eco_atr,Latest IR/eco_atr record date,Date of the most recent IR/eco_atr record; confirm what the acronym means in the source system.
