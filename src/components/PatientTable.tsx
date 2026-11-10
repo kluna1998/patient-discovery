@@ -67,20 +67,6 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
   // Generamos las columnas dinámicamente a partir del CSV.
   const columns = useMemo<ColumnDef<typeof features, PatientRow>[]>(
     () => [
-      // Columnas originales del CSV.
-      ...dataset.columns.map(
-        (name): ColumnDef<typeof features, PatientRow> => ({
-          id: name,
-          accessorFn: (row) => row[name] ?? "",
-          header: columnInfo.get(name)?.readable_name ?? name,
-
-          // TypeScript infiere el tipo de info desde ColumnDef.
-          cell: (info) => String(info.getValue() ?? ""),
-
-          sortFn: "alphanumeric",
-        }),
-      ),
-
       // Columna de revisión.
       {
         id: "__review_actions",
@@ -104,7 +90,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
                 ) : (
                   <Clock3 size={12} />
                 )}
-                {reviewStatusLabels[decision?.status ?? "pending"]}
+                
               </span>
 
               <button
@@ -120,6 +106,20 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
           );
         },
       },
+
+      // Columnas originales del CSV.
+      ...dataset.columns.map(
+        (name): ColumnDef<typeof features, PatientRow> => ({
+          id: name,
+          accessorFn: (row) => row[name] ?? "",
+          header: columnInfo.get(name)?.readable_name ?? name,
+
+          // TypeScript infiere el tipo de info desde ColumnDef.
+          cell: (info) => String(info.getValue() ?? ""),
+
+          sortFn: "alphanumeric",
+        }),
+      ),
 
       // Columna de justificación.
       {
@@ -237,7 +237,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
               .filter((column) => column.getCanHide())
               .map((column) => (
                 <label
-                  key={columnInfo.get(column.id)?.readable_name ?? column.id}
+                  key={column.id}
                   className="flex items-center gap-2 text-sm text-slate-600"
                 >
                   <input
@@ -247,7 +247,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
                     className="accent-blue-600"
                   />
 
-                  {column.id}
+                  {columnInfo.get(column.id)?.readable_name ?? column.id}
                 </label>
               ))}
           </div>

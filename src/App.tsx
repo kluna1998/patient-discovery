@@ -233,9 +233,14 @@ function App() {
         </section>
       )}
 
-      {selectedRowId !== null && (
+      {selectedRowId !== null && dataset && (
         <DecisionDialog
+          key={selectedRowId}
           rowId={selectedRowId}
+          row={dataset.rows[selectedRowId]}
+          columns={dataset.columns}
+          dictionary={dictionary.entries}
+          fileName={dataset.fileName}
           onSave={handleSaveDecision}
           onClose={() => setSelectedRowId(null)}
         />

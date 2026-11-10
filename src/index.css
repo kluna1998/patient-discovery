@@ -342,3 +342,38 @@
   text-align: left;
   box-shadow: 0 8px 32px #102c4533;
 }
+
+.patient-document {
+  max-width: 960px;
+  background: #fff;
+}
+.document-header {
+  padding: 32px;
+  border-bottom: 1px solid #dfe5eb;
+  background: #f8fafc;
+}
+.document-section {
+  padding: 32px;
+}
+.patient-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 0px;
+  border-top: 1px solid #dfe5eb;
+}
+.patient-field {
+  min-width: 0;
+  padding: 24px 16px;
+  border-bottom: 1px solid #dfe5eb;
+  overflow-wrap: anywhere;
+}
+.document-decision {
+  border-top: 1px solid #dfe5eb;
+  background: #f8fafc;
+}
+@media (max-width: 639px) {
+  .document-header,
+  .document-section { padding: 20px; }
+  .patient-fields { grid-template-columns: minmax(0, 1fr); }
+  .patient-field { padding-inline: 0; }
+}

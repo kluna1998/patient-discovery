@@ -1,14 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, X, ClipboardCheck } from "lucide-react";
+import type { PatientRow } from "../types/patient";
+import type { ColumnInfo } from "../services/columnDictionary";
 import type { ReviewDecision } from "../types/review";
 
 interface Props {
   rowId: number;
+  row: PatientRow;
+  columns: string[];
+  dictionary: ColumnInfo[];
+  fileName: string;
   onSave: (rowId: number, decision: ReviewDecision) => void;
   onClose: () => void;
 }
 
-export default function DecisionDialog({ rowId, onSave, onClose }: Props) {
+export default function DecisionDialog({ rowId, row, columns, dictionary, fileName, onSave, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -26,10 +32,10 @@ export default function DecisionDialog({ rowId, onSave, onClose }: Props) {
       else document.getElementById("workspace")?.focus();
     };
   }, []);
-  const [status, setStatus] = useState<"accepted" | "rejected">("accepted");
+  const columnInfo = new Map(dictionary.map((entry) => [entry.column_name, entry]));
   const [reason, setReason] = useState("");
 
-  function handleSave() {
+  function handleSave(status: "accepted" | "rejected") {
     const cleanReason = reason.trim();
 
     if (!cleanReason) return;
@@ -67,109 +73,60 @@ export default function DecisionDialog({ rowId, onSave, onClose }: Props) {
         event.preventDefault();
         onClose();
       }}
-      className="decision-dialog"
+      className="decision-dialog patient-document"
     >
-      <div className="border-b border-line p-5">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="icon-tile">
-            <ClipboardCheck size={20} />
-          </span>
-          <button
-            type="button"
-            onClick={onClose}
-            className="btn min-h-8 p-2"
-            aria-label="Cerrar revisión"
-          >
-            <X size={16} />
-          </button>
-        </div>
-        <h2
-          id="decision-title"
-          className="text-xl font-semibold text-slate-900"
-        >
-          Revisar candidato
-        </h2>
+      <article>
+        <header className="document-header">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="eyebrow mt-5">FICHA DE REVISIÓN</p>
+              <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-slate-900">Registro #{rowId + 1}</h2>
+            </div>
+            <button type="button" onClick={onClose} className="btn min-h-8 p-2" aria-label="Cerrar revisión"><X size={16} /></button>
+            </div>
+          </header>
 
-        <p id="decision-description" className="mt-1 text-sm text-slate-500">
-          Registro #{rowId + 1}
-        </p>
-      </div>
-      <div className="p-5">
-        <p className="text-xs text-slate-500">
-          Las decisiones guardadas no se pueden modificar en esta sesión.
-        </p>
-        <div
-          role="group"
-          aria-label="Decisión de revisión"
-          className="mt-4 grid grid-cols-2 gap-3"
-        >
-          <button
-            type="button"
-            onClick={() => setStatus("accepted")}
-            aria-pressed={status === "accepted"}
-            className={`rounded-lg border px-4 py-3 font-medium ${
-              status === "accepted"
-                ? "border-emerald-600 bg-emerald-50 text-emerald-700"
-                : "border-slate-200 text-slate-600"
-            }`}
-          >
-            <Check size={16} className="mr-2 inline" />
-            Aceptar
-          </button>
+        <section className="document-section" aria-labelledby="patient-data-title">
+          <dl className="patient-fields">
+            {columns.map((name) => {
+              const info = columnInfo.get(name);
+              const value = row[name] ?? "";
+              return (
+                <div key={name} className="patient-field">
+                  <dt>
+                    <span className="block font-semibold text-slate-800">{info?.readable_name ?? name}</span>
+                    {/*info && <span className="mt-1 block break-all font-mono text-[11px] text-slate-500">{name}</span>*/}
+                  </dt>
+                  <dd className="mt-3 whitespace-pre-wrap break-words text-base text-slate-900">{value.trim() ? value : <span className="text-sm italic text-slate-400">Sin datos</span>}</dd>
+                  {info?.meaning && <dd className="mt-2 text-xs leading-relaxed text-slate-500">{info.meaning}</dd>}
+                </div>
+              );
+            })}
+          </dl>
+        </section>
 
-          <button
-            type="button"
-            onClick={() => setStatus("rejected")}
-            aria-pressed={status === "rejected"}
-            className={`rounded-lg border px-4 py-3 font-medium ${
-              status === "rejected"
-                ? "border-red-600 bg-red-50 text-red-700"
-                : "border-slate-200 text-slate-600"
-            }`}
-          >
-            <X size={16} className="mr-2 inline" />
-            Rechazar
-          </button>
-        </div>
-
-        <label
-          htmlFor="decision-reason"
-          className="mt-6 block text-sm font-medium text-slate-700"
-        >
-          Justificación
-        </label>
-
-        <textarea
-          id="decision-reason"
-          value={reason}
-          onChange={(event) => setReason(event.target.value)}
-          required
-          aria-describedby="reason-help"
-          rows={4}
-          maxLength={2000}
-          placeholder="Describe el motivo de la decisión…"
-          className="text-input mt-2 resize-y"
-        />
-
-        <p id="reason-help" className="mt-1 text-xs text-slate-500">
-          Obligatorio · {reason.length}/2000 caracteres
-        </p>
-
-        <div className="mt-6 flex justify-end gap-3">
-          <button type="button" onClick={onClose} className="btn">
-            Cancelar
-          </button>
-
-          <button
-            type="button"
-            onClick={handleSave}
-            disabled={!reason.trim()}
-            className="btn btn-primary"
-          >
-            Guardar decisión
-          </button>
-        </div>
-      </div>
+        <section className="document-section document-decision" aria-labelledby="patient-decision-title">
+          <h3 id="patient-decision-title" className="text-lg font-semibold text-slate-900">Decisión de revisión</h3>
+          <label htmlFor="decision-reason" className="mt-5 block text-sm font-medium text-slate-700">Motivo de la decisión</label>
+          <textarea
+            id="decision-reason"
+            value={reason}
+            onChange={(event) => setReason(event.target.value)}
+            required
+            aria-describedby="reason-help"
+            rows={4}
+            maxLength={2000}
+            placeholder="Escribe el motivo para aceptar o rechazar este candidato…"
+            className="text-input mt-2 resize-y"
+          />
+          <p id="reason-help" className="mt-1 text-xs text-slate-500">Obligatorio · {reason.length}/2000 caracteres</p>
+          <p className="mt-4 text-xs leading-relaxed text-slate-500">Al aceptar o rechazar se guardarán la decisión y el motivo. Las decisiones guardadas no se pueden modificar en esta sesión.</p>
+          <div className="mt-6 flex flex-wrap justify-end gap-3">
+            <button type="button" onClick={() => handleSave("rejected")} disabled={!reason.trim()} className="btn border-red-700 bg-red-50 text-red-800 hover:bg-red-100"><X size={16} />Rechazar</button>
+            <button type="button" onClick={() => handleSave("accepted")} disabled={!reason.trim()} className="btn border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800"><Check size={16} />Aceptar</button>
+          </div>
+        </section>
+      </article>
     </dialog>
   );
 }
