@@ -240,7 +240,6 @@ function App() {
           row={dataset.rows[selectedRowId]}
           columns={dataset.columns}
           dictionary={dictionary.entries}
-          fileName={dataset.fileName}
           onSave={handleSaveDecision}
           onClose={() => setSelectedRowId(null)}
         />

@@ -1,6 +1,5 @@
 import ColumnHelp from "./ColumnHelp";
 import type { ColumnInfo } from "../services/columnDictionary";
-import { reviewStatusLabels } from "../types/review";
 import { useMemo } from "react";
 import {
   Search,

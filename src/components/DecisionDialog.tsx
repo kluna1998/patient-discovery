@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Check, X, ClipboardCheck } from "lucide-react";
+import { Check, X } from "lucide-react";
 import type { PatientRow } from "../types/patient";
 import type { ColumnInfo } from "../services/columnDictionary";
 import type { ReviewDecision } from "../types/review";
@@ -9,12 +9,11 @@ interface Props {
   row: PatientRow;
   columns: string[];
   dictionary: ColumnInfo[];
-  fileName: string;
   onSave: (rowId: number, decision: ReviewDecision) => void;
   onClose: () => void;
 }
 
-export default function DecisionDialog({ rowId, row, columns, dictionary, fileName, onSave, onClose }: Props) {
+export default function DecisionDialog({ rowId, row, columns, dictionary, onSave, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const dialog = dialogRef.current;
