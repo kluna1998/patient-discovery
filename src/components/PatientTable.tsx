@@ -180,7 +180,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
   const totalPages = table.getPageCount();
 
   return (
-    <section className="panel table-panel">
+    <section aria-label="Cohorte de pacientes">
       {/* Cabecera */}
       <div className="table-heading">
         <h2 className="text-base font-semibold text-slate-800">

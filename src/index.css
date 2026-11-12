@@ -135,17 +135,26 @@
   .review-progress::-moz-progress-bar {
     background: #2a7679;
   }
-  .status-grid {
-    @apply mt-5 grid grid-cols-3 gap-3;
+  .review-tabs {
+    @apply isolate mx-0 my-0 grid w-[calc(100%-2rem)] max-w-[510px] grid-cols-3 pt-1;
   }
-  .status-card {
-    @apply flex items-center gap-3 rounded-panel border border-line bg-white p-4 hover:border-slate-400;
+  .review-tab {
+    @apply relative z-0 -mx-0.5 inline-flex h-12 min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-md border border-slate-200 bg-slate-50 px-3 text-sm font-medium text-slate-600 transition-[transform,box-shadow,background-color,border-color,color] duration-150 hover:bg-slate-100;
   }
-  .status-card.active {
-    @apply border-primary ring-1 ring-primary;
+  .review-tab svg {
+    @apply shrink-0;
   }
-  .status-icon {
-    @apply flex size-9 shrink-0 items-center justify-center rounded-md;
+  .review-tab:focus-visible {
+    @apply z-20 outline-2 -outline-offset-4 outline-primary;
+  }
+  .review-tab[aria-selected="true"] {
+    @apply relative z-10 -translate-y-0 border-x-slate-400 border-t-slate-400 bg-white font-semibold text-slate-900 shadow-sm;
+  }
+  .review-tab-pending[aria-selected="true"] svg { @apply text-amber-800; }
+  .review-tab-accepted[aria-selected="true"] svg { @apply text-emerald-800; }
+  .review-tab-rejected[aria-selected="true"] svg { @apply text-red-800; }
+  @media (prefers-reduced-motion: reduce) {
+    .review-tab { transition: none; }
   }
   .pending {
     @apply bg-amber-50 text-amber-800;
@@ -155,12 +164,6 @@
   }
   .rejected {
     @apply bg-red-50 text-red-800;
-  }
-  .status-indicator {
-    @apply size-2 rounded-full bg-transparent;
-  }
-  .active .status-indicator {
-    @apply bg-primary;
   }
   .empty-state {
     @apply mt-5 flex min-h-80 flex-col items-center justify-center px-5 py-12 text-center;
@@ -264,16 +267,14 @@
   h1 {
     font-size: 25px;
   }
-  .status-card {
-    padding: 12px 8px;
-    gap: 6px;
+  .review-tab {
+    padding-inline: 4px;
+    gap: 4px;
+    font-size: 11px;
   }
-  .status-icon,
-  .status-indicator {
-    display: none;
-  }
-  .status-grid {
-    gap: 8px;
+  .review-tab svg {
+    width: 14px;
+    height: 14px;
   }
 }
 .decision-dialog {

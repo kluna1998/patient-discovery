@@ -1,11 +1,10 @@
-import { reviewStatusLabels } from "./types/review";
 import { useMemo, useState } from "react";
 import {
   Download,
   ClipboardList,
   Clock3,
-  Check,
-  X,
+  CircleCheck,
+  CircleX,
   FileSpreadsheet,
 } from "lucide-react";
 import ColumnDictionaryEditor from "./components/ColumnDictionaryEditor";
@@ -177,51 +176,62 @@ function App() {
         </section>
       )}
       {dataset && visibleDataset ? (
-        <>
+        <section className="mt-5" aria-label="Revisión de pacientes">
           <div
-            className="status-grid"
-            role="group"
-            aria-label="Filtrar por estado de revisión"
+            className="review-tabs"
+            role="tablist"
+            aria-label="Estado de revisión"
+            onKeyDown={(event) => {
+              const statuses = ["pending", "accepted", "rejected"] as const;
+              const current = statuses.indexOf(activeTab);
+              const next = event.key === "ArrowRight" ? (current + 1) % statuses.length
+                : event.key === "ArrowLeft" ? (current + statuses.length - 1) % statuses.length
+                  : event.key === "Home" ? 0
+                    : event.key === "End" ? statuses.length - 1 : null;
+              if (next === null) return;
+              event.preventDefault();
+              setActiveTab(statuses[next]);
+              event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="tab"]')[next]?.focus();
+            }}
           >
             {(["pending", "accepted", "rejected"] as const).map((status) => {
-              const StatusIcon =
-                status === "pending"
-                  ? Clock3
-                  : status === "accepted"
-                    ? Check
-                    : X;
+              const StatusIcon = status === "pending" ? Clock3 : status === "accepted" ? CircleCheck : CircleX;
+              const label = status === "pending" ? "Pendientes" : status === "accepted" ? "Aceptados" : "Rechazados";
               return (
                 <button
                   key={status}
+                  id={`review-tab-${status}`}
+                  role="tab"
                   type="button"
+                  aria-selected={activeTab === status}
+                  aria-controls="review-tab-panel"
+                  tabIndex={activeTab === status ? 0 : -1}
                   onClick={() => setActiveTab(status)}
-                  aria-pressed={activeTab === status}
-                  className={`status-card ${activeTab === status ? "active" : ""}`}
+                  className={`review-tab review-tab-${status}`}
                 >
-                  <span className={`status-icon ${status}`}>
-                    <StatusIcon size={18} />
-                  </span>
-                  <span className="flex-1 text-left">
-                    <span className="block text-xs font-medium capitalize text-slate-600">
-                      {reviewStatusLabels[status]}
-                    </span>
-                    <span className="mt-1 block text-2xl font-semibold tabular-nums text-slate-900">
-                      {counts[status]}
-                    </span>
-                  </span>
-                  <span className="status-indicator" />
+                  <StatusIcon size={16} aria-hidden="true" />
+                  <span className="min-w-0 truncate">{label}</span>
+                  <span className="shrink-0 tabular-nums">({counts[status]})</span>
                 </button>
               );
             })}
           </div>
-          <PatientTable
-            key={`${dataset.fileName}-${activeTab}`}
-            dataset={visibleDataset}
-            dictionary={dictionary.entries}
-            decisions={visibleDecisions}
-            onReview={handleReview}
-          />
-        </>
+          <div
+            id="review-tab-panel"
+            className="panel overflow-hidden"
+            role="tabpanel"
+            aria-labelledby={`review-tab-${activeTab}`}
+            tabIndex={0}
+          >
+            <PatientTable
+              key={`${dataset.fileName}-${activeTab}`}
+              dataset={visibleDataset}
+              dictionary={dictionary.entries}
+              decisions={visibleDecisions}
+              onReview={handleReview}
+            />
+          </div>
+        </section>
       ) : (
         <section className="panel empty-state">
           <span className="empty-icon">
