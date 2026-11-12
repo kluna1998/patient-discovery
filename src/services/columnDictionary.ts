@@ -6,9 +6,15 @@ export interface ColumnInfo {
   meaning: string;
   section: string;
   section_order: number;
+  criterion_id?: string;
+  criterio?: string;
+  tipo?: "Evidencia" | "Valor" | "Unidades" | "";
+  value_type?: "boolean" | "date" | "number" | "text" | "";
+  explicacion?: string;
 }
 
 const dictionaryFields = ["column_name", "readable_name", "meaning", "section", "section_order"];
+const metadataFields = ["criterion_id", "criterio", "tipo", "value_type", "explicacion"] as const;
 
 export function validateDictionary(value: unknown): ColumnInfo[] {
   if (!Array.isArray(value)) throw new Error("El diccionario debe contener una lista de columnas.");
@@ -36,6 +42,26 @@ export function validateDictionary(value: unknown): ColumnInfo[] {
       section: text("section"),
       section_order: Number(order),
     };
+    for (const field of metadataFields) {
+      const value = row[field];
+      if (value !== undefined && typeof value !== "string") {
+        throw new Error(`${field} debe ser texto en la fila ${index + 1}.`);
+      }
+      const textValue = (value as string | undefined)?.trim() ?? "";
+      if (field === "tipo") {
+        if (!["", "Evidencia", "Valor", "Unidades"].includes(textValue)) {
+          throw new Error(`tipo no válido en la fila ${index + 1}.`);
+        }
+        clean.tipo = textValue as ColumnInfo["tipo"];
+      } else if (field === "value_type") {
+        if (!["", "boolean", "date", "number", "text"].includes(textValue)) {
+          throw new Error(`value_type no válido en la fila ${index + 1}.`);
+        }
+        clean.value_type = textValue as ColumnInfo["value_type"];
+      } else {
+        clean[field] = textValue;
+      }
+    }
     if (names.has(clean.column_name)) throw new Error(`La columna «${clean.column_name}» está duplicada.`);
     if (sectionOrders.has(clean.section) && sectionOrders.get(clean.section) !== clean.section_order) {
       throw new Error(`Las filas de la sección «${clean.section}» deben compartir section_order.`);
@@ -80,8 +106,69 @@ export function groupColumnsBySection(columns: string[], dictionary: ColumnInfo[
   return grouped;
 }
 
+export interface DialogField {
+  primary: ColumnInfo;
+  evidences: ColumnInfo[];
+  units?: ColumnInfo;
+}
+
+export interface DialogSection {
+  name: string;
+  order: number;
+  fields: DialogField[];
+}
+
+export function groupPatientFieldsForDialog(columns: string[], dictionary: ColumnInfo[]): DialogSection[] {
+  const byName = new Map(dictionary.map((info) => [info.column_name, info]));
+  const dictionaryOrder = new Map(dictionary.map((info, index) => [info.column_name, index]));
+
+  return groupColumnsBySection(columns, dictionary).map((section) => {
+    const ordered = section.columns.map((name): ColumnInfo => byName.get(name) ?? {
+      column_name: name,
+      readable_name: name,
+      meaning: "",
+      section: section.name,
+      section_order: section.order,
+    }).sort((a, b) =>
+      (dictionaryOrder.get(a.column_name) ?? Infinity) - (dictionaryOrder.get(b.column_name) ?? Infinity),
+    );
+    const criteria = new Map<string, ColumnInfo[]>();
+    for (const info of ordered) {
+      if (!info.criterion_id) continue;
+      const group = criteria.get(info.criterion_id) ?? [];
+      group.push(info);
+      criteria.set(info.criterion_id, group);
+    }
+
+    const fields = new Map<string, DialogField>();
+    const attached = new Set<string>();
+    for (const group of criteria.values()) {
+      const values = group.filter((info) => info.tipo === "Valor");
+      // Without a unique primary, preserve every column independently.
+      if (values.length !== 1) continue;
+      const primary = values[0];
+      const evidences = group.filter((info) => info.tipo === "Evidencia");
+      const units = group.filter((info) => info.tipo === "Unidades");
+      const field: DialogField = { primary, evidences };
+      evidences.forEach((info) => attached.add(info.column_name));
+      if (units.length === 1) {
+        field.units = units[0];
+        attached.add(units[0].column_name);
+      }
+      fields.set(primary.column_name, field);
+    }
+
+    return {
+      name: section.name,
+      order: section.order,
+      fields: ordered.filter((info) => !attached.has(info.column_name))
+        .map((info) => fields.get(info.column_name) ?? { primary: info, evidences: [] }),
+    };
+  });
+}
+
 export function downloadDictionary(entries: ColumnInfo[]) {
-  const csv = Papa.unparse({ fields: dictionaryFields, data: validateDictionary(entries) });
+  const csv = Papa.unparse({ fields: [...dictionaryFields, ...metadataFields], data: validateDictionary(entries) });
   const url = URL.createObjectURL(new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8;" }));
   const link = document.createElement("a");
   link.href = url;

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 import ColumnHelp from "./ColumnHelp";
 import type { PatientRow } from "../types/patient";
-import { groupColumnsBySection } from "../services/columnDictionary";
+import { groupPatientFieldsForDialog } from "../services/columnDictionary";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { reviewStatusLabels } from "../types/review";
 import type { ReviewDecision } from "../types/review";
@@ -35,7 +35,8 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
       else document.getElementById("workspace")?.focus();
     };
   }, []);
-  const columnInfo = new Map(dictionary.map((entry) => [entry.column_name, entry]));
+  const knownColumns = new Set(dictionary.map((entry) => entry.column_name));
+  const displayValue = (name: string) => row[name]?.trim() ? row[name] : "Sin datos";
   const [reason, setReason] = useState(decision?.reason ?? "");
   const [status, setStatus] = useState<ReviewDecision["status"]>(decision?.status ?? "accepted");
 
@@ -90,23 +91,27 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
 
 
         <section className="document-section" aria-label="Datos del paciente">
-          {groupColumnsBySection(columns, dictionary).map((section, index) => (
+          {groupPatientFieldsForDialog(columns, dictionary).map((section, index) => (
             <section className="clinical-section" key={index} aria-labelledby={`clinical-section-${index}`}>
               <h3 id={`clinical-section-${index}`} className="clinical-section-title">{section.name}</h3>
               <dl className="patient-fields">
-                {section.columns.map((name) => {
-                  const info = columnInfo.get(name);
-                  const value = row[name] ?? "";
-                  return (
-                    <div key={name} className="patient-field">
-                      <dt>
-                        <span>{info?.readable_name ?? name}</span>
-                        {info && <ColumnHelp info={info} />}:
-                      </dt>{" "}
-                      <dd>{value.trim() ? value : <span className="text-sm italic text-slate-400">Sin datos</span>}</dd>
-                    </div>
-                  );
-                })}
+                {section.fields.map(({ primary, evidences, units }) => (
+                  <div key={primary.column_name} className="patient-field">
+                    <dt>
+                      <span>{primary.readable_name}</span>
+                      {knownColumns.has(primary.column_name) && (
+                        <ColumnHelp
+                          info={primary}
+                          evidences={evidences.map((info) => ({ info, value: displayValue(info.column_name) }))}
+                        />
+                      )}:
+                    </dt>{" "}
+                    <dd>
+                      {displayValue(primary.column_name)}
+                      {units && ` ${displayValue(units.column_name)}`}
+                    </dd>
+                  </div>
+                ))}
               </dl>
             </section>
           ))}

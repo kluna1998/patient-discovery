@@ -388,7 +388,7 @@
 }
 .dictionary-table {
   width: 100%;
-  min-width: 1100px;
+  min-width: 2400px;
   text-align: left;
 }
 .dictionary-table th {
@@ -403,8 +403,8 @@
   vertical-align: top;
   border-bottom: 1px solid #dfe5eb;
 }
-.dictionary-table th:nth-child(1) { width: 20%; }
-.dictionary-table th:nth-child(2) { width: 20%; }
-.dictionary-table th:nth-child(3) { width: 30%; }
-.dictionary-table th:nth-child(4) { width: 18%; }
-.dictionary-table th:nth-child(5) { width: 12%; }
+.dictionary-table th { min-width: 180px; }
+.dictionary-table th:nth-child(3),
+.dictionary-table th:nth-child(10) { min-width: 300px; }
+.dictionary-table th:nth-child(5),
+.dictionary-table th:last-child { min-width: 100px; }

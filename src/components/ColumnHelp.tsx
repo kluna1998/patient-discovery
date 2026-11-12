@@ -3,7 +3,12 @@ import { createPortal } from "react-dom";
 import { Info } from "lucide-react";
 import type { ColumnInfo } from "../services/columnDictionary";
 
-export default function ColumnHelp({ info }: { info: ColumnInfo }) {
+interface Props {
+  info: ColumnInfo;
+  evidences?: { info: ColumnInfo; value: string }[];
+}
+
+export default function ColumnHelp({ info, evidences }: Props) {
   const id = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -58,7 +63,7 @@ export default function ColumnHelp({ info }: { info: ColumnInfo }) {
       window.removeEventListener("scroll", place, true);
       window.removeEventListener("keydown", dismiss);
     };
-  }, [open, info]);
+  }, [open, info, evidences]);
 
   return (
     <>
@@ -88,6 +93,16 @@ export default function ColumnHelp({ info }: { info: ColumnInfo }) {
             <strong>{info.readable_name}</strong>
             <p className="my-2 break-all font-mono text-xs text-slate-500">{info.column_name}</p>
             <p className="text-sm font-normal leading-relaxed">{info.meaning}</p>
+            {!!evidences?.length && (
+              <dl className="mt-3 space-y-2 text-sm font-normal">
+                {evidences.map(({ info: evidence, value }) => (
+                  <div key={evidence.column_name}>
+                    <dt className="font-medium">{evidence.readable_name}</dt>
+                    <dd className="whitespace-pre-wrap break-words">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
           </div>
         </div>,
         portalTarget ?? document.body,
