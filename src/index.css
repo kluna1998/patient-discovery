@@ -408,3 +408,7 @@
 .dictionary-table th:nth-child(10) { min-width: 300px; }
 .dictionary-table th:nth-child(5),
 .dictionary-table th:last-child { min-width: 100px; }
+
+.column-help-button.result-help-yes { color: #166534; background: #dcfce7; }
+.column-help-button.result-help-no { color: #991b1b; background: #fee2e2; }
+.column-help-button.result-help-unknown { color: #475569; background: #f1f5f9; }

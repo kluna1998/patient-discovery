@@ -36,7 +36,13 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
     };
   }, []);
   const knownColumns = new Set(dictionary.map((entry) => entry.column_name));
-  const displayValue = (name: string) => row[name]?.trim() ? row[name] : "Sin datos";
+  const booleanStatus = (name: string) => {
+    const value = row[name]?.trim();
+    return value === "1" ? "SÍ" : value === "0" ? "NO" : "Sin datos";
+  };
+  const displayValue = (info: ColumnInfo) => info.value_type === "boolean"
+    ? booleanStatus(info.column_name)
+    : row[info.column_name]?.trim() ? row[info.column_name] : "Sin datos";
   const [reason, setReason] = useState(decision?.reason ?? "");
   const [status, setStatus] = useState<ReviewDecision["status"]>(decision?.status ?? "accepted");
 
@@ -95,23 +101,27 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
             <section className="clinical-section" key={index} aria-labelledby={`clinical-section-${index}`}>
               <h3 id={`clinical-section-${index}`} className="clinical-section-title">{section.name}</h3>
               <dl className="patient-fields">
-                {section.fields.map(({ primary, evidences, units }) => (
+                {section.fields.map(({ primary, evidences, units }) => {
+                  const status = primary.value_type === "boolean" ? booleanStatus(primary.column_name) : undefined;
+                  return (
                   <div key={primary.column_name} className="patient-field">
                     <dt>
                       <span>{primary.readable_name}</span>
                       {knownColumns.has(primary.column_name) && (
                         <ColumnHelp
                           info={primary}
-                          evidences={evidences.map((info) => ({ info, value: displayValue(info.column_name) }))}
+                          status={status}
+                          evidences={evidences.map((info) => ({ info, value: displayValue(info) }))}
                         />
                       )}:
                     </dt>{" "}
                     <dd>
-                      {displayValue(primary.column_name)}
-                      {units && ` ${displayValue(units.column_name)}`}
+                      {displayValue(primary)}
+                      {units && ` ${displayValue(units)}`}
                     </dd>
                   </div>
-                ))}
+                  );
+                })}
               </dl>
             </section>
           ))}

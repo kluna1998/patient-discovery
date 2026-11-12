@@ -1,14 +1,17 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Info } from "lucide-react";
+import { CircleCheck, CircleX, CircleHelp, Info } from "lucide-react";
 import type { ColumnInfo } from "../services/columnDictionary";
 
 interface Props {
   info: ColumnInfo;
   evidences?: { info: ColumnInfo; value: string }[];
+  status?: "SÍ" | "NO" | "Sin datos";
 }
 
-export default function ColumnHelp({ info, evidences }: Props) {
+export default function ColumnHelp({ info, evidences, status }: Props) {
+  const Icon = status === "SÍ" ? CircleCheck : status === "NO" ? CircleX : status ? CircleHelp : Info;
+  const title = status ? info.criterio || info.readable_name : info.readable_name;
   const id = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -63,22 +66,22 @@ export default function ColumnHelp({ info, evidences }: Props) {
       window.removeEventListener("scroll", place, true);
       window.removeEventListener("keydown", dismiss);
     };
-  }, [open, info, evidences]);
+  }, [open, info, evidences, status]);
 
   return (
     <>
       <button
         ref={buttonRef}
         type="button"
-        aria-label={`Información sobre ${info.readable_name}`}
+        aria-label={`Información sobre ${title}${status ? `: ${status}` : ""}`}
         aria-describedby={open ? id : undefined}
         onMouseEnter={show}
         onMouseLeave={scheduleClose}
         onFocus={show}
         onBlur={scheduleClose}
         onClick={show}
-        className="column-help-button"
-      ><Info size={15} /></button>
+        className={`column-help-button${status ? ` result-help-${status === "SÍ" ? "yes" : status === "NO" ? "no" : "unknown"}` : ""}`}
+      ><Icon size={status ? 20 : 15} /></button>
       {open && createPortal(
         <div
           ref={tooltipRef}
@@ -90,9 +93,10 @@ export default function ColumnHelp({ info, evidences }: Props) {
           onMouseLeave={scheduleClose}
         >
           <div className="column-help-content">
-            <strong>{info.readable_name}</strong>
+            <strong>{title}</strong>
             <p className="my-2 break-all font-mono text-xs text-slate-500">{info.column_name}</p>
-            <p className="text-sm font-normal leading-relaxed">{info.meaning}</p>
+            <p className="text-sm font-normal leading-relaxed">{status ? info.explicacion || info.meaning : info.meaning}</p>
+            {status && <p className="mt-2 text-sm">Estado: {status}</p>}
             {!!evidences?.length && (
               <dl className="mt-3 space-y-2 text-sm font-normal">
                 {evidences.map(({ info: evidence, value }) => (
