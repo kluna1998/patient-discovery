@@ -42,12 +42,14 @@ function App() {
   }
 
   function handleSaveDecision(rowId: number, decision: ReviewDecision) {
-    if (decisions[rowId]) return;
+    setDecisions((previous) => {
+      const existing = previous[rowId];
+      if (existing?.status === decision.status && existing.reason === decision.reason) {
+        return previous;
+      }
 
-    setDecisions((previous) => ({
-      ...previous,
-      [rowId]: decision,
-    }));
+      return { ...previous, [rowId]: decision };
+    });
 
     setSelectedRowId(null);
   }
@@ -91,7 +93,6 @@ function App() {
     const originalIndex = visibleIndices[localIndex];
 
     if (originalIndex === undefined) return;
-    if (decisions[originalIndex]) return;
 
     setSelectedRowId(originalIndex);
   }
@@ -237,6 +238,7 @@ function App() {
         <DecisionDialog
           key={selectedRowId}
           rowId={selectedRowId}
+          decision={decisions[selectedRowId]}
           row={dataset.rows[selectedRowId]}
           columns={dataset.columns}
           dictionary={dictionary.entries}

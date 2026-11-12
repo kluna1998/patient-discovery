@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 import type { PatientRow } from "../types/patient";
 import type { ColumnInfo } from "../services/columnDictionary";
+import { reviewStatusLabels } from "../types/review";
 import type { ReviewDecision } from "../types/review";
 
 interface Props {
   rowId: number;
+  decision?: ReviewDecision;
   row: PatientRow;
   columns: string[];
   dictionary: ColumnInfo[];
@@ -13,7 +15,7 @@ interface Props {
   onClose: () => void;
 }
 
-export default function DecisionDialog({ rowId, row, columns, dictionary, onSave, onClose }: Props) {
+export default function DecisionDialog({ rowId, row, columns, dictionary, decision, onSave, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -32,7 +34,8 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, onSave
     };
   }, []);
   const columnInfo = new Map(dictionary.map((entry) => [entry.column_name, entry]));
-  const [reason, setReason] = useState("");
+  const [reason, setReason] = useState(decision?.reason ?? "");
+  const [status, setStatus] = useState<ReviewDecision["status"]>(decision?.status ?? "accepted");
 
   function handleSave(status: "accepted" | "rejected") {
     const cleanReason = reason.trim();
@@ -78,14 +81,17 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, onSave
         <header className="document-header">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="eyebrow mt-5">FICHA DE REVISIÓN</p>
+              <p className="eyebrow mt-5">{decision ? "MODIFICAR DECISIÓN" : "FICHA DE REVISIÓN"}</p>
               <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-slate-900">Registro #{rowId + 1}</h2>
             </div>
             <button type="button" onClick={onClose} className="btn min-h-8 p-2" aria-label="Cerrar revisión"><X size={16} /></button>
             </div>
           </header>
 
-        <section className="document-section" aria-labelledby="patient-data-title">
+        <p id="decision-description" className="px-6 text-sm text-slate-600">
+          {decision ? "Consulta la decisión registrada o modifica el estado y la justificación." : "Consulta los datos del paciente y registra tu decisión."}
+        </p>
+        <section className="document-section" aria-label="Datos del paciente">
           <dl className="patient-fields">
             {columns.map((name) => {
               const info = columnInfo.get(name);
@@ -106,6 +112,20 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, onSave
 
         <section className="document-section document-decision" aria-labelledby="patient-decision-title">
           <h3 id="patient-decision-title" className="text-lg font-semibold text-slate-900">Decisión de revisión</h3>
+          {decision && (
+            <>
+              <dl className="mt-4 space-y-3 text-sm text-slate-700">
+                <div><dt className="font-medium">Estado actual</dt><dd>{reviewStatusLabels[decision.status]}</dd></div>
+                <div><dt className="font-medium">Justificación registrada</dt><dd className="whitespace-pre-wrap break-words">{decision.reason}</dd></div>
+                <div><dt className="font-medium">Fecha de la última decisión</dt><dd><time dateTime={decision.reviewedAt}>{new Date(decision.reviewedAt).toLocaleString("es-ES")}</time></dd></div>
+              </dl>
+              <label htmlFor="decision-status" className="mt-5 block text-sm font-medium text-slate-700">Estado de la decisión</label>
+              <select id="decision-status" value={status} onChange={(event) => setStatus(event.target.value as ReviewDecision["status"])} className="text-input mt-2">
+                <option value="accepted">Aceptado</option>
+                <option value="rejected">Rechazado</option>
+              </select>
+            </>
+          )}
           <label htmlFor="decision-reason" className="mt-5 block text-sm font-medium text-slate-700">Motivo de la decisión</label>
           <textarea
             id="decision-reason"
@@ -119,10 +139,17 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, onSave
             className="text-input mt-2 resize-y"
           />
           <p id="reason-help" className="mt-1 text-xs text-slate-500">Obligatorio · {reason.length}/2000 caracteres</p>
-          <p className="mt-4 text-xs leading-relaxed text-slate-500">Al aceptar o rechazar se guardarán la decisión y el motivo. Las decisiones guardadas no se pueden modificar en esta sesión.</p>
+          <p className="mt-4 text-xs leading-relaxed text-slate-500">{decision ? "La fecha se actualizará únicamente si cambia el estado o la justificación." : "Al aceptar o rechazar se guardarán la decisión y el motivo."}</p>
           <div className="mt-6 flex flex-wrap justify-end gap-3">
-            <button type="button" onClick={() => handleSave("rejected")} disabled={!reason.trim()} className="btn border-red-700 bg-red-50 text-red-800 hover:bg-red-100"><X size={16} />Rechazar</button>
-            <button type="button" onClick={() => handleSave("accepted")} disabled={!reason.trim()} className="btn border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800"><Check size={16} />Aceptar</button>
+            <button type="button" onClick={onClose} className="btn">Cancelar</button>
+            {decision ? (
+              <button type="button" onClick={() => handleSave(status)} disabled={!reason.trim()} className="btn btn-primary">Guardar cambios</button>
+            ) : (
+              <>
+                <button type="button" onClick={() => handleSave("rejected")} disabled={!reason.trim()} className="btn border-red-700 bg-red-50 text-red-800 hover:bg-red-100"><X size={16} />Rechazar</button>
+                <button type="button" onClick={() => handleSave("accepted")} disabled={!reason.trim()} className="btn border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800"><Check size={16} />Aceptar</button>
+              </>
+            )}
           </div>
         </section>
       </article>

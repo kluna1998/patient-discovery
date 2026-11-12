@@ -95,11 +95,10 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
               <button
                 type="button"
                 onClick={() => onReview(rowId)}
-                disabled={Boolean(decision)}
-                aria-label={`Revisar registro ${rowId + 1}`}
+                aria-label={`${decision ? "Ver / Modificar" : "Revisar"} registro ${rowId + 1}`}
                 className="btn btn-primary min-h-8 px-3 py-1"
               >
-                Revisar
+                {decision ? "Ver / Modificar" : "Revisar"}
               </button>
             </div>
           );
