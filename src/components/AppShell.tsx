@@ -7,16 +7,27 @@ export default function AppShell({ children }: { children: ReactNode }) {
         Ir al contenido principal
       </a>
       <header className="topbar">
-        <div className="flex items-center gap-3">
-          {/*<span className="text-content-subtle">Patient Discovery</span>
-          <span className="text-footer-muted">/</span>*/}
-          <strong>Patient Discovery</strong>
+        <div className="topbar-brand">
+          <span className="topbar-clinic">
+            <img
+              src={`${import.meta.env.BASE_URL}clinic-barcelona-reference.jpg`}
+              alt="Clínic Barcelona"
+            />
+          </span>
+          <img
+            src={`${import.meta.env.BASE_URL}idibaps-logo.png`}
+            alt="IDIBAPS · Institut d’Investigacions Biomèdiques August Pi i Sunyer"
+            width={137}
+            height={52}
+            className="topbar-idibaps"
+          />
         </div>
-        <img
-          src={`${import.meta.env.BASE_URL}idibaps-logo.png`}
-          alt="IDIBAPS"
-          className="h-9 w-auto shrink-0 object-contain"
-        />
+        <a
+          className="btn topbar-collaborate"
+          href="https://www.clinicbarcelona.org/colabora/amics-del-clinic"
+        >
+          COLABORA
+        </a>
       </header>
       <main id="workspace" className="workspace" tabIndex={-1}>
         {children}

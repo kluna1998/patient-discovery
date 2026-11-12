@@ -3,25 +3,28 @@
 @theme {
   --font-sans: "Inter", "Segoe UI", Arial, sans-serif;
 
-  /* Marca, enlaces y foco */
-  --color-primary: #163f64;
-  --color-primary-hover: #123452;
+  /* Acciones, enlaces y foco */
+  --color-primary: #375171;
+  --color-primary-hover: #274361;
   --color-secondary: #2a7679;
-  --color-interactive: var(--color-blue-600);
+  --color-interactive: #375171;
   --color-info: var(--color-blue-800);
   --color-info-bg: var(--color-blue-50);
-  --color-focus: var(--color-secondary);
-  --color-focus-tab: var(--color-primary);
-  --color-selection: #d9ebee;
+  --color-focus: #375171;
+  --color-focus-tab: #375171;
+  --color-selection: #e3edf7;
+
+  /* Acento de marca */
+  --color-brand-accent: #85de75;
 
   /* Fondos y superficies */
-  --color-canvas: #f4f6f8;
+  --color-canvas: #f4f7fa;
   --color-surface: #ffffff;
   --color-surface-muted: var(--color-slate-50);
   --color-surface-hover: var(--color-slate-100);
-  --color-surface-accent: #edf4f6;
-  --color-table-header: #edf1f5;
-  --color-table-row-hover: #f3f8fa;
+  --color-surface-accent: #edf3f8;
+  --color-table-header: #e9eff5;
+  --color-table-row-hover: #f3f7fb;
   --color-progress-track: #e5ebef;
 
   /* Texto */
@@ -70,7 +73,7 @@
   --color-error-bg: var(--color-red-50);
 
   /* Pie de página y capas */
-  --color-footer: #17344d;
+  --color-footer: #274361;
   --color-footer-content: var(--color-slate-200);
   --color-footer-muted: var(--color-slate-300);
   --color-footer-line: var(--color-slate-700);
@@ -120,7 +123,31 @@
     min-height: 100dvh;
   }
   .topbar {
-    @apply flex min-h-16 items-center justify-between gap-3 border-b border-line bg-surface px-8 text-xs;
+    @apply flex min-h-20 items-center justify-between gap-3 border-b border-line bg-white px-4 py-3 sm:px-8;
+  }
+  .topbar-brand {
+    --topbar-logo-height: clamp(1.4rem, 5.5vw, 2.3rem);
+    @apply flex min-w-0 items-center gap-2 sm:gap-4;
+  }
+  .topbar-clinic {
+    @apply relative block shrink-0 overflow-hidden;
+    height: var(--topbar-logo-height);
+    aspect-ratio: 756 / 292;
+  }
+  .topbar-clinic img {
+    /* Show the Clínic portion of the supplied horizontal lockup. */
+    position: absolute;
+    width: 271%;
+    max-width: none;
+    left: -27%;
+    top: -43%;
+  }
+  .topbar-idibaps {
+    @apply box-content w-auto shrink-0 border-l-2 border-brand-accent pl-2 sm:pl-4;
+    height: var(--topbar-logo-height);
+  }
+  .topbar-collaborate.btn {
+    @apply shrink-0 border-review-rejected-action bg-review-rejected-action px-3 text-content-inverse hover:border-review-rejected hover:bg-review-rejected sm:px-4;
   }
   .workspace {
     @apply mx-auto w-full max-w-[1800px] flex-1 p-8;
