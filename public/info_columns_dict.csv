@@ -1,6 +1,7 @@
 ﻿column_name,readable_name,meaning,section,section_order,criterion_id,criterio,tipo,value_type,explicacion
 patient_ref,Referencia del paciente,Identificador del registro del paciente.,Demografía,3,,,Valor,text,
-age,Edad,"Edad en años cumplidos.",Demografía,3,adult_age,Edad del paciente,Valor,number,Comprueba si el paciente es mayor de edad.
+age,Edad,"Edad en años cumplidos.",Demografía,3,adult_age,Edad del paciente,Valor,number,Edad calculada a partir de la fecha de nacimiento y la fecha actual del navegador. En archivos antiguos sin fecha de nacimiento se conserva la edad importada.
+birth_date,Fecha de nacimiento,Fecha de nacimiento en formato YYYY-MM-DD.,Demografía,3,adult_age,Edad del paciente,Evidencia,date,
 lab_sap_ref,Código de la prueba de laboratorio,Código SAP utilizado para identificar o rastrear la prueba de laboratorio.,Laboratorio,4,high_lpa,Resultado de lipoproteína(a) [Lp(a)],Evidencia,text,
 lab_descr,Nombre de la prueba de laboratorio,Nombre del analito medido.,Laboratorio,4,high_lpa,Resultado de lipoproteína(a) [Lp(a)],Evidencia,text,
 ultima_lpa,Último valor de laboratorio registrado,"Resultado numérico de laboratorio.",Laboratorio,4,high_lpa,Resultado de lipoproteína(a) [Lp(a)],Valor,number,Valor de lipoproteína(a). Umbral usado es de >150 mg/dL.

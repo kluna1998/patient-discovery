@@ -1,5 +1,5 @@
 import { reviewStatusLabels } from "./types/review";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Download,
   ClipboardList,
@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import ColumnDictionaryEditor from "./components/ColumnDictionaryEditor";
 import { useColumnDictionary } from "./hooks/useColumnDictionary";
+import { useCurrentDate } from "./hooks/useCurrentDate";
 import AppShell from "./components/AppShell";
 
 import CsvUploader from "./components/CsvUploader";
@@ -17,6 +18,7 @@ import PatientTable from "./components/PatientTable";
 import DecisionDialog from "./components/DecisionDialog";
 
 import { exportReviewCsv } from "./services/exportService";
+import { withPatientAges } from "./services/patientAge";
 
 import type { CsvDataset } from "./types/patient";
 import type {
@@ -28,7 +30,12 @@ import type {
 function App() {
   const showDictionaryEditor = new URLSearchParams(window.location.search).get("debug") === "1";
   const dictionary = useColumnDictionary();
-  const [dataset, setDataset] = useState<CsvDataset | null>(null);
+  const [sourceDataset, setDataset] = useState<CsvDataset | null>(null);
+  const today = useCurrentDate();
+  const dataset = useMemo(
+    () => sourceDataset ? withPatientAges(sourceDataset, today) : null,
+    [sourceDataset, today],
+  );
   const [decisions, setDecisions] = useState<ReviewDecisions>({});
   const [activeTab, setActiveTab] = useState<ReviewStatus>("pending");
 
@@ -100,9 +107,9 @@ function App() {
   const reviewedCount = counts.accepted + counts.rejected;
 
   function handleExport() {
-    if (!dataset) return;
+    if (!sourceDataset) return;
 
-    exportReviewCsv(dataset, decisions);
+    exportReviewCsv(withPatientAges(sourceDataset), decisions);
   }
 
   return (
@@ -146,7 +153,7 @@ function App() {
                 {dataset.fileName}
               </p>
               <p className="mt-1 text-xs text-slate-500">
-                {dataset.rows.length} registros · {dataset.columns.length}{" "}
+                {dataset.rows.length} registros · {sourceDataset?.columns.length}{" "}
                 columnas originales
               </p>
             </div>
