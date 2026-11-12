@@ -35,6 +35,7 @@ interface Props {
   dataset: CsvDataset;
   dictionary: ColumnInfo[];
   decisions: ReviewDecisions;
+  originalRowIndices: number[];
   onReview: (rowId: number) => void;
 }
 
@@ -61,14 +62,19 @@ const features = tableFeatures({
   },
 });
 
-export default function PatientTable({ dataset, dictionary, decisions, onReview }: Props) {
+export default function PatientTable({ dataset, dictionary, decisions, originalRowIndices, onReview }: Props) {
   const columnInfo = useMemo(() => new Map(dictionary.map((entry) => [entry.column_name, entry])), [dictionary]);
-  const defaultVisibility = useMemo(() => Object.fromEntries(
-    dataset.columns.map((name) => {
+  const defaultVisibility = useMemo(() => {
+    const visible = new Set(dataset.columns.filter((name) => {
       const tipo = columnInfo.get(name)?.tipo;
-      return [name, tipo === "Valor" || tipo === "Unidades"];
-    }),
-  ), [dataset.columns, columnInfo]);
+      return name === "patient_ref" || tipo === "Valor" || tipo === "Unidades";
+    }));
+    if (visible.size === 0) {
+      for (const name of dataset.columns.slice(0, 3)) visible.add(name);
+    }
+
+    return Object.fromEntries(dataset.columns.map((name) => [name, visible.has(name)]));
+  }, [dataset.columns, columnInfo]);
   const [visibilityOverride, setVisibilityOverride] = useState<Record<string, boolean> | null>(null);
   // Generamos las columnas dinámicamente a partir del CSV.
   const columns = useMemo<ColumnDef<typeof features, PatientRow>[]>(
@@ -85,6 +91,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
           // Índice de la fila en el dataset recibido.
           const rowId = row.index;
           const decision = decisions[rowId];
+          const recordNumber = originalRowIndices[rowId] + 1;
 
           const StatusIcon = decision?.status === "accepted" ? Check : decision?.status === "rejected" ? X : Clock3;
           const buttonColor = decision?.status === "accepted"
@@ -97,7 +104,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
             <button
               type="button"
               onClick={() => onReview(rowId)}
-              aria-label={`${decision ? "Modificar" : "Revisar"} registro ${rowId + 1}`}
+              aria-label={`${decision ? "Modificar" : "Revisar"} registro #${recordNumber}`}
               className={`btn min-h-8 px-3 py-1 ${buttonColor}`}
             >
               <StatusIcon size={14} aria-hidden="true" />
@@ -143,7 +150,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
         },
       },
     ],
-    [dataset.columns, columnInfo, decisions, onReview],
+    [dataset.columns, columnInfo, decisions, originalRowIndices, onReview],
   );
 
   const table = useTable({

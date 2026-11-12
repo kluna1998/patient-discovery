@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Download,
   ClipboardList,
@@ -39,12 +39,56 @@ function App() {
   const [activeTab, setActiveTab] = useState<ReviewStatus>("pending");
 
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
+  const [incomingDataset, setIncomingDataset] = useState<CsvDataset | null>(null);
+  const [exportedDecisions, setExportedDecisions] = useState<ReviewDecisions | null>(null);
+  const [exportError, setExportError] = useState("");
+  const replacementDialog = useRef<HTMLDialogElement>(null);
+  const hasUnexportedDecisions =
+    decisions !== exportedDecisions && Object.keys(decisions).length > 0;
 
-  function handleLoad(newDataset: CsvDataset) {
+  useEffect(() => {
+    if (!hasUnexportedDecisions) return;
+
+    function warnBeforeLeaving(event: BeforeUnloadEvent) {
+      event.preventDefault();
+      event.returnValue = true;
+    }
+
+    window.addEventListener("beforeunload", warnBeforeLeaving);
+    return () => window.removeEventListener("beforeunload", warnBeforeLeaving);
+  }, [hasUnexportedDecisions]);
+
+  function replaceCohort(newDataset: CsvDataset) {
     setDataset(newDataset);
+    setIncomingDataset(null);
     setDecisions({});
+    setExportedDecisions(null);
+    setExportError("");
     setActiveTab("pending");
-    setSelectedRowId(null);
+  }
+
+  if (incomingDataset && selectedRowId === null && !hasUnexportedDecisions) {
+    replaceCohort(incomingDataset);
+  }
+
+  const confirmReplacement =
+    incomingDataset !== null && selectedRowId === null && hasUnexportedDecisions;
+
+  useEffect(() => {
+    if (!confirmReplacement) return;
+
+    const dialog = replacementDialog.current;
+    dialog?.showModal();
+    return () => dialog?.close();
+  }, [confirmReplacement]);
+
+  function discardReviewAndReplace() {
+    if (incomingDataset) replaceCohort(incomingDataset);
+  }
+
+  function cancelReplacement() {
+    setIncomingDataset(null);
+    setExportError("");
   }
 
   function handleSaveDecision(rowId: number, decision: ReviewDecision) {
@@ -108,7 +152,13 @@ function App() {
   function handleExport() {
     if (!sourceDataset) return;
 
-    exportReviewCsv(withPatientAges(sourceDataset), decisions);
+    try {
+      exportReviewCsv(withPatientAges(sourceDataset), decisions);
+      setExportedDecisions(decisions);
+      setExportError("");
+    } catch {
+      setExportError("No se ha podido iniciar la descarga. Intenta exportar de nuevo.");
+    }
   }
 
   return (
@@ -122,7 +172,7 @@ function App() {
           </p>
         </div>
         <div className="flex flex-wrap items-start gap-3">
-          {dataset && <CsvUploader onLoad={handleLoad} compact />}
+          {dataset && <CsvUploader onLoad={setIncomingDataset} compact />}
           <button
             type="button"
             onClick={handleExport}
@@ -137,7 +187,7 @@ function App() {
       {dictionary.loading && <p role="status">Cargando diccionario de columnas…</p>}
       {dictionary.error && <div role="alert" className="error-message my-3">{dictionary.error}<button type="button" className="btn" onClick={dictionary.retry}>Reintentar carga</button></div>}
       {showDictionaryEditor && !dictionary.loading && <ColumnDictionaryEditor entries={dictionary.entries} columns={dataset?.columns ?? []} onSave={dictionary.save} />}
-      {!dataset && <CsvUploader onLoad={handleLoad} />}
+      {!dataset && <CsvUploader onLoad={setIncomingDataset} />}
       {dataset && (
         <section className="panel progress-panel" aria-label="Progreso de revisión">
           <div className="flex min-w-0 items-center gap-3">
@@ -228,6 +278,7 @@ function App() {
               dataset={visibleDataset}
               dictionary={dictionary.entries}
               decisions={visibleDecisions}
+              originalRowIndices={visibleIndices}
               onReview={handleReview}
             />
           </div>
@@ -250,6 +301,44 @@ function App() {
           </div>
         </section>
       )}
+
+      {!confirmReplacement && exportError && (
+        <p role="alert" className="error-message mt-3">{exportError}</p>
+      )}
+
+      <dialog
+        ref={replacementDialog}
+        aria-labelledby="replace-cohort-title"
+        aria-describedby="replace-cohort-description"
+        className="decision-dialog"
+        onCancel={(event) => {
+          event.preventDefault();
+          cancelReplacement();
+        }}
+      >
+        <div className="p-5 sm:p-6">
+          <h2 id="replace-cohort-title" className="text-lg font-semibold text-content-strong">
+            ¿Sustituir la cohorte actual?
+          </h2>
+          <p id="replace-cohort-description" className="mt-2 text-sm text-content">
+            Hay decisiones sin exportar. Si cargas el nuevo CSV sin exportarlas, se perderán.
+          </p>
+          {confirmReplacement && exportError && (
+            <p role="alert" className="error-message mt-3">{exportError}</p>
+          )}
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button type="button" className="btn" autoFocus onClick={cancelReplacement}>
+              Volver a la revisión
+            </button>
+            <button type="button" className="btn btn-primary" onClick={handleExport}>
+              Exportar y cargar CSV
+            </button>
+            <button type="button" className="btn" onClick={discardReviewAndReplace}>
+              Cargar sin exportar
+            </button>
+          </div>
+        </div>
+      </dialog>
 
       {selectedRowId !== null && dataset && (
         <DecisionDialog
