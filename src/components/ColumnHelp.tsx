@@ -16,8 +16,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
   const explanation = info.explicacion?.trim();
   const meaning = info.meaning.trim();
   const statusLabel = status === "yes" ? "SÍ" : status === "no" ? "NO" : "Sin datos";
-  const normalize = (text: string) => text.replace(/\s+/g, " ").toLocaleLowerCase("es");
-  const showDefinition = meaning && (!explanation || normalize(meaning) !== normalize(explanation));
+  const showDefinition = meaning && !explanation;
   const id = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -116,7 +115,6 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
                 <p className="text-sm font-normal leading-relaxed">{info.meaning}</p>
               </>
             )}
-            {status && <p className="mt-2 text-sm">Estado: {statusLabel}</p>}
             {!!evidences?.length && (
               <div className="mt-3 text-sm font-normal">
                 <p className="mb-2 font-medium">Evidencias</p>
