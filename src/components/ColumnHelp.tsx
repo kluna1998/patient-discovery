@@ -6,12 +6,18 @@ import type { ColumnInfo } from "../services/columnDictionary";
 interface Props {
   info: ColumnInfo;
   evidences?: { info: ColumnInfo; value: string }[];
-  status?: "SÍ" | "NO" | "Sin datos";
+  status?: "yes" | "no" | "unknown";
+  variant?: "default" | "dialog";
 }
 
-export default function ColumnHelp({ info, evidences, status }: Props) {
-  const Icon = status === "SÍ" ? CircleCheck : status === "NO" ? CircleX : status ? CircleHelp : Info;
-  const title = status ? info.criterio || info.readable_name : info.readable_name;
+export default function ColumnHelp({ info, evidences, status, variant = "default" }: Props) {
+  const Icon = status === "yes" ? CircleCheck : status === "no" ? CircleX : status ? CircleHelp : Info;
+  const title = variant === "dialog" ? info.criterio?.trim() || info.readable_name : info.readable_name;
+  const explanation = info.explicacion?.trim();
+  const meaning = info.meaning.trim();
+  const statusLabel = status === "yes" ? "SÍ" : status === "no" ? "NO" : "Sin datos";
+  const normalize = (text: string) => text.replace(/\s+/g, " ").toLocaleLowerCase("es");
+  const showDefinition = meaning && (!explanation || normalize(meaning) !== normalize(explanation));
   const id = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
@@ -66,21 +72,21 @@ export default function ColumnHelp({ info, evidences, status }: Props) {
       window.removeEventListener("scroll", place, true);
       window.removeEventListener("keydown", dismiss);
     };
-  }, [open, info, evidences, status]);
+  }, [open, info, evidences, status, variant]);
 
   return (
     <>
       <button
         ref={buttonRef}
         type="button"
-        aria-label={`Información sobre ${title}${status ? `: ${status}` : ""}`}
+        aria-label={`Información sobre ${title}${status ? `: ${statusLabel}` : ""}`}
         aria-describedby={open ? id : undefined}
         onMouseEnter={show}
         onMouseLeave={scheduleClose}
         onFocus={show}
         onBlur={scheduleClose}
         onClick={show}
-        className={`column-help-button${status ? ` result-help-${status === "SÍ" ? "yes" : status === "NO" ? "no" : "unknown"}` : ""}`}
+        className={`column-help-button${status ? ` result-help-${status}` : ""}`}
       ><Icon size={status ? 20 : 15} /></button>
       {open && createPortal(
         <div
@@ -94,18 +100,35 @@ export default function ColumnHelp({ info, evidences, status }: Props) {
         >
           <div className="column-help-content">
             <strong>{title}</strong>
-            <p className="my-2 break-all font-mono text-xs text-slate-500">{info.column_name}</p>
-            <p className="text-sm font-normal leading-relaxed">{status ? info.explicacion || info.meaning : info.meaning}</p>
-            {status && <p className="mt-2 text-sm">Estado: {status}</p>}
+            {variant === "dialog" ? (
+              <>
+                {explanation && <p className="mt-2 text-sm font-normal leading-relaxed">{explanation}</p>}
+                {showDefinition && (
+                  <div className="mt-3 text-sm font-normal leading-relaxed">
+                    <p className="font-medium">Definición del dato</p>
+                    <p>{meaning}</p>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                <p className="my-2 break-all font-mono text-xs text-slate-500">{info.column_name}</p>
+                <p className="text-sm font-normal leading-relaxed">{info.meaning}</p>
+              </>
+            )}
+            {status && <p className="mt-2 text-sm">Estado: {statusLabel}</p>}
             {!!evidences?.length && (
-              <dl className="mt-3 space-y-2 text-sm font-normal">
+              <div className="mt-3 text-sm font-normal">
+                <p className="mb-2 font-medium">Evidencias</p>
+                <dl className="space-y-2">
                 {evidences.map(({ info: evidence, value }) => (
                   <div key={evidence.column_name}>
                     <dt className="font-medium">{evidence.readable_name}</dt>
                     <dd className="whitespace-pre-wrap break-words">{value}</dd>
                   </div>
                 ))}
-              </dl>
+                </dl>
+              </div>
             )}
           </div>
         </div>,

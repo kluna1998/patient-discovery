@@ -36,12 +36,14 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
     };
   }, []);
   const knownColumns = new Set(dictionary.map((entry) => entry.column_name));
-  const booleanStatus = (name: string) => {
-    const value = row[name]?.trim();
-    return value === "1" ? "SÍ" : value === "0" ? "NO" : "Sin datos";
+  const parseBooleanValue = (value: string | undefined) => {
+    if (value?.trim() === "1") return "yes";
+    if (value?.trim() === "0") return "no";
+    return "unknown";
   };
+  const booleanLabels = { yes: "SÍ", no: "NO", unknown: "Sin datos" };
   const displayValue = (info: ColumnInfo) => info.value_type === "boolean"
-    ? booleanStatus(info.column_name)
+    ? booleanLabels[parseBooleanValue(row[info.column_name])]
     : row[info.column_name]?.trim() ? row[info.column_name] : "Sin datos";
   const [reason, setReason] = useState(decision?.reason ?? "");
   const [status, setStatus] = useState<ReviewDecision["status"]>(decision?.status ?? "accepted");
@@ -102,24 +104,30 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
               <h3 id={`clinical-section-${index}`} className="clinical-section-title">{section.name}</h3>
               <dl className="patient-fields">
                 {section.fields.map(({ primary, evidences, units }) => {
-                  const status = primary.value_type === "boolean" ? booleanStatus(primary.column_name) : undefined;
+                  const status = primary.value_type === "boolean" ? parseBooleanValue(row[primary.column_name]) : undefined;
+                  const rawValue = row[primary.column_name]?.trim() ?? "";
+                  const unit = units ? row[units.column_name]?.trim() ?? "" : "";
+                  const displayedValue = displayValue(primary);
+                  const helper = knownColumns.has(primary.column_name) ? (
+                    <ColumnHelp
+                      info={primary}
+                      variant="dialog"
+                      status={status}
+                      evidences={evidences.map((info) => ({ info, value: displayValue(info) }))}
+                    />
+                  ) : null;
                   return (
-                  <div key={primary.column_name} className="patient-field">
-                    <dt>
-                      <span>{primary.readable_name}</span>
-                      {knownColumns.has(primary.column_name) && (
-                        <ColumnHelp
-                          info={primary}
-                          status={status}
-                          evidences={evidences.map((info) => ({ info, value: displayValue(info) }))}
-                        />
-                      )}:
-                    </dt>{" "}
-                    <dd>
-                      {displayValue(primary)}
-                      {units && ` ${displayValue(units)}`}
-                    </dd>
-                  </div>
+                    <div key={primary.column_name} className="patient-field">
+                      <dt>
+                        <span>{primary.readable_name}</span>
+                        {!status && helper}:
+                      </dt>{" "}
+                      <dd>
+                        {displayedValue}
+                        {rawValue && unit && (!status || status !== "unknown") ? ` ${unit}` : ""}
+                        {status && helper}
+                      </dd>
+                    </div>
                   );
                 })}
               </dl>
