@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { dictionaryStorageKey, parseDictionary, validateDictionary } from "../services/columnDictionary";
+import { parseDictionary, validateDictionary } from "../services/columnDictionary";
 import type { ColumnInfo } from "../services/columnDictionary";
 
 export function useColumnDictionary() {
@@ -13,25 +13,14 @@ export function useColumnDictionary() {
     async function load() {
       setLoading(true);
       setError("");
-      let warning = "";
       try {
-        try {
-          const saved = localStorage.getItem(dictionaryStorageKey);
-          if (saved !== null) {
-            const stored = validateDictionary(JSON.parse(saved));
-            if (!controller.signal.aborted) setEntries(stored);
-            return;
-          }
-        } catch {
-          warning = "No se pudo leer la copia local. Se ha cargado el diccionario del proyecto.";
-        }
-        const response = await fetch(`${import.meta.env.BASE_URL}info_columns_dict.csv`, { signal: controller.signal });
+        const response = await fetch(`${import.meta.env.BASE_URL}info_columns_dict.csv`, {
+          signal: controller.signal,
+          cache: "no-store",
+        });
         if (!response.ok) throw new Error("No se pudo cargar public/info_columns_dict.csv.");
         const initial = parseDictionary(await response.text());
-        if (!controller.signal.aborted) {
-          setEntries(initial);
-          setError(warning);
-        }
+        if (!controller.signal.aborted) setEntries(initial);
       } catch (cause) {
         if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : "No se pudo cargar el diccionario.");
       } finally {
@@ -43,14 +32,7 @@ export function useColumnDictionary() {
   }, [attempt]);
 
   function save(next: ColumnInfo[]) {
-    const clean = validateDictionary(next);
-    try {
-      localStorage.setItem(dictionaryStorageKey, JSON.stringify(clean));
-    } catch {
-      throw new Error("No se pudieron guardar los cambios en este navegador. Comprueba el espacio disponible y los permisos de almacenamiento.");
-    }
-    setEntries(clean);
-    setError("");
+    setEntries(validateDictionary(next));
   }
 
   return { entries, loading, error, save, retry: () => setAttempt((value) => value + 1) };

@@ -83,12 +83,13 @@ Si el archivo original ya contiene uno de estos nombres, se añade un sufijo (`_
 
 ## Qué se guarda y dónde
 
+El diccionario se gestiona editando `public/info_columns_dict.csv`: `column_name`, `readable_name`, `meaning`, `section` y `section_order`. Recarga la aplicación tras actualizar el archivo; en el sitio publicado es necesario publicar también el CSV actualizado. El editor provisional se activa con `?debug=1`: permite aplicar cambios durante la sesión y descargar el CSV. Al recargar se vuelve a cargar el archivo del proyecto; no hay guardado en el navegador ni versiones v1/v2. Las copias antiguas del navegador se ignoran y no se borran.
+
 | Información | Almacenamiento | ¿Se conserva al recargar? |
 | --- | --- | --- |
 | Cohorte cargada | Memoria de la pestaña | No. |
 | Decisiones y motivos | Memoria de la pestaña | No; exporta para conservarlos en un archivo. |
-| Cambios del diccionario guardados | `localStorage` del sitio en este navegador | Sí, mientras no se borre ese almacenamiento. |
-| Ediciones del diccionario sin guardar | Memoria de la pestaña | No. |
+| Diccionario de columnas | `public/info_columns_dict.csv` del proyecto | Se carga desde el CSV al abrir la aplicación. |
 | CSV descargados | Carpeta de descargas elegida por el navegador | Sí, como archivos independientes. |
 
 ## TODO · Mejoras pendientes
@@ -100,7 +101,7 @@ Las siguientes funcionalidades están pendientes; esta lista no describe capacid
 - [ ] **Consultar fichas ya revisadas:** abrir la información completa desde Aceptados y Rechazados, mostrando también la decisión guardada.
 - [ ] **Guardar y reanudar una revisión:** recuperar la cohorte y sus decisiones después de cerrar o recargar la aplicación.
 - [ ] **Importar revisiones exportadas:** reconocer sus estados, motivos y fechas y asociarlos al registro correcto.
-- [ ] **Avisar antes de perder trabajo:** confirmar la sustitución de una cohorte o la salida cuando haya decisiones sin exportar o ediciones del diccionario pendientes.
+- [ ] **Avisar antes de perder trabajo:** confirmar la sustitución de una cohorte o la salida cuando haya decisiones sin exportar.
 - [ ] **Conservar la vista de la tabla:** mantener búsqueda, ordenación y columnas seleccionadas al cambiar entre estados.
 - [ ] **Añadir filtros por columna y tipos de datos:** filtrar rangos y ordenar fechas y números según un tipo definido para cada campo.
 - [ ] **Organizar la ficha por secciones configurables:** agrupar los campos y definir su orden desde los metadatos del diccionario.

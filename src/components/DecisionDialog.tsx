@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
 import ColumnHelp from "./ColumnHelp";
 import type { PatientRow } from "../types/patient";
+import { groupColumnsBySection } from "../services/columnDictionary";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { reviewStatusLabels } from "../types/review";
 import type { ReviewDecision } from "../types/review";
@@ -91,21 +92,26 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
 
 
         <section className="document-section" aria-label="Datos del paciente">
-          <dl className="patient-fields">
-            {columns.map((name) => {
-              const info = columnInfo.get(name);
-              const value = row[name] ?? "";
-              return (
-                <div key={name} className="patient-field">
-                  <dt>
-                    <span>{info?.readable_name ?? name}</span>
-                    {info && <ColumnHelp info={info} />}:
-                  </dt>{" "}
-                  <dd>{value.trim() ? value : <span className="text-sm italic text-slate-400">Sin datos</span>}</dd>
-                </div>
-              );
-            })}
-          </dl>
+          {groupColumnsBySection(columns, dictionary).map((section, index) => (
+            <section className="clinical-section" key={index} aria-labelledby={`clinical-section-${index}`}>
+              <h3 id={`clinical-section-${index}`} className="clinical-section-title">{section.name}</h3>
+              <dl className="patient-fields">
+                {section.columns.map((name) => {
+                  const info = columnInfo.get(name);
+                  const value = row[name] ?? "";
+                  return (
+                    <div key={name} className="patient-field">
+                      <dt>
+                        <span>{info?.readable_name ?? name}</span>
+                        {info && <ColumnHelp info={info} />}:
+                      </dt>{" "}
+                      <dd>{value.trim() ? value : <span className="text-sm italic text-slate-400">Sin datos</span>}</dd>
+                    </div>
+                  );
+                })}
+              </dl>
+            </section>
+          ))}
         </section>
 
         <section className="document-section document-decision" aria-labelledby="patient-decision-title">

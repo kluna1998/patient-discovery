@@ -293,30 +293,6 @@
   background: #10283d80;
 }
 
-.dictionary-scroll {
-  max-height: 480px;
-  overflow: auto;
-}
-.dictionary-table {
-  width: 100%;
-  min-width: 850px;
-  text-align: left;
-}
-.dictionary-table th {
-  position: sticky;
-  top: 0;
-  background: #edf1f5;
-  padding: 10px;
-  z-index: 1;
-}
-.dictionary-table td {
-  padding: 8px;
-  vertical-align: top;
-  border-bottom: 1px solid #dfe5eb;
-}
-.dictionary-table th:nth-child(1) { width: 25%; }
-.dictionary-table th:nth-child(2) { width: 25%; }
-.dictionary-table th:nth-child(3) { width: 45%; }
 .column-help-button {
   flex-shrink: 0;
   color: #2a7679;
@@ -393,3 +369,42 @@
   .document-section { padding: 20px; }
   .patient-fields { grid-template-columns: minmax(0, 1fr); }
 }
+
+.clinical-section + .clinical-section {
+  margin-top: 32px;
+}
+.clinical-section-title {
+  margin-bottom: 14px;
+  color: #475569;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.dictionary-scroll {
+  max-height: 480px;
+  overflow: auto;
+}
+.dictionary-table {
+  width: 100%;
+  min-width: 1100px;
+  text-align: left;
+}
+.dictionary-table th {
+  position: sticky;
+  top: 0;
+  background: #edf1f5;
+  padding: 10px;
+  z-index: 1;
+}
+.dictionary-table td {
+  padding: 8px;
+  vertical-align: top;
+  border-bottom: 1px solid #dfe5eb;
+}
+.dictionary-table th:nth-child(1) { width: 20%; }
+.dictionary-table th:nth-child(2) { width: 20%; }
+.dictionary-table th:nth-child(3) { width: 30%; }
+.dictionary-table th:nth-child(4) { width: 18%; }
+.dictionary-table th:nth-child(5) { width: 12%; }
