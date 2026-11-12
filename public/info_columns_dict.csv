@@ -1,33 +1,33 @@
-﻿column_name,readable_name,meaning
-patient_ref,Patient reference,Patient record identifier. Treat as sensitive and use only in authorized systems.
-birth_date,Date of birth,Patient's date of birth; it can be used to calculate age for protocol criteria.
-lab_sap_ref,Laboratory test code,SAP code used to identify or trace the laboratory test.
-lab_descr,Laboratory test name,Name of the measured analyte; the current records say Apolipoproteina A1.
-ultima_lpa,Latest reported lab value,"Numeric laboratory result. Although the field name suggests Lp(a), verify the analyte against lab_descr before interpreting it."
-lpa_units,Laboratory value units,"Units recorded for the laboratory result, such as mg/dL."
-lpa_extrac_date,Sample collection date,Likely date and time the lab sample was collected; confirm this with the source system.
-lpa_result_date,Result reporting date,Likely date and time the laboratory result was reported; confirm this with the source system.
-fecha_ultima_lpa,Latest Lp(a) test date,Date associated with the latest Lp(a) test; confirm how it relates to the laboratory collection and result dates.
-tiene_visita_24m,Visit in the last 24 months,Indicator for whether a qualifying visit was recorded in the 24-month period; confirm the period's definition.
-fecha_ultima_visita_24m,Latest qualifying visit date,Date of the latest visit counted for the 24-month visit indicator.
-seguimiento_endocrino,Endocrinology follow-up recorded,Indicates recorded endocrinology follow-up; it does not by itself establish a diagnosis or active condition.
-fecha_ultima_visita_endocrino,Latest endocrinology visit date,Date of the most recent recorded endocrinology visit.
-seguimiento_cardio,Cardiology follow-up recorded,Indicates recorded cardiology follow-up; it does not by itself establish a diagnosis or active condition.
-fecha_ultima_visita_cardio,Latest cardiology visit date,Date of the most recent recorded cardiology visit.
-seguimiento_neuro,Neurology follow-up recorded,Indicates recorded neurology follow-up; it does not by itself establish a diagnosis or active condition.
-fecha_ultima_visita_neuro,Latest neurology visit date,Date of the most recent recorded neurology visit.
-seguimiento_cirugia_vascular,Vascular surgery follow-up recorded,Indicates recorded follow-up with vascular surgery; it does not by itself establish a diagnosis or active condition.
-fecha_ultima_visita_cirugia_vascular,Latest vascular surgery visit date,Date of the most recent recorded vascular surgery visit.
-fecha_ultima_visita_especialidad,Latest specialty visit date,Most recent date across the specialty visit(s) included by the source system; confirm which specialties count.
-tiene_especialidad_objetivo,Target specialty visit recorded,Indicates a visit with a designated target specialty; confirm which specialties are included.
-ecocardio_24m,Echocardiogram within 24 months,Likely indicates a recent echocardiogram; confirm the flag's exact time window and rule.
-fecha_ultimo_ecocardio,Latest echocardiogram date,Date of the most recent recorded echocardiogram; review the report for clinical details.
-angiotac_coronario_24m,Coronary CT angiography within 24 months,Likely indicates recent coronary CT angiography; confirm the flag's exact rule.
-fecha_ultimo_angiotac_coronario,Latest coronary CT angiography date,Date of the most recent recorded coronary CT angiography.
-ecografia_vascular_24m,Vascular ultrasound within 24 months,Likely indicates a recent vascular ultrasound; confirm the flag's exact rule.
-fecha_ultima_ecografia_vascular,Latest vascular ultrasound date,Date of the most recent recorded vascular ultrasound.
-cumple_imagen_24m,Imaging criterion within 24 months,Likely a combined recent-imaging indicator; the source-system rule should be documented before relying on it.
-tiene_ir_rx,IR/RX record recorded,Indicator for an IR/RX record or assessment. The acronym's meaning is unclear and should be confirmed with the source system.
-fecha_ultimo_ir_rx,Latest IR/RX record date,Date of the most recent IR/RX record; confirm what IR/RX means in the source system.
-tiene_ir_eco_atr,IR/eco_atr record recorded,Indicator for an IR/eco_atr record or assessment. Confirm the acronym and meaning with the source system.
-fecha_ultimo_ir_eco_atr,Latest IR/eco_atr record date,Date of the most recent IR/eco_atr record; confirm what the acronym means in the source system.
+﻿column_name,readable_name,meaning,section,section_order
+patient_ref,Referencia del paciente,Identificador del registro del paciente. Es un dato sensible y debe utilizarse solo en sistemas autorizados.,Demografía,3
+birth_date,Fecha de nacimiento,Fecha de nacimiento del paciente; permite calcular la edad para los criterios del protocolo.,Demografía,3
+lab_sap_ref,Código de la prueba de laboratorio,Código SAP utilizado para identificar o rastrear la prueba de laboratorio.,Laboratorio,4
+lab_descr,Nombre de la prueba de laboratorio,Nombre del analito medido; los registros actuales indican Apolipoproteína A1.,Laboratorio,4
+ultima_lpa,Último valor de laboratorio registrado,"Resultado numérico de laboratorio. Aunque el nombre del campo sugiere Lp(a), compruebe el analito en lab_descr antes de interpretarlo.",Laboratorio,4
+lpa_units,Unidades del valor de laboratorio,"Unidades registradas para el resultado de laboratorio, como mg/dL.",Laboratorio,4
+lpa_extrac_date,Fecha de extracción de la muestra,Posible fecha y hora de extracción de la muestra; debe confirmarse con el sistema de origen.,Laboratorio,4
+lpa_result_date,Fecha de emisión del resultado,Posible fecha y hora de emisión del resultado de laboratorio; debe confirmarse con el sistema de origen.,Laboratorio,4
+fecha_ultima_lpa,Fecha de la última prueba de Lp(a),Fecha asociada a la última prueba de Lp(a); confirme su relación con las fechas de extracción y emisión del resultado.,Laboratorio,4
+tiene_visita_24m,Visita en los últimos 24 meses,Indica si se registró una visita que cumple los criterios durante el período de 24 meses; confirme la definición del período.,Seguimiento,5
+fecha_ultima_visita_24m,Fecha de la última visita que cumple los criterios,Fecha de la última visita incluida en el indicador de visitas de los últimos 24 meses.,Seguimiento,5
+seguimiento_endocrino,Seguimiento en endocrinología registrado,Indica seguimiento registrado en endocrinología; por sí solo no establece un diagnóstico ni una enfermedad activa.,Seguimiento,5
+fecha_ultima_visita_endocrino,Fecha de la última visita de endocrinología,Fecha de la visita más reciente registrada en endocrinología.,Seguimiento,5
+seguimiento_cardio,Seguimiento en cardiología registrado,Indica seguimiento registrado en cardiología; por sí solo no establece un diagnóstico ni una enfermedad activa.,Seguimiento,5
+fecha_ultima_visita_cardio,Fecha de la última visita de cardiología,Fecha de la visita más reciente registrada en cardiología.,Seguimiento,5
+seguimiento_neuro,Seguimiento en neurología registrado,Indica seguimiento registrado en neurología; por sí solo no establece un diagnóstico ni una enfermedad activa.,Seguimiento,5
+fecha_ultima_visita_neuro,Fecha de la última visita de neurología,Fecha de la visita más reciente registrada en neurología.,Seguimiento,5
+seguimiento_cirugia_vascular,Seguimiento en cirugía vascular registrado,Indica seguimiento registrado en cirugía vascular; por sí solo no establece un diagnóstico ni una enfermedad activa.,Seguimiento,5
+fecha_ultima_visita_cirugia_vascular,Fecha de la última visita de cirugía vascular,Fecha de la visita más reciente registrada en cirugía vascular.,Seguimiento,5
+fecha_ultima_visita_especialidad,Fecha de la última visita de especialidad,Fecha más reciente entre las visitas de especialidad incluidas por el sistema de origen; confirme qué especialidades se contabilizan.,Seguimiento,5
+tiene_especialidad_objetivo,Visita en una especialidad objetivo registrada,Indica una visita en una especialidad objetivo; confirme qué especialidades se incluyen.,Seguimiento,5
+ecocardio_24m,Ecocardiograma en los últimos 24 meses,Posiblemente indica un ecocardiograma reciente; confirme el período exacto y la regla del indicador.,Pruebas de imagen,6
+fecha_ultimo_ecocardio,Fecha del último ecocardiograma,Fecha del ecocardiograma más reciente registrado; consulte el informe para conocer los detalles clínicos.,Pruebas de imagen,6
+angiotac_coronario_24m,Angio-TAC coronario en los últimos 24 meses,Posiblemente indica un angio-TAC coronario reciente; confirme la regla exacta del indicador.,Pruebas de imagen,6
+fecha_ultimo_angiotac_coronario,Fecha del último angio-TAC coronario,Fecha del angio-TAC coronario más reciente registrado.,Pruebas de imagen,6
+ecografia_vascular_24m,Ecografía vascular en los últimos 24 meses,Posiblemente indica una ecografía vascular reciente; confirme la regla exacta del indicador.,Pruebas de imagen,6
+fecha_ultima_ecografia_vascular,Fecha de la última ecografía vascular,Fecha de la ecografía vascular más reciente registrada.,Pruebas de imagen,6
+cumple_imagen_24m,Criterio de imagen en los últimos 24 meses,Posible indicador combinado de pruebas de imagen recientes; documente la regla del sistema de origen antes de utilizarlo.,Pruebas de imagen,6
+tiene_ir_rx,Registro de IR/RX,Indica un registro o una valoración de IR/RX. El significado de las siglas no está claro y debe confirmarse con el sistema de origen.,Otros registros,7
+fecha_ultimo_ir_rx,Fecha del último registro de IR/RX,Fecha del registro más reciente de IR/RX; confirme el significado de estas siglas en el sistema de origen.,Otros registros,7
+tiene_ir_eco_atr,Registro de IR/eco_atr,Indica un registro o una valoración de IR/eco_atr. Confirme las siglas y su significado con el sistema de origen.,Otros registros,7
+fecha_ultimo_ir_eco_atr,Fecha del último registro de IR/eco_atr,Fecha del registro más reciente de IR/eco_atr; confirme el significado de estas siglas en el sistema de origen.,Otros registros,7
