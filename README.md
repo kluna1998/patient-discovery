@@ -4,15 +4,6 @@ Aplicación web para consultar una cohorte de pacientes desde un CSV, revisar su
 
 **[Abrir la aplicación](https://kluna1998.github.io/patient-discovery/)** · **[Abrir con el editor del diccionario](https://kluna1998.github.io/patient-discovery/?debug=1)**
 
-## Índice
-
-- [Inicio rápido](#inicio-rápido)
-- [Consultar la tabla](#consultar-la-tabla)
-- [Revisar un paciente](#revisar-un-paciente)
-- [Exportar la revisión](#exportar-la-revisión)
-- [Qué se guarda y dónde](#qué-se-guarda-y-dónde)
-- [TODO · Mejoras pendientes](#todo--mejoras-pendientes)
-
 ## Inicio rápido
 
 1. Abre la aplicación y selecciona un CSV con los registros de la cohorte.
