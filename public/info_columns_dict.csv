@@ -1,6 +1,6 @@
 ﻿column_name,readable_name,meaning,section,section_order
 patient_ref,Referencia del paciente,Identificador del registro del paciente. Es un dato sensible y debe utilizarse solo en sistemas autorizados.,Demografía,3
-birth_date,Fecha de nacimiento,Fecha de nacimiento del paciente; permite calcular la edad para los criterios del protocolo.,Demografía,3
+age,Edad,"Edad en años cumplidos a la fecha de referencia (por defecto, 2026-11-05).",Demografía,3
 lab_sap_ref,Código de la prueba de laboratorio,Código SAP utilizado para identificar o rastrear la prueba de laboratorio.,Laboratorio,4
 lab_descr,Nombre de la prueba de laboratorio,Nombre del analito medido; los registros actuales indican Apolipoproteína A1.,Laboratorio,4
 ultima_lpa,Último valor de laboratorio registrado,"Resultado numérico de laboratorio. Aunque el nombre del campo sugiere Lp(a), compruebe el analito en lab_descr antes de interpretarlo.",Laboratorio,4
