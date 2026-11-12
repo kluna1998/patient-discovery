@@ -88,10 +88,10 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
 
           const StatusIcon = decision?.status === "accepted" ? Check : decision?.status === "rejected" ? X : Clock3;
           const buttonColor = decision?.status === "accepted"
-            ? "border-current bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+            ? "border-current bg-review-accepted-bg text-review-accepted hover:bg-review-accepted-hover"
             : decision?.status === "rejected"
-              ? "border-current bg-red-50 text-red-800 hover:bg-red-100"
-              : "border-current bg-amber-50 text-amber-800 hover:bg-amber-100";
+              ? "border-current bg-review-rejected-bg text-review-rejected hover:bg-review-rejected-hover"
+              : "border-current bg-review-pending-bg text-review-pending hover:bg-review-pending-hover";
 
           return (
             <button
@@ -135,7 +135,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
           return (
             <span
               title={decision?.reason ?? ""}
-              className="block max-w-80 truncate text-slate-600"
+              className="block max-w-80 truncate text-content-muted"
             >
               {decision?.reason ?? "—"}
             </span>
@@ -183,11 +183,11 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
     <section aria-label="Cohorte de pacientes">
       {/* Cabecera */}
       <div className="table-heading">
-        <h2 className="text-base font-semibold text-slate-800">
+        <h2 className="text-base font-semibold text-content-heading">
           Cohorte de pacientes
         </h2>
 
-        <p className="mt-1 text-sm text-slate-500">
+        <p className="mt-1 text-sm text-content-subtle">
           {dataset.fileName} · {dataset.rows.length} registros ·{" "}
           {dataset.columns.length} columnas originales
         </p>
@@ -199,7 +199,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
           <div className="w-full max-w-md">
             <label
               htmlFor="patient-search"
-              className="block text-xs font-medium text-slate-700"
+              className="block text-xs font-medium text-content"
             >
               Buscar registros
             </label>
@@ -243,13 +243,13 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
               .map((column) => (
                 <label
                   key={column.id}
-                  className="flex items-center gap-2 text-sm text-slate-600"
+                  className="flex items-center gap-2 text-sm text-content-muted"
                 >
                   <input
                     type="checkbox"
                     checked={column.getIsVisible()}
                     onChange={column.getToggleVisibilityHandler()}
-                    className="accent-blue-600"
+                    className="accent-interactive"
                   />
 
                   {columnInfo.get(column.id)?.readable_name ?? column.id}
@@ -295,11 +295,11 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
                           <button
                             type="button"
                             onClick={header.column.getToggleSortingHandler()}
-                            className="flex items-center gap-2 hover:text-blue-600"
+                            className="flex items-center gap-2 hover:text-interactive"
                           >
                             <table.FlexRender header={header} />
 
-                            <span className="text-slate-400">
+                            <span className="text-content-faint">
                               {sortDirection === "asc"
                                 ? "↑"
                                 : sortDirection === "desc"
@@ -333,7 +333,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
           </table>
 
           {table.getRowModel().rows.length === 0 && (
-            <p className="p-8 text-center text-slate-500">
+            <p className="p-8 text-center text-content-subtle">
               No se encontraron registros. Cambia el estado de revisión o
               restablece la búsqueda.
             </p>
@@ -342,7 +342,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
 
         {/* Paginación */}
         <div className="table-footer">
-          <p className="text-sm text-slate-500">
+          <p className="text-sm text-content-subtle">
             {filteredCount} registros encontrados
           </p>
 
@@ -356,7 +356,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
               <ChevronLeft size={14} /> Anterior
             </button>
 
-            <span className="text-sm text-slate-600">
+            <span className="text-sm text-content-muted">
               Página {table.state.pagination.pageIndex + 1} de{" "}
               {Math.max(totalPages, 1)}
             </span>

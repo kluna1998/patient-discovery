@@ -24,7 +24,7 @@ export default function ColumnDictionaryEditor({ entries, columns, onSave }: Pro
   return (
     <details className="panel my-5 p-5">
       <summary className="font-semibold text-primary"><BookOpen size={16} className="mr-2 inline" />Diccionario de columnas · {entries.length} definiciones</summary>
-      <p className="my-3 text-sm text-slate-600">Edita los títulos, las descripciones, las secciones, los criterios y los tipos de dato. Los cambios se aplican solo durante esta sesión y se pierden al recargar. Descarga el CSV y sustituye public/info_columns_dict.csv para conservarlos en el proyecto. Las filas de una misma sección deben compartir el mismo orden.</p>
+      <p className="my-3 text-sm text-content-muted">Edita los títulos, las descripciones, las secciones, los criterios y los tipos de dato. Los cambios se aplican solo durante esta sesión y se pierden al recargar. Descarga el CSV y sustituye public/info_columns_dict.csv para conservarlos en el proyecto. Las filas de una misma sección deben compartir el mismo orden.</p>
       <div className="mb-4 flex flex-wrap gap-2">
         <button type="button" className="btn" onClick={() => { setDraft([...rows, { column_name: "", readable_name: "", meaning: "", section: "", section_order: "", criterion_id: "", criterio: "", tipo: "", value_type: "", explicacion: "" }]); setMessage(""); }}><Plus size={14} />Añadir columna</button>
         <button type="button" className="btn" disabled={draft !== null} onClick={() => downloadDictionary(entries)}><Download size={14} />Descargar diccionario CSV</button>
@@ -75,7 +75,7 @@ export default function ColumnDictionaryEditor({ entries, columns, onSave }: Pro
           catch (cause) { setError(cause instanceof Error ? cause.message : "No se pudo guardar el diccionario."); }
         }}>Aplicar cambios</button>
         <button type="button" className="btn" onClick={() => { setDraft(null); setError(""); setMessage(""); }}>Descartar cambios</button>
-        <span className="self-center text-xs text-slate-500">Cambios pendientes de guardar</span>
+        <span className="self-center text-xs text-content-subtle">Cambios pendientes de guardar</span>
       </div>}
     </details>
   );

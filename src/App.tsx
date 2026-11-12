@@ -117,7 +117,7 @@ function App() {
         <div>
           <p className="eyebrow">PATIENT DISCOVERY</p>
           <h1>Revisión de cohorte</h1>
-          <p className="mt-2 text-sm text-slate-600">
+          <p className="mt-2 text-sm text-content-muted">
             Revisa los registros de la cohorte y documenta las decisiones sobre cada candidato.
           </p>
         </div>
@@ -146,12 +146,12 @@ function App() {
             </span>
             <div className="min-w-0">
               <p
-                className="truncate font-semibold text-slate-800"
+                className="truncate font-semibold text-content-heading"
                 title={dataset.fileName}
               >
                 {dataset.fileName}
               </p>
-              <p className="mt-1 text-xs text-slate-500">
+              <p className="mt-1 text-xs text-content-subtle">
                 {dataset.rows.length} registros · {sourceDataset?.columns.length}{" "}
                 columnas originales
               </p>
@@ -159,7 +159,7 @@ function App() {
           </div>
           <div className="progress-summary">
             <div className="mb-2 flex justify-between gap-6 text-xs">
-              <span className="font-medium text-slate-700">
+              <span className="font-medium text-content">
                 Progreso de revisión
               </span>
               <span>
@@ -218,7 +218,7 @@ function App() {
           </div>
           <div
             id="review-tab-panel"
-            className="panel overflow-hidden"
+            className="panel rounded-tl-none overflow-hidden"
             role="tabpanel"
             aria-labelledby={`review-tab-${activeTab}`}
             tabIndex={0}

@@ -8,8 +8,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
       </a>
       <header className="topbar">
         <div className="flex items-center gap-3">
-          {/*<span className="text-slate-500">Patient Discovery</span>
-          <span className="text-slate-300">/</span>*/}
+          {/*<span className="text-content-subtle">Patient Discovery</span>
+          <span className="text-footer-muted">/</span>*/}
           <strong>Patient Discovery</strong>
         </div>
         <img
@@ -24,13 +24,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <footer className="app-footer" aria-label="Contacto institucional">
         <div className="footer-contacts">
           <address>
-            <a className="font-semibold text-white" href="https://www.clinicbarcelona.org/ubicacion-y-contacto/investigacion">IDIBAPS</a>
+            <a className="font-semibold text-content-inverse" href="https://www.clinicbarcelona.org/ubicacion-y-contacto/investigacion">IDIBAPS</a>
             <span>C/ Mallorca, 183</span>
             <span>08036 Barcelona</span>
             <a href="tel:+34932275707">+34 93 227 57 07</a>
           </address>
           <address>
-            <a className="font-semibold text-white" href="https://www.clinicbarcelona.org/ubicacion-y-contacto/contacto-para-pacientes/hospital-clinic">Hospital Clínic de Barcelona</a>
+            <a className="font-semibold text-content-inverse" href="https://www.clinicbarcelona.org/ubicacion-y-contacto/contacto-para-pacientes/hospital-clinic">Hospital Clínic de Barcelona</a>
             <span>C/ Villarroel, 170</span>
             <span>08036 Barcelona</span>
             <a href="tel:+34932275400">+34 93 227 54 00</a>

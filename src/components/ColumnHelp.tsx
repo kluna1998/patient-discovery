@@ -111,7 +111,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
               </>
             ) : (
               <>
-                <p className="my-2 break-all font-mono text-xs text-slate-500">{info.column_name}</p>
+                <p className="my-2 break-all font-mono text-xs text-content-subtle">{info.column_name}</p>
                 <p className="text-sm font-normal leading-relaxed">{info.meaning}</p>
               </>
             )}

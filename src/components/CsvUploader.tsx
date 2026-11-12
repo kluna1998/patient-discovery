@@ -78,10 +78,10 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
           <Upload size={21} />
         </span>
         <div>
-          <h2 id="upload-title" className="font-semibold text-slate-900">
+          <h2 id="upload-title" className="font-semibold text-content-strong">
             Cargar resultados
           </h2>
-          <p id="upload-help" className="mt-1 text-sm text-slate-600">
+          <p id="upload-help" className="mt-1 text-sm text-content-muted">
             Selecciona un archivo CSV con los registros de la cohorte.
           </p>
         </div>
@@ -89,7 +89,7 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
       <div className="upload-control">
         <label
           htmlFor="cohort-file"
-          className="mb-2 block text-xs font-medium text-slate-600"
+          className="mb-2 block text-xs font-medium text-content-muted"
         >
           <FileUp size={14} className="mr-1 inline" /> Archivo de resultados ·
           CSV
@@ -113,7 +113,7 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
         aria-live="polite"
       >
         {loading && (
-          <p className="flex items-center gap-2 text-sm text-blue-800">
+          <p className="flex items-center gap-2 text-sm text-info">
             <LoaderCircle
               size={16}
               className="animate-spin motion-reduce:animate-none"

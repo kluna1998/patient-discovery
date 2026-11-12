@@ -91,7 +91,7 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="eyebrow mt-5">{decision ? "MODIFICAR DECISIÓN" : "FICHA DE REVISIÓN"}</p>
-              <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-slate-900">Registro #{rowId + 1}</h2>
+              <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
             </div>
             <button type="button" onClick={onClose} className="btn min-h-8 p-2" aria-label="Cerrar revisión"><X size={16} /></button>
             </div>
@@ -136,22 +136,22 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
         </section>
 
         <section className="document-section document-decision" aria-labelledby="patient-decision-title">
-          <h3 id="patient-decision-title" className="text-lg font-semibold text-slate-900">Decisión de revisión</h3>
+          <h3 id="patient-decision-title" className="text-lg font-semibold text-content-strong">Decisión de revisión</h3>
           {decision && (
             <>
-              <dl className="mt-4 space-y-3 text-sm text-slate-700">
+              <dl className="mt-4 space-y-3 text-sm text-content">
                 <div><dt className="font-medium">Estado actual</dt><dd>{reviewStatusLabels[decision.status]}</dd></div>
                 <div><dt className="font-medium">Justificación registrada</dt><dd className="whitespace-pre-wrap break-words">{decision.reason}</dd></div>
                 <div><dt className="font-medium">Fecha de la última decisión</dt><dd><time dateTime={decision.reviewedAt}>{new Date(decision.reviewedAt).toLocaleString("es-ES")}</time></dd></div>
               </dl>
-              <label htmlFor="decision-status" className="mt-5 block text-sm font-medium text-slate-700">Estado de la decisión</label>
+              <label htmlFor="decision-status" className="mt-5 block text-sm font-medium text-content">Estado de la decisión</label>
               <select id="decision-status" value={status} onChange={(event) => setStatus(event.target.value as ReviewDecision["status"])} className="text-input mt-2">
                 <option value="accepted">Aceptado</option>
                 <option value="rejected">Rechazado</option>
               </select>
             </>
           )}
-          <label htmlFor="decision-reason" className="mt-5 block text-sm font-medium text-slate-700">Motivo de la decisión</label>
+          <label htmlFor="decision-reason" className="mt-5 block text-sm font-medium text-content">Motivo de la decisión</label>
           <textarea
             id="decision-reason"
             value={reason}
@@ -162,16 +162,16 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
             placeholder="Escribe el motivo para aceptar o rechazar este candidato…"
             className="text-input mt-2 resize-y"
           />
-          <p id="reason-help" className="mt-1 text-xs text-slate-500">Opcional · {reason.length}/2000 caracteres</p>
-          <p className="mt-4 text-xs leading-relaxed text-slate-500">{decision ? "La fecha se actualizará únicamente si cambia el estado o la justificación." : "Al aceptar o rechazar se guardarán la decisión y el motivo."}</p>
+          <p id="reason-help" className="mt-1 text-xs text-content-subtle">Opcional · {reason.length}/2000 caracteres</p>
+          <p className="mt-4 text-xs leading-relaxed text-content-subtle">{decision ? "La fecha se actualizará únicamente si cambia el estado o la justificación." : "Al aceptar o rechazar se guardarán la decisión y el motivo."}</p>
           <div className="mt-6 flex flex-wrap justify-end gap-3">
             <button type="button" onClick={onClose} className="btn">Cancelar</button>
             {decision ? (
               <button type="button" onClick={() => handleSave(status)} className="btn btn-primary">Guardar cambios</button>
             ) : (
               <>
-                <button type="button" onClick={() => handleSave("rejected")}  className="btn border-red-700 bg-red-50 text-red-800 hover:bg-red-100"><X size={16} />Rechazar</button>
-                <button type="button" onClick={() => handleSave("accepted")} className="btn border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800"><Check size={16} />Aceptar</button>
+                <button type="button" onClick={() => handleSave("rejected")}  className="btn border-review-rejected-action bg-review-rejected-bg text-review-rejected hover:bg-review-rejected-hover"><X size={16} />Rechazar</button>
+                <button type="button" onClick={() => handleSave("accepted")} className="btn border-review-accepted-action bg-review-accepted-action text-content-inverse hover:bg-review-accepted"><Check size={16} />Aceptar</button>
               </>
             )}
           </div>

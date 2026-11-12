@@ -4,6 +4,8 @@ Aplicación web para consultar una cohorte de pacientes desde un CSV, revisar su
 
 **[Abrir la aplicación](https://kluna1998.github.io/patient-discovery/)** · **[Abrir con el editor del diccionario](https://kluna1998.github.io/patient-discovery/?debug=1)**
 
+La [guía de colores](docs/colors.md) incluye la paleta completa y ejemplos para personalizarla desde `src/index.css`.
+
 ## Inicio rápido
 
 1. Abre la aplicación y selecciona un CSV con los registros de la cohorte.
