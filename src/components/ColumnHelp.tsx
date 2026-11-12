@@ -86,7 +86,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
         onBlur={scheduleClose}
         onClick={show}
         className={`column-help-button${status ? ` result-help-${status}` : ""}`}
-      ><Icon size={status ? 20 : 15} /></button>
+      ><Icon size={status ? 16 : 15} /></button>
       {open && createPortal(
         <div
           ref={tooltipRef}

@@ -1,6 +1,6 @@
 import ColumnHelp from "./ColumnHelp";
 import type { ColumnInfo } from "../services/columnDictionary";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import {
   Search,
   RotateCcw,
@@ -63,6 +63,13 @@ const features = tableFeatures({
 
 export default function PatientTable({ dataset, dictionary, decisions, onReview }: Props) {
   const columnInfo = useMemo(() => new Map(dictionary.map((entry) => [entry.column_name, entry])), [dictionary]);
+  const defaultVisibility = useMemo(() => Object.fromEntries(
+    dataset.columns.map((name) => {
+      const tipo = columnInfo.get(name)?.tipo;
+      return [name, tipo === "Valor" || tipo === "Unidades"];
+    }),
+  ), [dataset.columns, columnInfo]);
+  const [visibilityOverride, setVisibilityOverride] = useState<Record<string, boolean> | null>(null);
   // Generamos las columnas dinámicamente a partir del CSV.
   const columns = useMemo<ColumnDef<typeof features, PatientRow>[]>(
     () => [
@@ -79,28 +86,23 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
           const rowId = row.index;
           const decision = decisions[rowId];
 
-          return (
-            <div className="flex items-center gap-3">
-              <span className={`review-badge ${decision?.status ?? "pending"}`}>
-                {decision?.status === "accepted" ? (
-                  <Check size={12} />
-                ) : decision?.status === "rejected" ? (
-                  <X size={12} />
-                ) : (
-                  <Clock3 size={12} />
-                )}
-                
-              </span>
+          const StatusIcon = decision?.status === "accepted" ? Check : decision?.status === "rejected" ? X : Clock3;
+          const buttonColor = decision?.status === "accepted"
+            ? "border-current bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+            : decision?.status === "rejected"
+              ? "border-current bg-red-50 text-red-800 hover:bg-red-100"
+              : "border-current bg-amber-50 text-amber-800 hover:bg-amber-100";
 
-              <button
-                type="button"
-                onClick={() => onReview(rowId)}
-                aria-label={`${decision ? "Ver / Modificar" : "Revisar"} registro ${rowId + 1}`}
-                className="btn btn-primary min-h-8 px-3 py-1"
-              >
-                {decision ? "Ver / Modificar" : "Revisar"}
-              </button>
-            </div>
+          return (
+            <button
+              type="button"
+              onClick={() => onReview(rowId)}
+              aria-label={`${decision ? "Modificar" : "Revisar"} registro ${rowId + 1}`}
+              className={`btn min-h-8 px-3 py-1 ${buttonColor}`}
+            >
+              <StatusIcon size={14} aria-hidden="true" />
+              {decision ? "Modificar" : "Revisar"}
+            </button>
           );
         },
       },
@@ -148,13 +150,18 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
     features,
     data: dataset.rows,
     columns,
+    // Follow dictionary loading until the user makes a manual selection.
+    state: { columnVisibility: visibilityOverride ?? defaultVisibility },
+    onColumnVisibilityChange: (updater) => {
+      setVisibilityOverride((previous) => typeof updater === "function"
+        ? updater(previous ?? defaultVisibility)
+        : updater);
+    },
 
     globalFilterFn: "includesString",
 
     initialState: {
-      columnVisibility: Object.fromEntries(
-        dataset.columns.map((name, index) => [name, index < 5]),
-      ),
+      columnVisibility: defaultVisibility,
       pagination: {
         pageIndex: 0,
         pageSize: 10,
@@ -165,7 +172,7 @@ export default function PatientTable({ dataset, dictionary, decisions, onReview 
   function resetView() {
     table.resetGlobalFilter(true);
     table.resetSorting(true);
-    table.resetColumnVisibility();
+    setVisibilityOverride(null);
     table.setPageIndex(0);
   }
 

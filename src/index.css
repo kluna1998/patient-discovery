@@ -297,7 +297,7 @@
   flex-shrink: 0;
   color: #2a7679;
   border-radius: 50%;
-  padding: 3px;
+  padding: 0px;
 }
 .column-help-tooltip {
   position: fixed;
