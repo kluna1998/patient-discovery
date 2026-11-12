@@ -42,8 +42,6 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
   function handleSave(status: "accepted" | "rejected") {
     const cleanReason = reason.trim();
 
-    if (!cleanReason) return;
-
     onSave(rowId, {
       status,
       reason: cleanReason,
@@ -135,23 +133,22 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
             id="decision-reason"
             value={reason}
             onChange={(event) => setReason(event.target.value)}
-            required
             aria-describedby="reason-help"
             rows={4}
             maxLength={2000}
             placeholder="Escribe el motivo para aceptar o rechazar este candidato…"
             className="text-input mt-2 resize-y"
           />
-          <p id="reason-help" className="mt-1 text-xs text-slate-500">Obligatorio · {reason.length}/2000 caracteres</p>
+          <p id="reason-help" className="mt-1 text-xs text-slate-500">Opcional · {reason.length}/2000 caracteres</p>
           <p className="mt-4 text-xs leading-relaxed text-slate-500">{decision ? "La fecha se actualizará únicamente si cambia el estado o la justificación." : "Al aceptar o rechazar se guardarán la decisión y el motivo."}</p>
           <div className="mt-6 flex flex-wrap justify-end gap-3">
             <button type="button" onClick={onClose} className="btn">Cancelar</button>
             {decision ? (
-              <button type="button" onClick={() => handleSave(status)} disabled={!reason.trim()} className="btn btn-primary">Guardar cambios</button>
+              <button type="button" onClick={() => handleSave(status)} className="btn btn-primary">Guardar cambios</button>
             ) : (
               <>
-                <button type="button" onClick={() => handleSave("rejected")} disabled={!reason.trim()} className="btn border-red-700 bg-red-50 text-red-800 hover:bg-red-100"><X size={16} />Rechazar</button>
-                <button type="button" onClick={() => handleSave("accepted")} disabled={!reason.trim()} className="btn border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800"><Check size={16} />Aceptar</button>
+                <button type="button" onClick={() => handleSave("rejected")}  className="btn border-red-700 bg-red-50 text-red-800 hover:bg-red-100"><X size={16} />Rechazar</button>
+                <button type="button" onClick={() => handleSave("accepted")} className="btn border-emerald-700 bg-emerald-700 text-white hover:bg-emerald-800"><Check size={16} />Aceptar</button>
               </>
             )}
           </div>
