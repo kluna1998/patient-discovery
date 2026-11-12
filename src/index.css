@@ -358,14 +358,31 @@
 .patient-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: 0px;
-  border-top: 1px solid #dfe5eb;
+  gap: 12px 32px;
+  margin: 0;
 }
 .patient-field {
   min-width: 0;
-  padding: 24px 16px;
-  border-bottom: 1px solid #dfe5eb;
+  line-height: 1.65;
   overflow-wrap: anywhere;
+}
+.patient-field dt,
+.patient-field dd {
+  display: inline;
+}
+.patient-field dt {
+  font-weight: 600;
+  color: #1e293b;
+}
+.patient-field dd {
+  margin: 0;
+  color: #0f172a;
+  white-space: pre-wrap;
+}
+.patient-field .column-help-button {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-inline-start: 4px;
 }
 .document-decision {
   border-top: 1px solid #dfe5eb;
@@ -375,5 +392,4 @@
   .document-header,
   .document-section { padding: 20px; }
   .patient-fields { grid-template-columns: minmax(0, 1fr); }
-  .patient-field { padding-inline: 0; }
 }

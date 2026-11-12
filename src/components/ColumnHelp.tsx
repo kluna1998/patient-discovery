@@ -9,6 +9,7 @@ export default function ColumnHelp({ info }: { info: ColumnInfo }) {
   const tooltipRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [open, setOpen] = useState(false);
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const [position, setPosition] = useState({ left: 0, top: 0 });
 
   function cancelClose() {
@@ -17,6 +18,8 @@ export default function ColumnHelp({ info }: { info: ColumnInfo }) {
 
   function show() {
     cancelClose();
+    // Keep modal tooltips in the dialog's top layer.
+    setPortalTarget(buttonRef.current?.closest("dialog") ?? document.body);
     setOpen(true);
   }
 
@@ -87,7 +90,7 @@ export default function ColumnHelp({ info }: { info: ColumnInfo }) {
             <p className="text-sm font-normal leading-relaxed">{info.meaning}</p>
           </div>
         </div>,
-        document.body,
+        portalTarget ?? document.body,
       )}
     </>
   );

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, X } from "lucide-react";
+import ColumnHelp from "./ColumnHelp";
 import type { PatientRow } from "../types/patient";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { reviewStatusLabels } from "../types/review";
@@ -88,9 +89,7 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
             </div>
           </header>
 
-        <p id="decision-description" className="px-6 text-sm text-slate-600">
-          {decision ? "Consulta la decisión registrada o modifica el estado y la justificación." : "Consulta los datos del paciente y registra tu decisión."}
-        </p>
+
         <section className="document-section" aria-label="Datos del paciente">
           <dl className="patient-fields">
             {columns.map((name) => {
@@ -99,11 +98,10 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
               return (
                 <div key={name} className="patient-field">
                   <dt>
-                    <span className="block font-semibold text-slate-800">{info?.readable_name ?? name}</span>
-                    {/*info && <span className="mt-1 block break-all font-mono text-[11px] text-slate-500">{name}</span>*/}
-                  </dt>
-                  <dd className="mt-3 whitespace-pre-wrap break-words text-base text-slate-900">{value.trim() ? value : <span className="text-sm italic text-slate-400">Sin datos</span>}</dd>
-                  {info?.meaning && <dd className="mt-2 text-xs leading-relaxed text-slate-500">{info.meaning}</dd>}
+                    <span>{info?.readable_name ?? name}</span>
+                    {info && <ColumnHelp info={info} />}:
+                  </dt>{" "}
+                  <dd>{value.trim() ? value : <span className="text-sm italic text-slate-400">Sin datos</span>}</dd>
                 </div>
               );
             })}
