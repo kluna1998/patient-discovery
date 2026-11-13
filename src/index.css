@@ -15,7 +15,8 @@
   --color-selection: #e3edf7;
 
   /* Acento de marca */
-  --color-brand-accent: #85de75;
+  --color-brand-accent: #8eca74;
+  --color-brand-accent-hover: #7cba62;
 
   /* Fondos y superficies */
   --color-canvas: #f4f7fa;
@@ -65,8 +66,8 @@
   /* Indicadores booleanos y errores */
   --color-indicator-yes: #166534;
   --color-indicator-yes-bg: #dcfce7;
-  --color-indicator-no: #991b1b;
-  --color-indicator-no-bg: #fee2e2;
+  --color-indicator-no: #92400e;
+  --color-indicator-no-bg: #fef3c7;
   --color-indicator-unknown: #475569;
   --color-indicator-unknown-bg: #f1f5f9;
   --color-error: var(--color-red-800);
@@ -126,28 +127,17 @@
     @apply flex min-h-20 items-center justify-between gap-3 border-b border-line bg-white px-4 py-3 sm:px-8;
   }
   .topbar-brand {
-    --topbar-logo-height: clamp(1.4rem, 5.5vw, 2.3rem);
-    @apply flex min-w-0 items-center gap-2 sm:gap-4;
+    @apply flex min-w-0 items-center;
   }
-  .topbar-clinic {
-    @apply relative block shrink-0 overflow-hidden;
-    height: var(--topbar-logo-height);
-    aspect-ratio: 756 / 292;
-  }
-  .topbar-clinic img {
-    /* Show the Clínic portion of the supplied horizontal lockup. */
-    position: absolute;
-    width: 271%;
-    max-width: none;
-    left: -27%;
-    top: -43%;
-  }
-  .topbar-idibaps {
-    @apply box-content w-auto shrink-0 border-l-2 border-brand-accent pl-2 sm:pl-4;
-    height: var(--topbar-logo-height);
+  .topbar-logo {
+    display: block;
+    width: auto;
+    height: clamp(2.5rem, 8vw, 3.25rem);
+    max-width: 100%;
+    object-fit: contain;
   }
   .topbar-collaborate.btn {
-    @apply shrink-0 border-review-rejected-action bg-review-rejected-action px-3 text-content-inverse hover:border-review-rejected hover:bg-review-rejected sm:px-4;
+    @apply shrink-0 border-brand-accent bg-brand-accent px-3 text-content-strong hover:border-brand-accent-hover hover:bg-brand-accent-hover sm:px-4;
   }
   .workspace {
     @apply mx-auto w-full max-w-[1800px] flex-1 p-8;
@@ -393,6 +383,9 @@
 .decision-dialog::backdrop {
   background: var(--color-backdrop);
 }
+.protocol-dialog {
+  width: min(720px, calc(100vw - 32px));
+}
 
 .column-help-button {
   flex-shrink: 0;
@@ -511,5 +504,6 @@
 .dictionary-table th:last-child { min-width: 100px; }
 
 .column-help-button.result-help-yes { color: var(--color-indicator-yes); background: var(--color-indicator-yes-bg); }
-.column-help-button.result-help-no { color: var(--color-indicator-no); background: var(--color-indicator-no-bg); }
+.column-help-button.result-help-no { color: var(--color-indicator-no); background: transparent; }
+.column-help-button.result-help-no svg { fill: var(--color-indicator-no-bg); }
 .column-help-button.result-help-unknown { color: var(--color-indicator-unknown); background: var(--color-indicator-unknown-bg); }

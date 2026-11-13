@@ -1,0 +1,21 @@
+CASOS ÍNDICE
+• Edad entre 30 y 70 años.
+• Registro de al menos dos visitas de seguimiento durante los últimos 18 meses.
+• Disponibilidad de una evaluación inicial y un cuestionario de hábitos de vida completos.
+• Aceptación voluntaria de la participación en este estudio ficticio.
+
+FAMILIARES DE PRIMER GRADO
+• Ser familiar de primer grado de un caso índice de la cohorte de demostración.
+• Tener 18 años o más.
+• Disponer de un registro individual y un cuestionario inicial completo.
+
+CRITERIOS DE EXCLUSIÓN
+• Registro duplicado dentro de la cohorte.
+• Ausencia de los datos mínimos necesarios para verificar la inclusión.
+• Participación simultánea en otro grupo de esta misma simulación.
+• Solicitud de retirada de la cohorte de demostración.
+
+REVISIÓN DE CANDIDATOS
+• Los registros con información incompleta quedarán pendientes de revisión.
+• Cada decisión deberá documentarse con una breve justificación.
+• Estos criterios se utilizan exclusivamente para demostrar el flujo de revisión y exportación.

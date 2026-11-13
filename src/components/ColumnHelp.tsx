@@ -1,6 +1,6 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { CircleCheck, CircleX, CircleHelp, Info } from "lucide-react";
+import { CircleCheck, TriangleAlert, CircleHelp, Info } from "lucide-react";
 import type { ColumnInfo } from "../services/columnDictionary";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function ColumnHelp({ info, evidences, status, variant = "default" }: Props) {
-  const Icon = status === "yes" ? CircleCheck : status === "no" ? CircleX : status ? CircleHelp : Info;
+  const Icon = status === "yes" ? CircleCheck : status === "no" ? TriangleAlert : status ? CircleHelp : Info;
   const title = variant === "dialog" ? info.criterio?.trim() || info.readable_name : info.readable_name;
   const explanation = info.explicacion?.trim();
   const meaning = info.meaning.trim();

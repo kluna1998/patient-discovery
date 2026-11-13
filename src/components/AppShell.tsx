@@ -8,18 +8,12 @@ export default function AppShell({ children }: { children: ReactNode }) {
       </a>
       <header className="topbar">
         <div className="topbar-brand">
-          <span className="topbar-clinic">
-            <img
-              src={`${import.meta.env.BASE_URL}clinic-barcelona-reference.jpg`}
-              alt="Clínic Barcelona"
-            />
-          </span>
           <img
-            src={`${import.meta.env.BASE_URL}idibaps-logo.png`}
-            alt="IDIBAPS · Institut d’Investigacions Biomèdiques August Pi i Sunyer"
-            width={137}
-            height={52}
-            className="topbar-idibaps"
+            src={`${import.meta.env.BASE_URL}clinic_logo.svg`}
+            alt="Clínic Barcelona"
+            width={332}
+            height={142}
+            className="topbar-logo"
           />
         </div>
         <a

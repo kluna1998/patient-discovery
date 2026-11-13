@@ -11,6 +11,7 @@ import ColumnDictionaryEditor from "./components/ColumnDictionaryEditor";
 import { useColumnDictionary } from "./hooks/useColumnDictionary";
 import { useCurrentDate } from "./hooks/useCurrentDate";
 import AppShell from "./components/AppShell";
+import ProtocolButton from "./components/ProtocolButton";
 
 import CsvUploader from "./components/CsvUploader";
 import PatientTable from "./components/PatientTable";
@@ -172,6 +173,7 @@ function App() {
           </p>
         </div>
         <div className="flex flex-wrap items-start gap-3">
+          <ProtocolButton />
           {dataset && <CsvUploader onLoad={setIncomingDataset} compact />}
           <button
             type="button"

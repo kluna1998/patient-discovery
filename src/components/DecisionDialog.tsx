@@ -41,7 +41,7 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
     if (value?.trim() === "0") return "no";
     return "unknown";
   };
-  const booleanLabels = { yes: "SÍ", no: "NO", unknown: "Sin datos" };
+  const booleanLabels = { yes: "Sí", no: "Revisar", unknown: "Sin datos" };
   const displayValue = (info: ColumnInfo) => info.value_type === "boolean"
     ? booleanLabels[parseBooleanValue(row[info.column_name])]
     : row[info.column_name]?.trim() ? row[info.column_name] : "Sin datos";
