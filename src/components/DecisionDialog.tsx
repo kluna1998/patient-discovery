@@ -162,7 +162,6 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
             className="text-input mt-2 resize-y"
           />
           <p id="reason-help" className="mt-1 text-xs text-content-subtle">Opcional · {reason.length}/2000 caracteres</p>
-          <p className="mt-4 text-xs leading-relaxed text-content-subtle">{decision ? "La fecha se actualizará únicamente si cambia el estado o la justificación." : "Al aceptar o rechazar se guardarán la decisión y el motivo."}</p>
           <div className="mt-6 flex flex-wrap justify-end gap-3">
             <button type="button" onClick={onClose} className="btn">Cancelar</button>
             {decision ? (
