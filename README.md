@@ -15,17 +15,3 @@ La [guía de colores](docs/colors.md) incluye la paleta completa y ejemplos para
 5. Repite el proceso y pulsa **Exportar revisión en CSV** para descargar el resultado. Puedes exportar aunque queden registros pendientes.
 
 **Antes de recargar, cerrar la pestaña o cargar otra cohorte, exporta la revisión.** Los registros y las decisiones de la sesión se mantienen en memoria y se pierden al hacerlo. El archivo exportado permite conservar los resultados, pero todavía no permite reanudar automáticamente una revisión en la aplicación.
-
-```mermaid
-flowchart TD
-    A[Cargar CSV de la cohorte] --> B[Consultar pendientes]
-    B --> C[Abrir ficha con Revisar]
-    C --> D[Leer todos los campos y escribir el motivo]
-    D --> E{Decisión}
-    E -->|Aceptar| F[Registro aceptado]
-    E -->|Rechazar| G[Registro rechazado]
-    C -->|Cerrar sin guardar| B
-    F --> B
-    G --> B
-    B --> H[Exportar revisión en CSV]
-```
