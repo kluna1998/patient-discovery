@@ -136,7 +136,6 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
         </section>
 
         <section className="document-section document-decision" aria-labelledby="patient-decision-title">
-          <h3 id="patient-decision-title" className="text-lg font-semibold text-content-strong">Decisión de revisión</h3>
           {decision && (
             <>
               <dl className="mt-4 space-y-3 text-sm text-content">
