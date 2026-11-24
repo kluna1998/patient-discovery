@@ -48,12 +48,25 @@ async function loadIndex(): Promise<DocumentIndex> {
   return index;
 }
 
-export async function getClinicalDocuments(patientId: string) {
+function getIndex() {
   indexRequest ??= loadIndex().catch((error: unknown) => {
     indexRequest = undefined;
     throw error;
   });
-  return (await indexRequest).get(patientId) ?? [];
+  return indexRequest;
+}
+
+export async function getClinicalDocuments(patientId: string) {
+  return (await getIndex()).get(patientId) ?? [];
+}
+
+export interface ClinicalDocumentsPatient {
+  patientId: string;
+  documents: readonly ClinicalDocument[];
+}
+
+export async function listClinicalDocumentsPatients(): Promise<ClinicalDocumentsPatient[]> {
+  return Array.from(await getIndex(), ([patientId, documents]) => ({ patientId, documents }));
 }
 
 export async function getClinicalDocumentText(path: string, signal: AbortSignal) {

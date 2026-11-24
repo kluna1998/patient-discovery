@@ -8,10 +8,11 @@ import type { ClinicalDocument } from "../services/clinicalDocuments";
 interface Props {
   document: ClinicalDocument;
   onClose: () => void;
-  onShowList: () => void;
+  onShowList?: () => void;
+  closeLabel?: string;
 }
 
-export default function DocumentViewer({ document, onClose, onShowList }: Props) {
+export default function DocumentViewer({ document, onClose, onShowList, closeLabel }: Props) {
   const [text, setText] = useState<string>();
   const [error, setError] = useState(false);
   const { query, changeQuery, matches, activeIndex, navigate } = useDocumentSearch(text ?? "");
@@ -59,11 +60,18 @@ export default function DocumentViewer({ document, onClose, onShowList }: Props)
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
-          <button type="button" className="btn btn-ghost min-h-8 px-3 py-1 lg:hidden" onClick={onShowList}>
-            Ver lista
-          </button>
-          <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Cerrar visor" onClick={onClose}>
-            <X size={16} aria-hidden="true" />
+          {onShowList && (
+            <button type="button" className="btn btn-ghost min-h-8 px-3 py-1 lg:hidden" onClick={onShowList}>
+              Ver lista
+            </button>
+          )}
+          <button
+            type="button"
+            className={closeLabel ? "btn btn-ghost min-h-8 px-3 py-1" : "btn btn-ghost size-8 min-h-8 p-0"}
+            aria-label={closeLabel ?? "Cerrar visor"}
+            onClick={onClose}
+          >
+            {closeLabel ?? <X size={16} aria-hidden="true" />}
           </button>
         </div>
       </header>

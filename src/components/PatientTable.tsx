@@ -1,4 +1,5 @@
 import ColumnHelp from "./ColumnHelp";
+import ClinicalDocumentsExplorer from "./ClinicalDocumentsExplorer";
 import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { useMemo, useState } from "react";
@@ -277,6 +278,10 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
               ))}
           </div>
         </details>
+
+        <div className="border-b border-line px-4 py-3">
+          <ClinicalDocumentsExplorer />
+        </div>
 
         {/* Tabla */}
         <div
