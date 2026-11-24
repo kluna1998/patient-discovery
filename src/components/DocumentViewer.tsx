@@ -1,5 +1,7 @@
-import { FileText, Search, X } from "lucide-react";
-import { Fragment, useEffect, useState } from "react";
+import DocumentSearchToolbar from "./DocumentSearchToolbar";
+import { useDocumentSearch } from "../hooks/useDocumentSearch";
+import { FileText, X } from "lucide-react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { getClinicalDocumentText } from "../services/clinicalDocuments";
 import type { ClinicalDocument } from "../services/clinicalDocuments";
 
@@ -12,7 +14,10 @@ interface Props {
 export default function DocumentViewer({ document, onClose, onShowList }: Props) {
   const [text, setText] = useState<string>();
   const [error, setError] = useState(false);
-  const [query, setQuery] = useState("");
+  const { query, changeQuery, matches, activeIndex, navigate } = useDocumentSearch(text ?? "");
+  const readingArea = useRef<HTMLDivElement>(null);
+  const activeMark = useRef<HTMLElement>(null);
+  const activeMatch = matches[activeIndex];
 
   useEffect(() => {
     const controller = new AbortController();
@@ -23,10 +28,20 @@ export default function DocumentViewer({ document, onClose, onShowList }: Props)
     return () => controller.abort();
   }, [document.textPath]);
 
-  const term = query.trim();
-  const escapedTerm = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const matches = text && term ? Array.from(text.matchAll(new RegExp(escapedTerm, "giu"))) : [];
-  const lastMatch = matches.at(-1);
+  useEffect(() => {
+    const area = readingArea.current;
+    const mark = activeMark.current;
+    if (!activeMatch || !area || !mark) return;
+
+    const viewport = area.getBoundingClientRect();
+    const match = mark.getBoundingClientRect();
+    const top = viewport.top + area.clientTop;
+    const bottom = top + area.clientHeight;
+    if (match.top < top || match.bottom > bottom) {
+      const offset = match.top - top - Math.max(0, (area.clientHeight - match.height) / 2);
+      area.scrollTo({ top: area.scrollTop + offset });
+    }
+  }, [activeMatch, query]);
 
   return (
     <section className="flex min-h-0 flex-1 flex-col bg-document-workspace text-sm" aria-label="Contenido del informe">
@@ -53,40 +68,36 @@ export default function DocumentViewer({ document, onClose, onShowList }: Props)
         </div>
       </header>
       {!error && text && (
-        <div className="shrink-0 border-b border-line bg-surface px-4 py-2">
-          <label className="relative block">
-            <span className="sr-only">Buscar en este informe</span>
-            <Search size={16} aria-hidden="true" className="pointer-events-none absolute top-2 left-3 text-content-muted" />
-            <input
-              type="search"
-              className="text-input h-8 py-1 pl-9"
-              placeholder="Buscar en este informe…"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-            />
-          </label>
-          <p role="status" className="text-content-subtle">
-            {term && matches.length === 0 ? "Sin coincidencias" : ""}
-          </p>
-        </div>
+        <DocumentSearchToolbar
+          query={query}
+          count={matches.length}
+          activeIndex={activeIndex}
+          onQueryChange={changeQuery}
+          onNavigate={navigate}
+        />
       )}
       <div className="flex min-h-0 flex-1 flex-col bg-document-workspace p-4">
-        <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain rounded-panel border border-line bg-surface p-6 lg:p-8">
+        <div ref={readingArea} className="min-h-0 flex-1 overflow-y-auto overscroll-contain rounded-panel border border-line bg-surface p-6 lg:p-8">
           {error ? <p role="alert">No se pudo cargar el informe.</p> : text === undefined ? (
             <p role="status">Cargando informe…</p>
           ) : text ? (
             <pre className="whitespace-pre-wrap break-words font-sans text-clinical-body text-document-content">
               {matches.map((match, index) => {
-                const previous = matches[index - 1];
-                const start = previous ? previous.index + previous[0].length : 0;
+                const start = matches[index - 1]?.end ?? 0;
+                const active = index === activeIndex;
                 return (
-                  <Fragment key={match.index}>
-                    {text.slice(start, match.index)}
-                    <mark className="rounded-sm bg-document-search-match text-content-strong">{match[0]}</mark>
+                  <Fragment key={match.start}>
+                    {text.slice(start, match.start)}
+                    <mark
+                    ref={active ? activeMark : undefined}
+                    className={`rounded-sm text-content-strong ${active ? "bg-document-search-match-active" : "bg-document-search-match"}`}
+                  >
+                    {text.slice(match.start, match.end)}
+                  </mark>
                   </Fragment>
                 );
               })}
-              {lastMatch ? text.slice(lastMatch.index + lastMatch[0].length) : text}
+              {text.slice(matches.at(-1)?.end ?? 0)}
             </pre>
           ) : (
             <pre className="whitespace-pre-wrap break-words font-sans text-clinical-body text-document-content">El informe está vacío.</pre>
