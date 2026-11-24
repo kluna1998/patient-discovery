@@ -1,0 +1,61 @@
+C. DIAGNÒSTIC IMATGE CLÍNIC
+ECOGRAFIES
+HURTADO MONSALVE, FERNANDA NHC: 515584662453
+Sexo/Sexe: Fem. Fecha nac./Data naix.: 21.08.1955 Edad/Edat: 70 años
+Dirección/Adreça: AVENIDA CARDENAL BENLLOCH 33, VALENCIA CP: 21367
+Municip. (Prov.): BARCELONA/BARCELONA ABS:5A Tel.:616051920
+As.: SERVEI CATALA DE LA SALUT CIP: OLDB7357094400
+Nº epis.: 868159683012 Tipo/Tipus: AMBUL. Inici.: 07.10.2024
+Serv: RADIOLOGIA UO Enf.: ECOGRAFIES Hora: 18:30:31
+
+Prueba/Prova: ECOGRAFIA VALORACION ARTERIOCLEROSIS
+Núm. Sol.: 90410761 Facult: MONTERO HERENCIA, JUAN JOSÉ
+Realización/Realització Fecha/Data: 24.04.2026
+
+INFORME ECOGRAFIA VALORACIÓN ATEROSCLEROSIS
+
+Descripción técnica
+
+ECOGRAFIA VALORACION ATEROSCLEROSIS
+
+Resultados
+Derecha                                 Izquierda
+IMT pared posterior                MÁXIMO (mm)    MEDIA  (mm)    MÁXIMO (mm)    MEDIA  (mm)
+Arteria carótida común (ACC)            0.949                 0.650               0.882                 0.703
+Bulbo                                                1.875                 1.236               1.470                 1.190
+Arteria carótida interna (ACI)            0.689                 0.570               0.479                 0.362
+Arteria femoral común                      0.562                 0.444               1.406                 1.188
+
+Placa   Localización   Lateralidad   Alt.Máx.(mm)   Características   Estenosis   Área planimetría(%)   Vel.Máx.(cm/s)
+0        Bulbo          Derecha       1.700             Hipoecoica      No
+0        Bulbo          Izquierda     1.900             Hipoecoica      No
+0        Bulbo          Izquierda     1.800             Calcificada     No
+0        Bulbo          Derecha       1.200             Hipoecoica      No
+0        A.F.C.         Derecha       4.300             Hipoecoica      Sí           43.90
+0        A.F.C.         Izquierda     4.400             Hipoecoica                   38.00
+0        A.F.C.         Izquierda     3.800             Heterogénea
+
+Grosor íntima media carotídea (GIMC) medio (mm)
+0.677 mm. En relación a la población de referencia (ajustado por edad y sexo): percentil 25%
+
+Conclusiones
+GIM percentil 25%. Placas en los 4 territorios. Estenosis por
+planimetria del 43 %  en femoral comun derecha y del 38% en femoral
+comun izquierda.
+
+Firma/Signatura: DÁVILA JIMÉNEZ, ALFONSINA
+Consult. Senior
+Nº matrícula grup HCP: 27636
+Fecha/Data: 24.04.2026
+
+Docum.: 122481664374 Vers. 00 Pag. 2 de 2
+Hist. Clínica: 515584662453 Episod.: 868159683012 El HCB tratará sus datos con fines asistenciales,
+y los cederá HOSPITAL CLÍNIC DE BARCELONA L'HCB tractarà les seves dades amb finalitats assistencia
+ls,
+en aquellos casos legalmente exigibles, de acuerdo con el Villarroel,170 08036-Barcelona (España)
+i les cedirà en aquells casos legalment exigibles, d'acordartículo 9 del Reglamento (UE) 2016/679. Puede ejercer sus Sabin
+o de Arana,1 08028-Barcelona (España) amb l'article 9 del Reglament (UE) 2016/679. Pot exercir
+derechos en la Oficina de Atención a la Ciudadanía del HCB Tel. 91 629 60 74 Fax 96 434 19 83
+els seus drets a l'Oficina d'Atenció a la Ciutadania de l'HCB
+y obtener una copia de la política de protección de datos. http://www.clinicbarcelona.org/
+i obtenir-hi una còpia de la política de protecció de dades.

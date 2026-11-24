@@ -1,0 +1,1355 @@
+ADRIÁN CORDERO, PENÉLOPE NHC: 580820206024
+
+CURSO CLÍNICO
+
+Fecha: 10.07.2024 Hora: 12:01:03 Autor/a: ROTGER ARÓSTEGUI,RAQUEL ( 951209 )
+OFTALMOLOGÍA - (OFT)
+RAE
+Paciente diagnosticada de posible catarata en óptica.
+
+AP:
+Niega
+AO: madre posible glaucoma
+AL: Niega
+
+VL: 30 -1.00 -4.00
+// 170 -2.75 -2.00 (no usa de cerca, se las quita)
+AVcc VL: OD 0.05+
+st.0.1 OI. 1.0--
+PIO(I): 25 / 26 mmHg
+NO DIL, OCT MP,
+paquimetría, Biometría
+Fecha: 10.07.2024 Hora: 12:15:36 Autor/a: RIBAS FONTÁN,OLIVIA ( 581295 )
+OFTALMOLOGÍA - (OFT)
+De momento no hacemos Biometría, valorar salud ocular OD
+Fecha: 10.07.2024 Hora: 12:18:21 Autor/a: RIBAS FONTÁN,OLIVIA ( 581295 )
+OFTALMOLOGÍA - (OFT)
+Paquimetria OD 532 OI 544
+PIO OD 25 OI 26
+Fecha: 10.07.2024 Hora: 12:42:40 Autor/a: ESCAMILLA AMPUERO,ARSENIO ( 78862 )
+OFTALMOLOGÍA - (OFT)
+RAE
+Paciente diagnosticada de posible catarata en óptica.
+
+AP:
+Niega
+AO: madre posible glaucoma
+AL: Niega
+
+VL: 30 -1.00 -4.00
+// 170 -2.75 -2.00 (no usa de cerca, se las quita)
+AVcc VL: OD 0.05+
+st.0.1 OD OJO AMBLIOPE previamente. // OI. 1.0--
+
+SA: CT CN 1+
+AO
+
+PIO(I): 25 / 26 mmHg
+
+Paquimetria OD 532 OI 544
+PIO OD 25 OI
+26
+
+FO: papila excavada 0.9//0.8
+
+OCT papila: RFNL 46//46. Lesiones
+terminales bilaterales. Proporción Copa/Disco Promedio 0.91//0.
+86
+
+OCT macula: MER macular OD y EM quistico.
+
+Debido a la
+importante lesión glaucomatosa bilateral, desde RAE se deriva de forma
+urgente a unidad de glaucoma.
+
+Igualmente se remite a Dr. Zamora
+para la valoracion EM OD.
+
+Fecha: 11.07.2024 Hora: 11:59:10 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+PRIMERA VISITA GLAUCOMA
+MC remitida desde RAE por glaucoma; PIOi sin
+tto 25/26 y papilas muy excavadas
+AP: Niega
+AO: madre posible
+glaucoma; paciente nunca tto glaucoma, OI ambliope
+AL: Niega
+
+VL:
+30 -1.00 -4.00 // 170 -2.75 -2.00 (no usa de cerca, se las quita)
+AVcc
+VL: OD 0.05+ st.0.1 OD OJO AMBLIOPE previamente. // OI. 1.0--
+
+Paquimetria OD 532 OI 544
+No tiene CV
+oct fibras OD defecto S, I
+<1%, T <5%, OI defecto S, T, I <1%, GM 46 ao, C/d 0.91/0.83
+oct
+macular OD aspecto de MER con quiste macular; OI perifil bien
+oct CGR
+OD no valorable, OI pérdida difusa, GM OI 60
+BMa sd CA III ao, cat en
+evolucíon ao, no veo PSX (no está dilatada)
+PIO sd 26/24
+FO sd e/p 0.
+9 ao
+PLAN: explico glaucoma avanzado ao. Pauto ecbirio/noche ao. Cito
+
+control PIO con CV + dilatar ao + paquimetria + contaje endotelial.
+Valorar combinada
+
+Fecha: 02.08.2024 Hora: 10:31:03 Autor/a: ROTGER ROSALES,BIEL ( 624251 )
+OFTALMOLOGÍA - (OFT)
+Se realiza campimetría 24-2 Sita Standard est. III.
+Fecha: 08.08.2024 Hora: 11:18:21 Autor/a: GODOY LANDETE,GLORIA ( 165527 )
+OFTALMOLOGÍA - (OFT)
+Se realiza Topografia
+Fecha: 08.08.2024 Hora: 11:45:35 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+CE OD 2073, OI CD 2036
+CV OD abolido, DM, -28.45, vfi 10%; OI defecto
+N-I con DM -12.12, VFI 76%
+PIO OD 17, OI 16 tto ecbirio ao
+Dilato
+ao
+AO: inició tto glaucoma hace 2-3 meses. Antes nunca tto. Iba
+notando que perdia visión OD progresiva...
+DRPA OD
+BMa C1N2- ao, no
+psx
+FO OD e/p 10/10, aspecto drusa/exudado macular, OI e/p 0.9, resto
+bien
+PLAN: explico indicación de cirugia glaucoma por glaucoma
+avanzado. De momento se acuerda tto bapiri /noche ao para conseguir PIO
+obj más baja. Cito control PIO. Iremos valorando combinada ao
+
+Fecha: 22.08.2024 Hora: 10:43:32 Autor/a: FABRA GASCO,BRIGIDA ( 811279 )
+OFTALMOLOGÍA - (OFT)
+Pacient derivada per Dr. Fando per valoració. EM OD. Subj
+estable
+Glaucoma amb TTo ecbirio/noche ao, ambliopia UD
+
+Rxhabitual
+VL: 30 -1.00 -4.00 // 170 -2.75 -2.00
+AVcc; 0.1- st: NM // 0.9-
+/++
+TOi 14 // 13
+TAO + OCT
+Fecha: 22.08.2024 Hora: 11:38:46 Autor/a: ZAMORA GASCO,GODOFREDO ( 306424 )
+OFTALMOLOGÍA - (OFT)
+Veure notes prèvies
+Nega DM ni altres FdCRV
+CT CN AUs
+FU DO NOG++ UD>
+UE, vasos aprimats AUs, MER UD, exudació macular inf UD possible canvi
+vascular?
+Dubtós MACRO UD però nega HTA
+OCT UD EM amb FIR i MACRO,
+
+MER
+OCT UE OK
+
+Explico, opcions a TIV vs VPP, acordem el primer,
+firma CI
+Carga RBZ UD i revalorar, no DEX per NOG+
+
+PLA
+RBZ UD
+propera setmana
+RBZ UD finals setembre
+RBZ UD finals octubre
+Visita
+acte únic RBZ UD principis desembre en q6w
+Fecha: 04.09.2024 Hora: 09:18:05 Autor/a: GUIRAL CARDENAL,HERMINIA ( 039263 )
+OFTALMOLOGÍA - (OFT)
+Ranibizumab 0.05mL TIV UD, povidona pre i Exocin post.
+Sense
+incidències.
+Fecha: 20.09.2024 Hora: 17:41:17 Autor/a: LANDETE CÁRDENAS,ITZEL ( 317228 )
+- (PUR2)
+Pacient de 67 anys amb AP d'atelectasia pulmonar, es visita a URG per
+presentar dispnea progressiva i astènia de 72h d'evolució. Nega dolor
+toràcic, nega edemes en EEII.
+A la seva arribada a PUR2 pacient C i O,
+taquicàrdia de 120ppm, HMD estable, saturació mantinguda sense O2
+suplementari, afebril, sense dolor. Pal·lidesa de pell i mucoses.
+Es
+canalitza CVP 20G a ESE, es cursa analítica amb bioquímica, hemograma i
+coagulació.
+Es realitza Rx de tòrax i ECG.
+Pertinences a bossa
+identificada sota de la camilla.
+Fecha: 20.09.2024 Hora: 18:12:28 Autor/a: LANDETE CÁRDENAS,ITZEL ( 317228 )
+- (PUR2)
+Laboratori avisa d'Hb de 60, es cursa reserva sanguínea i pendent
+administració de 2 concentrats d'hematíes.
+Fecha: 20.09.2024 Hora: 21:40:59 Autor/a: ARCE CIFUENTES,RAQUEL ( 405799 )
+- (URM)
+Dona de 67a que acut a UCIES per dispnea progressiva i astènia de 72h
+d'evolució.
+AP: Atelectasia pulmonar.
+C i O, HDM estable i afebril.
+Eupneica en basal. Nega àlgies. Pal·lidesa cutània generalitzada
+Es
+traslladada a Helios des de PUR2 --> 1r concentrat d'hematies.
+
+Pendent 2n concentrat, després del 2n concentrat POC venós i
+possible alta.
+
+Fecha: 21.09.2024 Hora: 02:06:57 Autor/a: GÁMEZ GABALDÓN,LLEDONER ( 382402 )
+URGENCIAS - (URM)
+HELIOS (Dra Gámez, turno noche 20.09.2024)
+
+Paciente de 67 años sin
+AMC ni hábitos tóxicos ni AP de interés que consulta derivada por su
+MAP por sintomatología compatible con síndrome anémico (cefalea,
+taquicardia, astenia, disnea de esfuerzo). La paciente refiere 3 meses
+de pérdida de apetito, astenia agudizada en la última semana y pérdida
+de peso no cuantificada. No cambios deposicionales, heces marrones no
+oscuras, no exteriorizaciones hemáticas. Niega dolor torácico. ECG
+taquicardia sinusal sin alteraciones de la repolarización. Analítica
+donde destaca anemia con Hb 6 y hematocrito 22%( perfil hepático normal,
+función renal correcta, hemostasia normal). Rx de tórax atelectasia
+basal derecha ya conocida desde 2018. Se realiza transfusion de 2 CHH.
+Se orienta como anemia en contexto de sindrome constitucional a estudio.
+Tras transfusiones mejoría clínica y HB de control 8.8. Se da de alta
+con visita en UDR. Se explican normas de reconsulta
+Fecha: 21.09.2024 Hora: 02:09:02 Autor/a: HERRERO MOSQUERA,ALFONSA ( 585833 )
+URGENCIAS - (URM)
+HELIOS_TN
+OD:
+1. ANEMIA GRAVE (NORMOCÍTICA-HIPOCRÓMICA)
+2.
+TAQUICARDIA SINUSAL
+
+Paciente conciente y orientada. Niega algias.
+
+HDME. Afebril. Eupneica en basal con saturaciones mantenidas.
+
+Administro 2º CCHH. Realizo POC venoso >> Hb 8.8
+Alta.
+Fecha: 30.09.2024 Hora: 09:45:56 Autor/a: CONEJO FORTUNY,CARLES ( 447423 )
+MEDICINA INTERNA - (MDI)
+Paciente de 67 años sin AMC ni hábitos tóxicos ni AP de interés
+que
+consulta derivada por su MAP por sintomatología compatible con
+síndrome
+anémico (cefalea, taquicardia, astenia, disnea de esfuerzo).
+La paciente
+refiere 3 meses de pérdida de apetito, astenia agudizada
+en la última
+semana y pérdida de peso no cuantificada. No cambios
+deposicionales,
+heces marrones no oscuras, no exteriorizaciones
+hemáticas. Niega dolor
+torácico. ECG taquicardia sinusal sin
+alteraciones de la repolarización.
+Analítica donde destaca anemia con
+Hb 6 y hematocrito 22%( perfil
+
+hepático normal, función renal correcta,
+hemostasia normal). Rx de tórax
+atelectasia basal derecha ya conocida
+desde 2018. Se realiza transfusion
+de 2 CHH. Se orienta como anemia en
+contexto de sindrome constitucional
+a estudio. Tras transfusiones
+mejoría clínica y HB de control 8.8. Se da
+de alta con visita en UDR.
+
+p Hb fecaly analitica.
+
+Segun resultado: FCS y FGS
+Fecha: 30.09.2024 Hora: 10:12:41 Autor/a: BRETONES EGIDO,JOANA ( 942157 )
+ENFERMEDADES INFECCIOSAS - (MDI)
+Acude a MDIHD pàra realización de analítica del lab central
+Fecha: 04.10.2024 Hora: 10:45:12 Autor/a: CAPÓ ACOSTA,EDUARDO ( 596098 )
+OFTALMOLOGÍA - (OFT)
+Ranibizumab 0.05mL TIV UD, povidona pre i post.
+Sense incidències.
+Fecha: 30.10.2024 Hora: 09:29:52 Autor/a: DUQUE BAYONA,AGATA ( 175548 )
+OFTALMOLOGÍA - (OFT)
+Ranibizumab 0.05mL TIV UD, povidona pre
+CD ok
+Sense incidències.
+Fecha: 31.10.2024 Hora: 14:09:36 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+AO: OD ambliope, tt o IV ranibizumab OD ayer, tto bapiri/noche ao.
+
+BMA cat ++ ao
+PIOg OD 20, OI 29 tto bapiri ao
+FO OI e/p 0.9
+PLAN:
+explico indicación cirugia cat + glaucoma OI. Explico obj controlar el
+glaucoma avanzado más que ganar AV. Conforme. Propongo estudio Qx
+glaucoma. Conforme. Firma c.i. Se hace biometria + CE. Se pone en lista
+cat + glaucoma OI (ojo prácticamente único). Candidata trabe/epnp
+
+Fecha: 31.10.2024 Hora: 14:19:34 Autor/a: CASTRO BAUTISTA,CAROLINA ( 775360 )
+OFTALMOLOGÍA - (OFT)
+Es realitza CE
+Fecha: 28.11.2024 Hora: 10:57:24 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+tto duokopt + monoprost
+Fecha: 05.12.2024 Hora: 09:08:25 Autor/a: GORDO MACIAS,PENÉLOPE ( 891679 )
+OFTALMOLOGÍA - (OFT)
+Control + TIV.
+Està espera FACO+LIO + trabe/EPNP.
+- TTO: Duokopt +
+
+monoprost .
+-Utilitza:30 -1.00 -4.00 // 170 -2.75 -2.00
+AVcc UD: 0.1
+st:NM
+AVcc UE: 0.9++
+PIo(ic):11/11
+Dilato AU + OCTm
+Fecha: 05.12.2024 Hora: 09:34:07 Autor/a: ZAMORA GASCO,GODOFREDO ( 306424 )
+OFTALMOLOGÍA - (OFT)
+Veure notes prèvies
+Nega DM ni altres FdCRV
+CT CN AUs
+FU DO NOG++ UD>
+UE, vasos aprimats AUs, MER UD, exudació macular inf UD possible canvi
+vascular?
+Dubtós MACRO UD però nega HTA
+OCT UD EM amb FIR i MACRO,
+MER --> molt poca milloria
+OCT UE OK
+
+Pacient es pensa que s'operarà
+FACOGlaucoma del UD, explico UE apuntat i firmat, explico més
+PIO
+
+Explico, opcions a TIV vs VPP, per ara no DEX per NOG
+Amblíop i
+no veig clar VPP...
+Plantejo switch a Faricimab, firma CI, farem
+carga
+
+PLA
+Faricimab UD avui
+Faricimab UD gener
+Faricimab UD
+febrer
+Visita amb mi març
+Fecha: 05.12.2024 Hora: 10:30:43 Autor/a: FUENTES VIDAL,TAMARA ( 095673 )
+OFTALMOLOGÍA - (OFT)
+Faricimab TIV UD 0.05mL, povidona pre i post. Bona tolerancia i
+colaboració. Sense incidències.
+Fecha: 02.01.2025 Hora: 10:38:51 Autor/a: GOIKOETXEA CORCHADO,JOEL ( 910569 )
+OFTALMOLOGÍA - (OFT)
+Faricimab TIV UD 0.05mL, povidona pre i post. Bona tolerancia i
+colaboració. Sense incidències.
+Fecha: 30.01.2025 Hora: 13:02:49 Autor/a: FUENTES VIDAL,TAMARA ( 095673 )
+OFTALMOLOGÍA - (OFT)
+Faricimab TIV UD 0.05mL, povidona pre i exocin post. Bona tolerancia i
+colaboració. Sense incidències.
+Fecha: 13.02.2025 Hora: 17:00:32 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (B-OFT)
+
+Diagnósticos:
+
+Glaucoma no especificat (H40.9)
+
+Cataracta no
+especificada (H26.9)
+
+Procedimientos:
+
+FACOEMULSIFICACION Y
+ASPIRACION DE CATARATA (13.41)
+
+TRABECULECTOMIA DESDE EL EXTERIOR (12.
+64)
+
+Evolución:
+Bajo antestesia peribulbar y sedación se procede en
+OI a:
+FACO+LIO MX60 +18.0D en saco
+EPNP con esnopper clip, MMC 0.02%
+2min, Cefuroxima IC
+Sin incidencias
+
+PLAN TERAPÉUTICO
+
+MAÑANA
+CONTROL A LAS 10.30 H
+
+OJO TAPADO HASTA ENTONCES, DESPUÉS INICIAR LA
+SIGUIENTE PAUTA
+
+VIGAMOX CADA 4 HORAS
+
+TOBRADEX CADA 4 HORAS
+Fecha: 13.02.2025 Hora: 17:02:29 Autor/a: FIOL SANTOS,GONZALO ( 259211 ) HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+INTERVENCIÓN CATARATA Y GLAUCOMA OI
+FACO+LIO MX60 +18.0D en saco
+EPNP
+con esnopper clip, MMC 0.02% 2min, Cefuroxima IC
+Sin incidencias
+Fecha: 14.02.2025 Hora: 11:00:53 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+MC control 24h faco + epnp OI.
+BMA OI pseudofaquia ok, CA amplia IV,
+ampolla difusa ++, seidel negativo
+PIo OI 7-8
+FO OI bien
+PLAN:
+
+tobradex `+ vigamox / 4h. Control PIO sem prox
+Fecha: 17.02.2025 Hora: 11:38:39 Autor/a: CONEJO FORTUNY,CARLES ( 447423 )
+MEDICINA INTERNA - (MDI)
+Paciente de 67 años sin AMC ni hábitos tóxicos ni AP de interés que
+consulta derivada por su MAP por sintomatología compatible con síndrome
+anémico (cefalea, taquicardia, astenia, disnea de esfuerzo). La
+paciente refiere 3 meses de pérdida de apetito, astenia agudizada en la
+última
+semana y pérdida de peso no cuantificada. No
+cambios
+deposicionales, heces marrones no oscuras, no
+exteriorizaciones hemáticas. Niega dolor torácico. ECG taquicardia
+sinusal sin
+alteraciones de la repolarización. Analítica donde destaca
+anemia con Hb 6 y hematocrito 22% (perfil hepático normal, función
+renal correcta, hemostasia normal). Rx de tórax atelectasia basal
+derecha ya conocida desde 2018. Se realiza transfusión de 2 CHH. Se
+orienta como anemia en contexto de síndrome c constitucional a estudio.
+Tras transfusiones mejoría clínica y HB de control 8.8. Se da de alta
+con visita en UDR.
+
+A/S sin elevación PCR ni VSG, función renal
+preservada, GGT 54, resto de perfil hepático sin alteraciones,
+proteinograma normal, RST elevado 4.12, IST 6.5, ferritina 16, B12 245,
+B9 5.17, Hb 8.8 g/dl, R 4.3%, resto de hemograma y coagulación sin
+alteraciones.
+
+UDR: Sd anemico de mas de 3 meses de evolucion con Hb
+6, ferropenia absoluta que requirio 2 conc de htes con Hb post de 8,8.
+Vit B12 245. A los 3 meses (tto Fe) de 9,6.
+Hb heces: 25 (negativa).
+
+Autoadministracion previa de ibuprofeno..
+
+p FGS
+
+Fecha: 20.02.2025 Hora: 12:04:38 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+MC control faco-epnp OI 13-2-25
+Se encuentra bien
+BMa OI pseudofaquia
+ok, CA IV, ampolla difusa muy buena ++`, seidel negativo
+PIO OI 13-
+14
+FO OI bien
+PLAN OI tobradex 4-6. Cito control AV + PIO + hacer oct
+Fecha: 26.02.2025 Hora: 13:45:18 Autor/a: AMUEDO CELDRÁN,FILOMENA ( 52611426 )
+APARATO DIGESTIVO - (GAS)
+
+No se ha presentado a la gastroscopia
+Fecha: 14.03.2025 Hora: 12:37:20 Autor/a: AMUEDO CELDRÁN,FILOMENA ( 52611426 )
+APARATO DIGESTIVO - (GAS)
+Se recibe al paciente para GSC. Sede Plató. Sin incidencias durante el
+procedimiento. Se han tomado muestras para A.P ( 4 tubos). Alta a
+domicilio acompañada. Explicamos recomendaciones a seguir al alta.
+Fecha: 17.03.2025 Hora: 16:35:44 Autor/a: FERRER CABAÑAS,CARINA ( 874794 )
+OFTALMOLOGÍA - (OFT)
+Control retina dr.Zamora : última Faricimab TIV UD 0.05mL
+faco-epnp
+OI 13-2-25
+Ttmnt. tobradex UE / Duokopt UD
+
+AVsc CD 1m st 0.1-
+// 0.7-- st nm
+PIOic 15 / 10
+TAU + OCTm
+Fecha: 17.03.2025 Hora: 17:29:57 Autor/a: ZAMORA GASCO,GODOFREDO ( 306424 )
+OFTALMOLOGÍA - (OFT)
+Nega DM ni altres FdCRV
+CT CN UD, LIO OK UE, ampolla filtració UE
+FU
+DO NOG++ UD>UE, vasos aprimats AUs, MER UD, exudació macular inf UD
+possible canvi vascular?
+Dubtós MACRO UD però nega HTA
+OCT UD no
+centrat, sembla EM bona resposta
+OCT UE OK
+
+Explico, opcions a TIV
+vs VPP, per ara no DEX per NOG
+Amblíop i no veig clar VPP...
+Bona
+resposta a Faricimab, ara q6w i sense edema, plantejo nou control en
++4w estarà en q10w
+Explico farem OCT i visita no presencial
+
+Vindrà
+a fer OCT i marxarà, ja rebrà la propera cita en funció del resultat,
+no visita mèdica presencial el dia del OCT
+Fecha: 20.03.2025 Hora: 09:48:12 Autor/a: GODOY LANDETE,GLORIA ( 165527 )
+OFTALMOLOGÍA - (OFT)
+MC: Control faco-epnp OI 13-2-25
+tto ocular: Tobradex cada 6h en OI
+/ Duokopt x2 en OD
+AVsc:
+OD: 0.05 ----> Rx: -2.50-1.50*10 AV: 0.2-
+dif
+OI: 0.8--dif ---> Rx: +1.50-1.50*170 AV: 1.0-
+PIOi:
+
+18/10mmHg
+OCTm+p
+Fecha: 20.03.2025 Hora: 10:03:39 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+MC control faco-epnp OI 13-2-25
+AO: OD ambliope, tt o IV ranibizumab
+OD; OD tto duokopt/12h + monoprost
+tto ocular: Tobradex cada 6h en
+OI / Duokopt x2 en OD
+AVsc:
+OD: 0.05 ----> Rx: -2.50-1.50*10 AV: 0.
+2-dif
+OI: 0.8--dif ---> Rx: +1.50-1.50*170 AV: 1.0-
+PIOi:
+18/10mmHg
+OCTm+p
+oct fibras defecto S e I <1% ao, GM
+oct OD aspecto
+de MER; OI parece bien
+BMA OD cat C1N2-SCP1, OI pseudofaquia ok,
+ampolla difusa buena +
+PIOg OD 17 tto duokopt + monopros; OI 10
+FO OD
+e/p 10/10
+PLAN: OI retiro punto corneal. Tobrex x 1 sem + Fridex 6-8.
+Cito control AV + PIO + hacer oct + dilatar ao con CV. Explico opción
+de cirugia cat + epnp OD sabiendo px visual pobre por ambliopia +
+glaucoma terminal + maculopatía. Valorar si conforme proxima visita y
+poner en lista Qx OD.
+Fecha: 28.03.2025 Hora: 13:22:23 Autor/a: CONEJO FORTUNY,CARLES ( 447423 )
+MEDICINA INTERNA - (MDI)
+UDR: Sd anemico de mas de 3 meses de evolucion con Hb 6, ferropenia
+absoluta que requirio 2 conc de htes con Hb post de 8,8. Vit B12 245. A
+los 3 meses (tto Fe) de 9,6.
+Hb heces: 25 (negativa).
+
+Autoadministracion previa de ibuprofeno..
+
+p FGS
+
+FGS: Hernia
+de hiato 2 erosiones en cuello herniario.
+Gastritis crónica de
+predominio en cuerpo. Pdte de AP.
+Duodenitis erosiva leve
+
+AP::
+gastritis cronica moderada. HP +
+
+p Tto anti-HP
+Fecha: 14.04.2025 Hora: 11:13:00 Autor/a: BLANCH ROTGER,JULIETA ( 797942 )
+OFTALMOLOGÍA - (OFT)
+Se realiza OCT m
+Fecha: 28.04.2025 Hora: 12:30:51 Autor/a: ZAMORA GASCO,GODOFREDO ( 306424 )
+OFTALMOLOGÍA - (OFT)
+Visita no presencial OCT 14/04
+RBZ UD set24, oct24, nov24
+Fari UD
+des24, gen25, feb25
+
+OCT UD perfil +/- OK, EM adjacent amb FIR i HRF,
+MER
+OCT UE OK
+
+Sembla manté resposta parcial en q8w Faricimab post
+carga
+Farem control presencial maig estarà en q12w post Fari x3
+mensual
+Fecha: 19.05.2025 Hora: 19:20:23 Autor/a: GODOY LANDETE,GLORIA ( 165527 )
+OFTALMOLOGÍA - (OFT)
+MC: Control 3 semanas . Subj igual
+AOFT: faco-epnp OI (13-2-25)
+tto
+ocular: Duokoptx2 en OD + Fridex cada 8h en OI + Monoprost x1 en
+OD
+AVsc:
+OD: CD a 2m
+OI: 0.4
+última Rx: (20/03/25)
+OD: -2.50-1.
+50*10 AV: 0.1+dif
+OI: +1.50-1.50*170 AV: 0.7
+PIOi: 13/9mmHg
+Tropi
+AO+ OCTm
+Fecha: 19.05.2025 Hora: 20:02:18 Autor/a: ZAMORA GASCO,GODOFREDO ( 306424 )
+OFTALMOLOGÍA - (OFT)
+Nega DM ni altres FdCRV
+EM UD, ha rebut Fari x3, últim Feb25
+
+CT CN
+UD, LIO OK UE, ampolla filtració UE
+FU DO NOG++ UD>UE, vasos aprimats
+AUs, MER UD, exudació macular inf UD possible canvi vascular?
+Dubtós
+MACRO UD però nega HTA
+OCT UD recidiva lleu FIR amb HRF, MER+
+OCT UE
+OK
+
+Explico, té visita Glaucoma aquesta setmana, per part Retina es
+pot operar UD de FACO+/-Glaucoma si cal, nosaltres seguim amb TIVs.
+Plantejo per ara seguir Faricimab q8w
+
+PLA
+Propera setmana Faricimab
+UD directe
+Juliol OCT + Faricimab UD directe
+Visita acte únic
+Faricimab UD setembre amb mi
+Fecha: 22.05.2025 Hora: 09:04:44 Autor/a: CORONEL LLOMPART,MAITANE ( 071989 )
+OFTALMOLOGÍA - (OFT)
+Control glaucoma.
+Tto ocular: Duokoptx2 en OD + Fridex cada 8h en OI
++ Monoprost x1 en OD
+AOFT: faco-epnp OI (13-2-25)
+AVsc OD: CD a 2m
+ST:0.16-/+
+AVsc OI: 0.3-/+ ST:0.5--
+PIO(icare):
+15/11 mmHg
+TAO + OCT m y p
+Fecha: 22.05.2025 Hora: 10:35:27 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+MC control faco-epnp OI 13-2-25
+En tto IV OD programados
+Vsc OD: CD a
+2m ST:0.16-/+
+AVsc OI: 0.3-/+ ST:0.5--
+PIO
+(icare): 15/11 mmHg
+TAO + OCT m y p
+oct fibras OD defecto S, I <1%;
+OI defecto S, I <1%, GM 52/58, c/d 0.88/0.83
+oct macular OI bien
+BMA
+OD C1N2, no veo psx, CA IV, resto polo ant bien, OI pseudofquia ok,
+ampolla difusa buena ++
+PIOg OD 17 tto duokopt + monoprost; OI 14 sin
+tto hipoT
+FO OD e/p 10/10; exudación macular; OI e/p 0.8, mácula buen
+aspecto
+PLAN: propongo faco + glaucoma OD (candidata epnp) por cat +
+glaucoma terminal pero explico px visual pobre por maculopatia y
+glaucoma terminal. Obj mantener y no ganar AV...Conforme. Se pone en
+lista cat + glaucoma OD pref.
+Cito tb control PIO OI en 4m.
+OD
+seguir duokopt + monoprost hasta Qx; OI fridex 8-12-24-0.
+
+Fecha: 22.05.2025 Hora: 10:39:11 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+Pendiente firmar c.i. cat y glaucoma OD
+Fecha: 29.05.2025 Hora: 12:18:52 Autor/a: FUENTES VIDAL,TAMARA ( 095673 )
+OFTALMOLOGÍA - (OFT)
+Faricimab TIV 0.05mL, OD. Povidona pre.
+Sin incidencias
+Fecha: 24.07.2025 Hora: 11:21:56 Autor/a: CARPIO LEMA,ALFONSA ( 064502 )
+OFTALMOLOGÍA - (OFT)
+Se realiza OCTm
+Fecha: 24.07.2025 Hora: 12:51:16 Autor/a: FUENTES VIDAL,TAMARA ( 095673 )
+OFTALMOLOGÍA - (OFT)
+Faricimab TIV 0.05mL, jpc, temporal inferior OD. Povidona pre.
+Sin
+incidencias
+Fecha: 29.08.2025 Hora: 23:38:13 Autor/a: RIUTORT FIZ,ALEXIA ( 609894 )
+URGENCIAS - (UDT)
+Acude paciente por DT.
+AP: No AP.
+A su llegada HDm estable, afebril.
+C y O, EVA 8/10. Eupneica basal. Realizo ECG. Instauro CVP, curso
+analítica.
+Pertenencias etiquetadas bajo camilla.
+Portadora de
+pulsera#
+identificativa.
+Fecha: 05.09.2025 Hora: 17:06:40 Autor/a: GALINDO CERÓN,IKER ( 02868 )
+URGENCIAS - (UDT)
+Pacient que consulta a ucies per dolor epigàstric i vertigen.
+A la
+seva arribada C i O, HDM estable.
+Es cursa analitica i ECG.
+Fecha: 06.09.2025 Hora: 02:27:14 Autor/a: LEÓN AMPUERO,LOLA ( 573417 )
+CARDIOLOGÍA - (CAR)
+Valoración Hospitalización
+
+General
+
+Identificación positiva del
+paciente
+Nombre, apellidos y fecha de nacimiento
+Responsable
+identificación positiva del paciente: Doble check (dos profesionales)
+
+¿En el momento del ingreso el paciente lleva pulsera identificativa?:
+Sí
+Datos del cuidador
+Datos persona contacto (nombre, teléfono y
+
+parentesco):
+Isidro (marido)777142894
+¿La persona de contacto
+corresponde con el cuidador?: No tiene cuidador
+Proceso
+actual
+Procedencia del paciente antes del ingreso hospitalario:
+Domicilio
+Motivo ingreso y procedencia interna:
+dolor
+torácico
+Alergias
+Alergias: No
+Antecedentes
+Antecedentes medico-
+quirúrgicos:
+No
+¿Sufre alguna enfermedad crónica?: Otras enfermedades
+crónicas
+Especificar otras enfermedades crónicas:
+anemia feropénica
+2024
+Déficits
+¿Tiene problemas de visión?: Sí
+Déficit de autocuidado:
+Independiente
+Puntuación escala Barthel al ingreso: 100-
+Autónomo
+
+Valoración aparato respiratorio
+
+Tipo de respiración:
+Eupneico
+Valor frecuencia respiratoria: 14 resp/min
+
+Valoración
+cardiovascular
+
+Valor Presión Arterial sistólica: 156 mm Hg
+Valor
+Presión Arterial diastólica: 83 mm Hg
+Valor frecuencia cardíaca: 76
+lpm
+
+Valoración gastrointestinal
+
+Prótesis dental: Sí
+¿Lleva
+puesta la prótesis dental?: Sí
+Intolerancias alimentarias: No
+
+Ritmo
+deposicional:
+diario
+Fecha última deposición:
+04/09/2025
+
+Valoración musculoesquelética
+
+Limitación funcional:
+No
+Puntuación escala Downton: 2-Riesgo bajo
+
+Valoración Piel y
+Mucosas
+
+¿Alteración de la integridad de piel y mucosas al ingresar?:
+No
+Coloración de la piel: Normocoloreada
+Puntuación escala Braden: 22-
+Sin riesgo
+Temperatura axilar: 36.5 ºC
+
+Valoración
+neurológica
+
+Estado de la consciencia: Alerta
+Alteración cognitiva:
+No
+
+Valoración Dolor y Disconfort
+
+¿Tiene dolor al ingreso?:
+No
+Puntuación escala EVN: 0
+
+Valoración salud mental y
+adicciones
+
+Valoración salud mental
+Puntuación escala detección
+depresión PHQ-2: 20-No valorable
+Adicciones
+¿Fuma actualmente?:
+No
+¿Usted bebe de forma habitual?: No
+Sueño y descanso
+¿Tiene
+problemas para dormir?: Sí
+
+Fecha: 06.09.2025 Hora: 07:34:19 Autor/a: LEÓN AMPUERO,LOLA ( 573417 )
+
+CARDIOLOGÍA - (CAR)
+Paciente que ingresa por dolor torácico a estudio.
+Consciente y
+orientada.
+HDM estable. Afebril.
+Eupneica en basal.
+No refiere
+algias durante la noche.
+En reposo.
+Micción espontánea.
+Descanso
+intermitente.
+
+Fecha: 06.09.2025 Hora: 11:52:33 Autor/a: AZCÁRATE GRIS,MARGOT ( 372073 )
+CARDIOLOGÍA - (CAR)
+Escalas del paciente
+Cognitiva y funcional
+Puntuación escala Barthel
+durante el ingreso: 100-Autónomo
+Valoración global
+Puntuación escala
+Braden: 22-Sin riesgo
+
+Fecha: 06.09.2025 Hora: 14:28:44 Autor/a: AZCÁRATE GRIS,MARGOT ( 372073 )
+CARDIOLOGÍA - (CAR)
+NRL: C y O, afebril. Refiere cefalea EVA 4, se administra 1g PCT
+efectivo.
+HDM: con tendencia a la hipertensión.
+RESP: eupneica en
+basal.
+ALIM: ingesta oral bien tolerada.
+ELIM: micciones
+espontáneas mantenidas.
+Aporta tratamiento oftálmico habitual. Se
+administra 2GT Duokopt.
+Se mantiene en reposo.
+Acompañada por
+familiar.
+Fecha: 06.09.2025 Hora: 15:03:40 Autor/a: JARA ESPEJO,GLORIA ( 966499 )
+- (CAR)
+Escalas del paciente
+Valoración global
+Puntuación escala Downton: 2-
+Riesgo bajo
+
+Fecha: 06.09.2025 Hora: 20:17:49 Autor/a: JARA ESPEJO,GLORIA ( 966499 )
+- (CAR)
+Pacient C i O. HDM estable, tendència a la Hipertensió.
+Afebril sense
+àlgies. Eupneica en basal.
+
+Monitor en RS.
+Ingesta oral ben tolerada.
+Miccions espontànies.
+S'administra laxant, efectiu. Realitza deposció.
+
+Passa el torn tranquil·la.
+
+Fecha: 07.09.2025 Hora: 07:37:56 Autor/a: LEÓN AMPUERO,LOLA ( 573417 )
+CARDIOLOGÍA - (CAR)
+Consciente y orientada.
+HDM estable. Afebril.
+Eupneica en basal.
+No
+refiere algias.
+En reposo.
+Micción espontáneas.
+La paciente demanda
+su pastilla para dormir que toma en casa, se adm lorazepam 1mg vo segun
+SIRE (pte pautar)
+Buen descanso nocturno.
+
+PTE:
+- @ central 8/9
+Fecha: 07.09.2025 Hora: 09:42:22 Autor/a: ALMAZÁN LLORENTE,MANUELA ( 748069 )
+CARDIOLOGÍA - (CAR)
+Escalas del paciente
+Valoración global
+Puntuación escala Downton: 2-
+Riesgo bajo
+Puntuación escala Braden: 19-Sin riesgo
+
+Fecha: 07.09.2025 Hora: 14:06:19 Autor/a: ALMAZÁN LLORENTE,MANUELA ( 748069 )
+CARDIOLOGÍA - (CAR)
+Paciente consciente y orientada.
+HMD estable, eupneica en basal.
+Afebril. Refiere cefalea EVA 3.
+TLM en RS.
+No tolera desayuno y
+realiza único vómito. Se realiza ECG. Se avisa a MG. Comenta sensación
+de mareo.
+Etapa II+WC. Sedestación y deambulación a WC bien toleradas.
+
+Micciones espontáneas.
+Pte: a/s 8/9.
+Fecha: 07.09.2025 Hora: 19:09:10 Autor/a: JARA ESPEJO,GLORIA ( 966499 )
+- (CAR)
+Pacient C i O. HDM estable, tendència a la Hipertensió.
+Afebril sense
+àlgies. Eupneica en basal.
+TLM en RS.
+
+Ingesta oral ben tolerada.
+Miccions espontànies al WC.
+S'administra laxant, efectiu. Realitza
+deposció.
+Passa el torn tranquil·la.
+
+Pte: a/s 8/9.
+Fecha: 08.09.2025 Hora: 07:39:22 Autor/a: LEÓN AMPUERO,LOLA ( 573417 )
+CARDIOLOGÍA - (CAR)
+Consciente y orientada.
+HDM estable. TLM en RS. Afebril.
+Eupneica en
+basal.
+No refiere algias.
+Micción espontáneas en cuña.
+Se cursa AS
+central 8/9.
+Refiere sentirse mareada durante todo el día, mejora
+durante la noche.
+Buen descanso nocturno.
+
+Fecha: 08.09.2025 Hora: 11:58:37 Autor/a: SINTES MORALES,AMADA ( 258399 )
+RADIODIAGNÓSTICO - (CAR)
+Paciente de 65 kg que acude de G026 para realizar un ANGIOTAC
+Se
+canaliza vía periférica según protocolo.
+Medicación administrada para
+la realización de la prueba 15ml ESMOLOL + 2 PUFF NITROGLICERINA
+previa valoración y autorización médica.(Dra. Gordo)
+T/A inicio
+procedimiento de 182/87 106x'
+T/A después medicación 118/66
+82x'
+T/A al irse a su domicilio 104/65 90x'
+Prueba realizada sin
+incidencias. Se retira vía periférica y marcha asintomático.
+Fecha: 08.09.2025 Hora: 14:20:40 Autor/a: COLL MACÍAS,ARIADNA ( 826712 )
+- (CAR)
+Paciente consciente y orientada. Afebril. No refiere algias.
+HDM
+estable. Eupneica en basal. TLM en RS.
+Ingesta oral bien tolerada.
+
+Tolera sedestación y deambulación.
+Realizado Ecocardio + Angiotac.
+Fecha: 08.09.2025 Hora: 15:46:01 Autor/a: AZCÁRATE CASTAÑER,ITZEL ( 458196 )
+CARDIOLOGÍA - (CAR)
+1. DOLOR TORÁCIO A ESTUDIO. Con cambios en ECG respecto al del 09/2024
+(HC3) con ondas T negativas en V1-V4 con mínima rectificación ST.
+
+Paciente de 68 años que ingresa en planta de cardiología para
+continuar estudio de anatomía coronaria. Al pase buen estado general,
+nos refiere dolor centrotorácico el viernes con irradiación difusa
+mamaria en forma de pinchazos que se autolimitó a los pocos minutos y
+posterior irradiación hacia escápula. No refiere vegetatismo ni otros
+síntomas. El dolor se cedió parcialmente en urgencias con analgesia.
+Comenta un episodio de acorchamiento en mano izquierda el viernes
+anterior, no acompañado de dolor torácico.
+
+EF/:
+Ctes:
+Hemodinámicamente estable a 129/74 a 76 lpm, eupneica en basal al 98%.
+Afebril.
+CAR: Rítmico sin soplos ni ruidos sobreañadidos.
+RES: MVC
+sin ruidos sobreañadidos.
+NRL: Sin focalidad neurológica.
+
+EECC/:
+
+** AS (08/09): FG >90 con iones en rango de normalidad, ác úrico 5.1,
+colesterol total 176, LDL 85, HDL 60, triglicéridos 156, proteínas
+totales 7.2, Apo A1 161, Apo B 60, Lp A 46, leucocitos 6.12 con 57.1%
+neutrófilos, plaquetas 218.000, Hb 12.8, Hb glicada 5.9%, TSH 2.236.
+
+** Ecocardiografía (08/09): FEVI 50-55%. Ventrículo izquierdo no
+dilatado, ligeramente hipertrófico con motilidad global conservada pese
+a acinesia inferior medio-basal. Insuficiencia aórtica leve, central.
+Sin valvulopatía mitral. Ventrículo derecho no dilatado con motilidad
+conservada. Sin derrame pericárdico. VCi no dilatada.
+** Angio TAC
+(08/09): Pendiente
+
+PLAN/:
+> Continuar estudio anatomía coronaria.
+
+> Continuar pautas de medicación.
+> Pendiente frotis rectal.
+Fecha: 08.09.2025 Hora: 20:44:01 Autor/a: EXPÓSITO CAPILLA,CIPRIANO ( 181473 )
+- (CAR)
+Paciente consciente y orientado
+HDM estable.
+Afebril y no refiere
+algias.
+Sat correcta en Basal.
+Micciones espontáneas.
+Ingesta oral
+bien tolerada.
+Sedesta y deambula al WC
+
+Fecha: 09.09.2025 Hora: 07:14:54 Autor/a: FERNÁNDEZ BRETONES,JIMENA ( 816381 )
+- (CAR)
+Paciente despierta en decúbito supino. C y O. Colaboradora y tranquila.
+Apoyo para ABVD. Eupneica en basal.
+C/cts: HDM con tendencia a HTA +
+taquicardia sinusal asintomática, afebril no algias no angina no
+adormecimiento en mano izquierda.
+Portadora: TLM en RS (FC: 113lpm).
+Vvp ESD (Madoox 0) permeable, no refluente y salinizado.
+EEII: leve
+edema.
+Diuresis: ME (cuña) o/concentrada y disminuida TN. Se refuerza
+ingesta hídrica.
+Medidas de comfort.
+Administración de medicamentos
+s/n PM. Además, solicita medicación para conciliar el sueño. Se
+administra Lorazepam 1mg vo s/n PM.
+Deposición (-).
+Descanso nocturno:
+adecuado.
+07hs: refiere cefalea. Se administra Paracetamol 1g iv.
+
+Pte: control evolutivo.
+Fecha: 09.09.2025 Hora: 08:24:39 Autor/a: VERGER RICO,EDMUNDO ( 56121112 )
+- (CAR)
+
+Desitja activar l'AET? No
+Fecha: 09.09.2025 Hora: 11:57:38 Autor/a: AZCÁRATE CASTAÑER,ITZEL ( 458196 )
+CARDIOLOGÍA - (CAR)
+Hemodinamicamente estable, al pase buen estado general. Hoy alta.
+Fecha: 09.09.2025 Hora: 14:18:43 Autor/a: GÁLVEZ AMAYA,ELISENDA ( 038719 )
+CARDIOLOGÍA - (CAR)
+Paciente estable.
+Se retira VP.
+Se entrega informe de alta. Marcha
+sin incidencias.
+Fecha: 18.09.2025 Hora: 19:17:32 Autor/a: BELLO CID,GLORIA ( 260270 ) HINOJOSA
+CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+INTERVENCIÓN CAT + GLAUCOMA OD Faco + LIO saco +17.5D + EPNP + MMC 0.02
+x 2 min + Esnopper V2000. Sin complicaciones
+Fecha: 18.09.2025 Hora: 19:20:11 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (B-OFT)
+Diagnósticos:
+
+Cataracta no especificada (H26.9)
+
+Glaucoma no
+especificat (H40.9)
+
+Procedimientos:
+
+FACOEMULSIFICACION Y
+ASPIRACION DE CATARATA (13.41)
+
+TRABECULECTOMIA DESDE EL EXTERIOR (12.
+64)
+
+Evolución:
+Bajo anestesia peribulbar y sedación, se procede en
+OD a: FACO+LIO MX60 17.5D en saco, EPNP con esnopper clip V2000, MMC 0.
+02% 2 minutos,cefuroxima IC. Sin incidencias.
+
+Plan terapéutico:
+
+PLAN TERAPÉUTICO:
+Control mañana a las en consultas externas de
+oftalmología a las 11:00h Mantener el ojo tapado hasta entonces,
+después iniciar la siguientepauta:
+Vigamox c/4h
+Tobradex c/4h
+El
+paciente requiere de reposo y cuidados domiciliarios.
+Fecha: 19.09.2025 Hora: 11:06:22 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+MC Control 24h FACO + EPNP OD (18.9-25)
+BMA: OD buen evolución,
+pseudofaquia ok, cornea clara con algun pligue endotelial (parece más
+por hipotonía), ampolla diufusa muy buena ++, seidel negativo
+BMA OI
+pseudofaquia ok, ampolla buena +
+PIOg OD 6
+PIOg OI 12 sin tto
+PLAN
+OD tobradex + vigamox / 4h. Control PIO sem prox
+Fecha: 16.10.2025 Hora: 10:12:19 Autor/a: CORONEL LLOMPART,MAITANE ( 071989 )
+OFTALMOLOGÍA - (OFT)
+Control FACO + EPNP OD (18.9-25)
+FACO + EPNP OI 13-2-25
+AVsc OD: 0.1--
+ST:0.16-dif
+SX OD: 20º -1.75 +1.25 (AV:0.16-)
+PIO(Icare):
+13/13 mmHg
+OCT mp
+Fecha: 16.10.2025 Hora: 10:58:43 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+Mc EPNP OD (18.9-25)
+AVsc OD: 0.1-- ST:0.16-dif
+
+SX OD: 20º -1.
+75 +1.25 (AV:0.16-)
+PIO(Icare): 13/13 mmHg
+OCT mp
+BMA OD
+pseudofaquia ok, polo ant muy bien, ampolla difusa muy buena ++, seidel-
+; OI pseudofaquia ok, ampolla +
+PIOg OD 13; OI 14 sin tto
+FO
+bien
+Retiro punto corneal od
+oct fibras GM 58/54
+oct macular OD EM;
+OI bien
+PLAN: OD tobradex /6h x 1 sem y seguir con fridex / 6h. cito
+control PIO
+Fecha: 18.12.2025 Hora: 14:22:52 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+Mc EPNP OD (18.9-25); OI EPNP febrero 2025; tto IV OD controlada por
+retina
+Se encuentra bien
+BMA pseudofaquia ok ao, OD ampolla difusa +;
+OI ampolla difusa +
+PIOg 14/15 sin tto hipoT
+PLAN: OD fridex 8-12-24h-
+0. Control PIO 3m
+Fecha: 26.03.2026 Hora: 13:00:29 Autor/a: HINOJOSA CARRASCO,Octavio ( 322125 )
+OFTALMOLOGÍA - (OFT)
+Mc EPNP OD (18.9-25); OI EPNP febrero 2025; tto IV OD controlada por
+retina
+Se encuentra bien
+BMa OD pseudofaquia ok, ampolla difusa buena
++ con microquistes de filtración; OI pseduofaquia ok, ampolla buena
+++
+PIog OD 16; OI 15 sin tto ao
+PLAN: seguir sin tto hipoT ao.
+control RAE aV + PIO + hacer oct. REmitir de nuevo a sección si mal
+control PIO
+
+Fecha: 22.05.2026 Hora: 09:38:43 Autor/a: BECERRIL AVELLANEDA,EDUARDO ( 907652 )
+MEDICINA INTERNA - (MDI)
+PRIMERA VISITA UDR
+
+Pacient derivada per troballa d'anèmia de 87g/L,
+lleugerament hiporcorm ai normocítica. Ja s'havia visitat al març de
+2025 per anèmia, FGS+ per H.pylori. Va fer el tractament erradicador
+(juny test Ag -) i va recuperar-se de l'anèmia (desembre Hb 124g/L). Ha
+pres fero vo però ara no el tolera bé. Refereix que no té pèrdues de
+sang macrosòpica. SOF l'any passat negatiu, en la última analítica dona
+error. Tampoc pèrdues ginecològiques. Sí que refereix anorèxia les
+
+últimes 4 setmanes i dolors epigàstrics. Sd anèmic lleu-moderat.
+
+PLA/
+- FGS + SOF. Si normalitat gàstrica i segons resultat de SOF
+farem FCS.
+- Cambio formulació oral de ferro
+
+Fecha: 29.05.2026 Hora: 21:05:22 Autor/a: BACHILLER LOZOYA,EVA ( 529345 )
+- (GAS)
+Acut pacient al servei d'endoscòpia digestiva per realitzar FGS.
+S'utilitza endoscop Olympus.
+Acut en dejú, CI signats i acompanyada.
+
+Es realitzen biòpsies, 2 tubs.
+Finalitza el procediment sense
+incidències.
+Es trasllada a REA per la seva recuperació i posterior
+alta a domicili.
+Fecha: 12.06.2026 Hora: 13:39:50 Autor/a: MORALEDA LANDETE,NARRO ( 461482 )
+MEDICINA INTERNA - (MDI)
+Dona de 69a en seguiment per anèmia de 8'7 amb anorèxia i dolors
+epigàstrics
+
+Explica que es troba millor i menys cansada des que està
+fent el tractament amb Fe. No exterioritzacions, no dolor epigàstric.
+Ara menja una mica més de carn. Va tenir H. pylori fa 1 any que es va
+tractar i no hi ha evidència de recidiva
+
+EC/
+-SOF: negativa
+
+-Gsc:
+Hernia de hiato con erosiones.
+Resto de la exploración dentro de la
+normalidad.
+DUODENO (BIOPSIAS):- MUCOSA DUODENAL CON ARQUITECTURA
+VELLOSITARIA Y RIBETE ABSORTIVO PRESERVADOS, SIN LINFOCITOSIS
+INTRAEPITELIAL.- AUSENCIA DE ESTRUCTURAS PARASITARIAS.
+B26-016963-
+B
+ESTÓMAGO, ANTRO Y CUERPO (BIOPSIAS):- MUCOSA GÁSTRICA CON MÍNIMO
+INFILTRADO INFLAMATORIO CRÓNICO EN LA LÁMINA PROPIA, SIN ATROFIA
+GLANDULAR NI METAPLASIA INTESTINAL.- NO SE OBJETIVAN MICROORGANISMOS DE
+MORFOLOGÍA COMPATIBLE CON HELICOBACTER PYLORI.
+
+OD/
+Anèmia
+ferropènica, possible hemorràgia digestiva baixa crònica
+
+Pla/
+-
+Sol·licitem colonoscòpia, si normal, plantejaríem càpsula endoscòpica
+si persisteix anèmia vs alta si ha millorat (entendríem que la causa és
+baixa ingesta)
+-Continuar ferroteràpia
+-Analítica en 1 mes de control
+Fecha: 29.07.2026 Hora: 18:17:39 Autor/a: EGIDO ROTGER,ALFONSA ( 035961 )
+APARATO DIGESTIVO - (GAS)
+Se realiza FCS sin incidencias.
+Sedación administrada por equipo de
+enfermería de anestesia.
+Se extraen muestras (1 Tubo) pendientes de AP.
+
+Más información ver informe médico.
+Fecha: 13.08.2026 Hora: 11:59:38 Autor/a: CELDRÁN ESCOBEDO,EVA ( 609297 )
+MEDICINA INTERNA - (MDI)
+Seguimiento UDR
+
+Paciente de 69 años en seguemiento por anemia
+normocítica carencial (ferropenia, déficit de fólico y B12), anorexia y
+dolor epigástrico.
+
+Refiere encontrarse mejor. Menos astenia. No
+dolor abdominal, náuseas ni vómitos. Heces de aspecto normal. Toma los
+suplementos de hierro cada día con correcta tolerancia. Come variado,
+leve hiporexia. No fiebre recurrente. No metrorragia, no hematuria. No
+otras exteriorizaciones.
+
+*Pruebas complementarias:
+- Colonoscopia
+(29/07): Boston 1-2-2. Úlcera colónica de 8mm en colon ascendente.
+Diverticulosis.
+- AP (29/07): colitis aguda. Sin signos de malignidad.
+
+- Analítica sanguínea (13/07): Hb 7,7 g/dL, VCM 83 fl. ferritina 5
+ng/mL, receptor soluble 4,75 ng/L. B12 206 pg/mL, fólico 4,55 ng/mL.
+-
+Sangre oculta en heces (29/05): negativa.
+
+Se orienta como un
+empeoramiento de la anemia ferroopénica a pesar de ferroterapia.,
+consideramos que merece la pena realizar la cápsula.
+
+Plan:
+modificamos formulación de hierro oral, suplementamos fólico y B12.
+Analítica de control en 3 meses. Solicitamos cápsula y visita
+telefónica para resultados. Explicamos signos de alarma.
+Fecha: 27.08.2026 Hora: 19:31:41 Autor/a: PALOU AROCA,JULIETA ( 473910 )
+
+OFTALMOLOGÍA - (OFT)
+RAE
+MC: Seguir sin tto hipoT ao AV + PIO + hacer oct. REmitir de
+nuevo a sección si mal control PIO
+EPNP OD (18.9-25); OI EPNP febrero
+2025; tto IV OD controlada por retina
+tto ocular: lagrimas
+artificiales
+RX HAB: +1.50-1.75x15 // +1.75-2.75x170
+AVcc OD:0.16+
+// OI: 0.9
+PIO ic: 10/11
+OCT mip
+Fecha: 27.08.2026 Hora: 20:02:33 Autor/a: AVELLANEDA BEDOYA,ARNAU ( 420246 )
+OFTALMOLOGÍA - (OFT)
+RAE
+MC: Seguir sin tto hipoT ao AV + PIO + hacer oct. REmitir de
+nuevo a sección si mal control PIO
+EPNP OD (18.9-25); OI EPNP 08/2025;
+tto IV OD controlada por retina
+tto ocular: lagrimas artificiales
+
+RX HAB: +1.50-1.75x15 // +1.75-2.75x170
+AVcc OD:0.16+ // OI: 0.
+9
+PIO ic: 10/11
+OCT mip
+
+Sin CV desde 2024
+
+SA: ampolla formada,
+extensa, vasc. ok, psf correcta, OCP incipiente
+FO: E/P 0.95 en AO,
+glaucoma avanzado, MER OD, retina aplicada en AO
+
+PIO 14/14
+mmHg
+
+PPCC
+OCT RNFL 40/55, poco valorable en OD por fluctuaciones,
+MER y AML residual en OD, normal en OI
+
+IDx: glaucoma avanzado en
+AO
+Plan: control 6 meses con CV y OCTMP
+Seguir sin tto. hipotensor
+Fecha: 01.09.2026 Hora: 12:26:24 Autor/a: INFANTE PIÑA,MARICARMEN ( 84550 )
+- (GAS)
+Arriba pacient C i O ambulatòria. Acompanyada. En dejú. Preparació
+intestinal feta. Es realitza colonoscòpia amb CF convencional+CO2 i
+
+sedació profunda. S'explora fins a cec. Preparació inadequada. Va al
+recovery. Dr Amat informa del procediment de la càpsula endoscòpica.
+Signa consentiment. Col.loquem cinturó i connectem a la gravadora.
+Ingesta de la CE sense incidències. Donem indicacions orals i escrites
+post procediemnt.
+Fecha: 17.09.2026 Hora: 15:46:43 Autor/a: CRESPÍ BOCETA,ANA ( 23609112 )
+MEDICINA INTERNA - (MDI)
+SUCCESSIVA TELEFÒNICA UDR
+
+Pacient clínicament millor, refereix menys
+astènia
+Confirma que pren anti-inflamatoris uns 3 cops/setmana per
+dolors inespecífics. Recomano que els deixi i que, en cas de dolor,
+prengui paracetamol.
+
+c) CÀPSULA ENDOSCÒPICA: Exploración del
+intestino delgado: En duodeno y a lo largo de todo yeyuno no se
+observan lesiones mucosas. En íleon proximal y medio no se observan
+lesiones mucosas. En íleon distal la preparación es regular, con una
+valoración de la mucosa subóptima. Entre restos se observa en íleon
+distal una úlcera de 4mm fibrinada (03:09h), un afta de 3mm (03:24h),
+dos úlceras de 3-4mm fibrinadas (03:26h) y aftas sobre la mucosa ileal
+de la válvula ileocecal (03:26h). Estudio completo. La cápsula
+atraviesa la válvula ileocecal a las 03:26h. Colon no valorable por
+presencia de restos fecales.
+NOTA: Se recomienda descartar del todo
+la presencia de AINEs que puedan justificar las lesiones. Si AINEs,
+retirada y repetir cápsula endoscópica en 3-4 meses. Si se descartan
+los AINEs valorar nueva colonoscopia con ileoscopia para toma de
+biopsias (con preparación intensiva).
+
+i) Petites aftes i úlceres a
+ileon distal possiblement en relació a AINEs
+
+p) Stop AINEs
+
+Repetirem càpsula endoscòpica en 4 mesos amb visita posterior.
+Té
+programada analítica de control i visita telefònica al novembre per
+veure resposta a suplementació de B12 i ferro
+
+Docum.: 803350423980 Vers. 00 Pag. 27 de 27
+Hist. Clínica: 580820206024 Episod.: El HCB tratará sus datos con fines asistenciales, y l
+os cederá HOSPITAL CLÍNIC DE BARCELONA L'HCB tractarà les seves dades amb finalitats assistencials,
+en aquellos casos legalmente exigibles, de acuerdo con el Villarroel,170 08036-Barcelona (España)
+i les cedirà en aquells casos legalment exigibles, d'acordartículo 9 del Reglamento (UE) 2016/679. Puede ejercer sus Sabin
+o de Arana,1 08028-Barcelona (España) amb l'article 9 del Reglament (UE) 2016/679. Pot exercir
+derechos en la Oficina de Atención a la Ciudadanía del HCB Tel. 96 153 03 12 Fax 98 665 73 28
+els seus drets a l'Oficina d'Atenció a la Ciutadania de l'HCB
+y obtener una copia de la política de protección de datos. http://www.clinicbarcelona.org/
+i obtenir-hi una còpia de la política de protecció de dades.

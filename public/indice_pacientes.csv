@@ -1,0 +1,62 @@
+﻿nhc_pseudo,n_documentos,filas_tabla,conjunto,doc_id_pseudo,tipo_informe,fecha_informe,archivo_txt,archivo_json
+103809395880,1,1,cursos_clinicos,240356624868,Curso clínico,23.09.2026,cursos_clinicos/txt/240356624868.txt,cursos_clinicos/json/240356624868.json
+117048133814,1,1,cursos_clinicos,847134533196,Curso clínico,14.11.2026,cursos_clinicos/txt/847134533196.txt,cursos_clinicos/json/847134533196.json
+128020049249,1,1,cursos_clinicos,319842356013,Curso clínico,26.02.2026,cursos_clinicos/txt/319842356013.txt,cursos_clinicos/json/319842356013.json
+154062319365,1,1,cursos_clinicos,778045748580,Curso clínico,17.06.2026,cursos_clinicos/txt/778045748580.txt,cursos_clinicos/json/778045748580.json
+190781704956,1,1,cursos_clinicos,213870706155,Curso clínico,13.11.2026,cursos_clinicos/txt/213870706155.txt,cursos_clinicos/json/213870706155.json
+223317216894,1,1,cursos_clinicos,379599034981,Curso clínico,03.11.2026,cursos_clinicos/txt/379599034981.txt,cursos_clinicos/json/379599034981.json
+225055757338,1,1,cursos_clinicos,979690031374,Curso clínico,09.10.2026,cursos_clinicos/txt/979690031374.txt,cursos_clinicos/json/979690031374.json
+252976801456,1,1,cursos_clinicos,819167469254,Curso clínico,03.11.2026,cursos_clinicos/txt/819167469254.txt,cursos_clinicos/json/819167469254.json
+305175248536,1,1,cursos_clinicos,288827149628,Curso clínico,23.09.2026,cursos_clinicos/txt/288827149628.txt,cursos_clinicos/json/288827149628.json
+333575215294,1,1,cursos_clinicos,749245544349,Curso clínico,12.11.2026,cursos_clinicos/txt/749245544349.txt,cursos_clinicos/json/749245544349.json
+340092607148,1,1,cursos_clinicos,618106359217,Curso clínico,05.10.2026,cursos_clinicos/txt/618106359217.txt,cursos_clinicos/json/618106359217.json
+342361277635,1,1,cursos_clinicos,108047300313,Curso clínico,04.11.2026,cursos_clinicos/txt/108047300313.txt,cursos_clinicos/json/108047300313.json
+370887416196,1,1,cursos_clinicos,410284971271,Curso clínico,08.10.2026,cursos_clinicos/txt/410284971271.txt,cursos_clinicos/json/410284971271.json
+398032735598,1,1,cursos_clinicos,567961361509,Curso clínico,13.10.2026,cursos_clinicos/txt/567961361509.txt,cursos_clinicos/json/567961361509.json
+406733353263,1,1,cursos_clinicos,966360178680,Curso clínico,21.10.2026,cursos_clinicos/txt/966360178680.txt,cursos_clinicos/json/966360178680.json
+410863906285,2,1,cursos_clinicos,807749211513,Curso clínico,18.11.2026,cursos_clinicos/txt/807749211513.txt,cursos_clinicos/json/807749211513.json
+410863906285,2,1,digestivo,223127477707,INFORME ECOGRAFIA VALORACIÓN ATEROSCLEROSIS,05.03.2025,digestivo/txt/223127477707.txt,digestivo/json/223127477707.json
+423155254786,1,1,cursos_clinicos,472357062106,Curso clínico,13.10.2026,cursos_clinicos/txt/472357062106.txt,cursos_clinicos/json/472357062106.json
+425306889388,1,1,cursos_clinicos,370579395860,Curso clínico,21.10.2026,cursos_clinicos/txt/370579395860.txt,cursos_clinicos/json/370579395860.json
+427560167423,1,1,cursos_clinicos,994134514745,Curso clínico,27.04.2026,cursos_clinicos/txt/994134514745.txt,cursos_clinicos/json/994134514745.json
+449505947229,1,1,cursos_clinicos,134338924165,Curso clínico,04.03.2026,cursos_clinicos/txt/134338924165.txt,cursos_clinicos/json/134338924165.json
+484086442376,1,1,cursos_clinicos,899390528588,Curso clínico,18.11.2025,cursos_clinicos/txt/899390528588.txt,cursos_clinicos/json/899390528588.json
+502436189147,1,1,cursos_clinicos,455999596044,Curso clínico,28.10.2026,cursos_clinicos/txt/455999596044.txt,cursos_clinicos/json/455999596044.json
+504366479247,1,1,cursos_clinicos,452458585110,Curso clínico,22.07.2026,cursos_clinicos/txt/452458585110.txt,cursos_clinicos/json/452458585110.json
+506258789671,1,1,cursos_clinicos,458316926723,Curso clínico,18.08.2026,cursos_clinicos/txt/458316926723.txt,cursos_clinicos/json/458316926723.json
+515584662453,2,1,cursos_clinicos,225094487363,Curso clínico,29.10.2026,cursos_clinicos/txt/225094487363.txt,cursos_clinicos/json/225094487363.json
+515584662453,2,1,digestivo,122481664374,INFORME ECOGRAFIA VALORACIÓN ATEROSCLEROSIS,24.04.2026,digestivo/txt/122481664374.txt,digestivo/json/122481664374.json
+516433083032,1,1,cursos_clinicos,729773520844,Curso clínico,22.01.2025,cursos_clinicos/txt/729773520844.txt,cursos_clinicos/json/729773520844.json
+524252076073,1,1,cursos_clinicos,658938137905,Curso clínico,28.01.2026,cursos_clinicos/txt/658938137905.txt,cursos_clinicos/json/658938137905.json
+565960926565,1,1,cursos_clinicos,558085611049,Curso clínico,09.07.2026,cursos_clinicos/txt/558085611049.txt,cursos_clinicos/json/558085611049.json
+580820206024,1,1,cursos_clinicos,803350423980,Curso clínico,17.09.2026,cursos_clinicos/txt/803350423980.txt,cursos_clinicos/json/803350423980.json
+589102445030,1,1,cursos_clinicos,137182835103,Curso clínico,09.11.2026,cursos_clinicos/txt/137182835103.txt,cursos_clinicos/json/137182835103.json
+611960826376,1,1,cursos_clinicos,841545055104,Curso clínico,03.11.2025,cursos_clinicos/txt/841545055104.txt,cursos_clinicos/json/841545055104.json
+614022487610,1,1,cursos_clinicos,143383023689,Curso clínico,12.11.2026,cursos_clinicos/txt/143383023689.txt,cursos_clinicos/json/143383023689.json
+616057800975,1,1,cursos_clinicos,766718681491,Curso clínico,29.07.2026,cursos_clinicos/txt/766718681491.txt,cursos_clinicos/json/766718681491.json
+636711842165,1,1,cursos_clinicos,886727903569,Curso clínico,14.08.2026,cursos_clinicos/txt/886727903569.txt,cursos_clinicos/json/886727903569.json
+639115779239,1,1,cursos_clinicos,545204502364,Curso clínico,17.10.2026,cursos_clinicos/txt/545204502364.txt,cursos_clinicos/json/545204502364.json
+642457423550,1,1,cursos_clinicos,931213020913,Curso clínico,13.03.2026,cursos_clinicos/txt/931213020913.txt,cursos_clinicos/json/931213020913.json
+642748898055,1,1,cursos_clinicos,676741233941,Curso clínico,13.10.2026,cursos_clinicos/txt/676741233941.txt,cursos_clinicos/json/676741233941.json
+643834007825,1,1,cursos_clinicos,588398560927,Curso clínico,09.09.2026,cursos_clinicos/txt/588398560927.txt,cursos_clinicos/json/588398560927.json
+650400541191,2,1,cursos_clinicos,634729361422,Curso clínico,21.07.2026,cursos_clinicos/txt/634729361422.txt,cursos_clinicos/json/634729361422.json
+650400541191,2,1,digestivo,740802671868,INFORME ECOGRAFIA VALORACIÓN ATEROSCLEROSIS,21.05.2025,digestivo/txt/740802671868.txt,digestivo/json/740802671868.json
+662239174705,1,1,cursos_clinicos,401211939301,Curso clínico,06.08.2026,cursos_clinicos/txt/401211939301.txt,cursos_clinicos/json/401211939301.json
+677580939823,1,1,cursos_clinicos,738691053829,Curso clínico,07.10.2026,cursos_clinicos/txt/738691053829.txt,cursos_clinicos/json/738691053829.json
+706593689661,1,1,cursos_clinicos,176905744124,Curso clínico,15.10.2026,cursos_clinicos/txt/176905744124.txt,cursos_clinicos/json/176905744124.json
+712684091489,1,1,cursos_clinicos,557362951767,Curso clínico,05.11.2026,cursos_clinicos/txt/557362951767.txt,cursos_clinicos/json/557362951767.json
+717047228421,1,1,cursos_clinicos,957549563016,Curso clínico,04.11.2026,cursos_clinicos/txt/957549563016.txt,cursos_clinicos/json/957549563016.json
+732821251779,1,1,cursos_clinicos,188333089783,Curso clínico,19.11.2026,cursos_clinicos/txt/188333089783.txt,cursos_clinicos/json/188333089783.json
+744935016313,1,1,cursos_clinicos,224546394824,Curso clínico,28.04.2026,cursos_clinicos/txt/224546394824.txt,cursos_clinicos/json/224546394824.json
+792639650873,1,1,cursos_clinicos,252021210036,Curso clínico,29.10.2026,cursos_clinicos/txt/252021210036.txt,cursos_clinicos/json/252021210036.json
+796642494265,1,1,cursos_clinicos,232736064678,Curso clínico,30.06.2026,cursos_clinicos/txt/232736064678.txt,cursos_clinicos/json/232736064678.json
+802144596278,2,1,cursos_clinicos,537588768823,Curso clínico,15.10.2026,cursos_clinicos/txt/537588768823.txt,cursos_clinicos/json/537588768823.json
+802144596278,2,1,digestivo,621912689541,INFORME ECOGRAFIA VALORACIÓN ATEROSCLEROSIS,04.03.2025,digestivo/txt/621912689541.txt,digestivo/json/621912689541.json
+833597453777,2,1,cursos_clinicos,977781313847,Curso clínico,04.06.2026,cursos_clinicos/txt/977781313847.txt,cursos_clinicos/json/977781313847.json
+833597453777,2,1,digestivo,967946760370,INFORME ECOGRAFIA VALORACIÓN ATEROSCLEROSIS,22.05.2025,digestivo/txt/967946760370.txt,digestivo/json/967946760370.json
+835500908223,1,1,cursos_clinicos,991342996453,Curso clínico,04.11.2026,cursos_clinicos/txt/991342996453.txt,cursos_clinicos/json/991342996453.json
+900016621702,1,1,cursos_clinicos,835283071987,Curso clínico,30.10.2026,cursos_clinicos/txt/835283071987.txt,cursos_clinicos/json/835283071987.json
+927621900997,1,1,cursos_clinicos,523377058627,Curso clínico,09.10.2026,cursos_clinicos/txt/523377058627.txt,cursos_clinicos/json/523377058627.json
+932660323986,1,1,cursos_clinicos,155978938811,Curso clínico,16.10.2026,cursos_clinicos/txt/155978938811.txt,cursos_clinicos/json/155978938811.json
+953433553589,1,1,cursos_clinicos,968849443909,Curso clínico,08.09.2026,cursos_clinicos/txt/968849443909.txt,cursos_clinicos/json/968849443909.json
+954387979385,1,1,cursos_clinicos,284861888554,Curso clínico,29.05.2026,cursos_clinicos/txt/284861888554.txt,cursos_clinicos/json/284861888554.json

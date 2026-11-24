@@ -1,0 +1,55 @@
+C. DIAGNÒSTIC IMATGE CLÍNIC
+ECOGRAFIES
+PEÑA FORTUNY, NICANOR NHC: 650400541191
+Sexo/Sexe: Masc. Fecha nac./Data naix.: 26.08.1968 Edad/Edat: 56 años
+Dirección/Adreça: AVENIDA DE LA FAMA 3 CP: 37064
+Municip. (Prov.): BARCELONA ABS:7A Tel.:619114439
+As.: PACIENTS AMB CARREC A LA CORPORACIO CIP: DAVE5999698214
+Nº epis.: 124001242764 Tipo/Tipus: AMBUL. Inici.: 13.11.2024
+Serv: RADIOLOGIA UO Enf.: ECOGRAFIES Hora: 11:52:28
+
+Prueba/Prova: ECOGRAFIA VALORACION ARTERIOCLEROSIS
+Núm. Sol.: 76892533 Facult: BARRANCO ARAGÓN, ESPERANZA
+Realización/Realització Fecha/Data: 20.05.2025
+Técnico/Tècnic: ARROYO PEÑA, AGRIPINA (0000241786)
+
+INFORME ECOGRAFIA VALORACIÓN ATEROSCLEROSIS
+
+Descripción técnica
+
+ECOGRAFIA VALORACION ATEROSCLEROSIS
+
+Resumen clínico
+PROTOCOLO HOSPITAL CARDIOSALUDABLE
+
+Resultados
+Derecha                                 Izquierda
+IMT pared posterior                MÁXIMO (mm)    MEDIA  (mm)    MÁXIMO (mm)    MEDIA  (mm)
+Arteria carótida común (ACC)            0.832                 0.699               0.757                 0.678
+Bulbo                                                1.018                 0.752               1.013                 0.878
+Arteria carótida interna (ACI)            0.961                 0.708               0.884                 0.725
+Arteria femoral común                      1.318                 1.010               0.770                 0.622
+
+Grosor íntima media carotídea (GIMC) medio (mm)
+0.689 mm. En relación a la población de referencia (ajustado por edad y sexo): percentil 50%
+
+Conclusiones
+GIM percentil 50%. Ausencia placas de ateroma.
+
+Firma/Signatura: CALVO GIMÉNEZ, TAMARA      Firma/Signatura: ARROYO PEÑA, AGRIPINA
+Consult. Senior                  Tècnic FP2
+Nº Matrícula grup HCP: 91186     Nº Matrícula grup HCP: 241786
+
+Fecha/Data: 21.05.2025
+
+Docum.: 740802671868 Vers. 00 Pag. 2 de 2
+Hist. Clínica: 650400541191 Episod.: 124001242764 El HCB tratará sus datos con fines asistenciales,
+y los cederá HOSPITAL CLÍNIC DE BARCELONA L'HCB tractarà les seves dades amb finalitats assistencia
+ls,
+en aquellos casos legalmente exigibles, de acuerdo con el Villarroel,170 08036-Barcelona (España)
+i les cedirà en aquells casos legalment exigibles, d'acordartículo 9 del Reglamento (UE) 2016/679. Puede ejercer sus Sabin
+o de Arana,1 08028-Barcelona (España) amb l'article 9 del Reglament (UE) 2016/679. Pot exercir
+derechos en la Oficina de Atención a la Ciudadanía del HCB Tel. 98 449 26 32 Fax 97 997 62 48
+els seus drets a l'Oficina d'Atenció a la Ciutadania de l'HCB
+y obtener una copia de la política de protección de datos. http://www.clinicbarcelona.org/
+i obtenir-hi una còpia de la política de protecció de dades.
