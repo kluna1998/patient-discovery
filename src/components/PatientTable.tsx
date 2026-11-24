@@ -1,4 +1,5 @@
 import ColumnHelp from "./ColumnHelp";
+import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { useMemo, useState } from "react";
 import {
@@ -10,6 +11,7 @@ import {
   Check,
   X,
   Clock3,
+  FileText,
 } from "lucide-react";
 
 import {
@@ -101,15 +103,26 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
               : "border-current bg-review-pending-bg text-review-pending hover:bg-review-pending-hover";
 
           return (
-            <button
-              type="button"
-              onClick={() => onReview(rowId)}
-              aria-label={`${decision ? "Modificar" : "Revisar"} registro #${recordNumber}`}
-              className={`btn min-h-8 px-3 py-1 ${buttonColor}`}
-            >
-              <StatusIcon size={14} aria-hidden="true" />
-              {decision ? "Modificar" : "Revisar"}
-            </button>
+            <div className="flex  items-center gap-2">
+              <button
+                type="button"
+                onClick={() => onReview(rowId)}
+                aria-label={`${decision ? "Modificar" : "Revisar"} registro #${recordNumber}`}
+                className={`btn min-h-8 min-w-18 gap-1.5 whitespace-nowrap px-3 py-1 ${buttonColor}`}
+              >
+                <StatusIcon size={14} aria-hidden="true" />
+                {decision ? "Modificar" : "Revisar"}
+              </button>
+              <ClinicalDocumentsSheet patientId={row.original.nhc}>
+                <button
+                  type="button"
+                  aria-label={`Abrir documentos del registro #${recordNumber}`}
+                  className="btn min-h-8 gap-1.5 whitespace-nowrap px-3 py-1"
+                >
+                  <FileText size={14} aria-hidden="true" />
+                </button>
+              </ClinicalDocumentsSheet>
+            </div>
           );
         },
       },

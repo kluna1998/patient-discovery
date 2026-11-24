@@ -417,6 +417,33 @@
   max-width: 960px;
   background: var(--color-surface);
 }
+[data-slot="sheet-overlay"] {
+  background: var(--color-backdrop);
+}
+@media (min-width: 64rem) {
+  .patient-document:has([data-slot="sheet-content"]) {
+    inset-inline-end: 24rem;
+    width: calc(100% - 24rem - 32px);
+  }
+  .patient-document [data-slot="sheet-overlay"] {
+    background: transparent;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-slot="sheet-content"][data-state="open"] {
+    animation: sheet-slide-in 250ms ease-out;
+  }
+  [data-slot="sheet-content"][data-state="closed"] {
+    animation: sheet-slide-out 200ms ease-in;
+  }
+}
+@keyframes sheet-slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+@keyframes sheet-slide-out {
+  to { transform: translateX(100%); }
+}
 .document-header {
   padding: 32px;
   border-bottom: 1px solid var(--color-line);

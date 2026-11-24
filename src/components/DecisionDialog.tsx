@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Check, X } from "lucide-react";
 import ColumnHelp from "./ColumnHelp";
+import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
 import type { PatientRow } from "../types/patient";
 import { groupPatientFieldsForDialog } from "../services/columnDictionary";
 import type { ColumnInfo } from "../services/columnDictionary";
@@ -18,23 +19,24 @@ interface Props {
 }
 
 export default function DecisionDialog({ rowId, row, columns, dictionary, decision, onSave, onClose }: Props) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
+  const [documentsOpen, setDocumentsOpen] = useState(false);
   useEffect(() => {
-    const dialog = dialogRef.current;
+    if (!dialog) return;
     const previousFocus =
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
-    dialog?.showModal();
+    dialog.showModal();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      dialog?.close();
+      dialog.close();
       document.body.style.overflow = previousOverflow;
       if (previousFocus?.isConnected) previousFocus.focus();
       else document.getElementById("workspace")?.focus();
     };
-  }, []);
+  }, [dialog]);
   const knownColumns = new Set(dictionary.map((entry) => entry.column_name));
   const parseBooleanValue = (value: string | undefined) => {
     if (value?.trim() === "1") return "yes";
@@ -60,9 +62,9 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
 
   return (
     <dialog
-      ref={dialogRef}
+      ref={setDialog}
       onKeyDown={(event) => {
-        if (event.key !== "Tab") return;
+        if (event.key !== "Tab" || documentsOpen) return;
         const controls = Array.from(
           event.currentTarget.querySelectorAll<HTMLElement>(
             'button:not(:disabled), textarea, input:not(:disabled), select:not(:disabled), a[href], [tabindex="0"]',
@@ -82,7 +84,8 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
       aria-describedby="decision-description"
       onCancel={(event) => {
         event.preventDefault();
-        onClose();
+        if (documentsOpen) setDocumentsOpen(false);
+        else onClose();
       }}
       className="decision-dialog patient-document"
     >
@@ -91,7 +94,12 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
           <div className="flex items-start justify-between gap-4">
             <div>
               <p className="eyebrow mt-5">{decision ? "MODIFICAR DECISIÓN" : "FICHA DE REVISIÓN"}</p>
-              <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
+                <ClinicalDocumentsSheet open={documentsOpen} onOpenChange={setDocumentsOpen} container={dialog} patientId={row.nhc}>
+                  <button type="button" className="btn min-h-8 px-3 py-1 text-sm">Ver documentos</button>
+                </ClinicalDocumentsSheet>
+              </div>
             </div>
             <button type="button" onClick={onClose} className="btn min-h-8 p-2" aria-label="Cerrar revisión"><X size={16} /></button>
             </div>
