@@ -42,19 +42,22 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
         />
         <button
           type="button"
-          className="btn"
+          className="btn max-sm:size-10 max-sm:p-0"
           disabled={loading}
+          aria-label={loading ? "Procesando archivo…" : "Cargar otro CSV"}
+          title="Cargar otro CSV"
           onClick={() => inputRef.current?.click()}
         >
           {loading ? (
             <LoaderCircle
               size={16}
+              aria-hidden="true"
               className="animate-spin motion-reduce:animate-none"
             />
           ) : (
-            <Upload size={16} />
+            <Upload size={16} aria-hidden="true" />
           )}
-          {loading ? "Procesando archivo..." : "Cargar otro CSV"}
+          <span className="hidden sm:inline">{loading ? "Procesando archivo..." : "Cargar otro CSV"}</span>
         </button>
         <div aria-live="polite">
           {error && (

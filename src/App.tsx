@@ -179,10 +179,12 @@ function App() {
             type="button"
             onClick={handleExport}
             disabled={!dataset}
-            className="btn btn-primary"
+            className="btn btn-primary max-sm:size-10 max-sm:p-0"
+            aria-label="Exportar revisión en CSV"
+            title="Exportar revisión en CSV"
           >
-            <Download size={16} />
-            Exportar revisión en CSV
+            <Download size={16} aria-hidden="true" />
+            <span className="hidden sm:inline">Exportar revisión en CSV</span>
           </button>
         </div>
       </div>

@@ -10,8 +10,14 @@ export default function ClinicalDocumentsExplorer() {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <button type="button" className="btn text-primary hover:bg-surface-accent">
-          <FileText size={16} aria-hidden="true" /> Explorar documentos clínicos
+        <button
+          type="button"
+          className="btn btn-primary size-10 shrink-0 p-0 sm:w-auto sm:px-4 sm:py-2"
+          aria-label="Explorar documentos clínicos"
+          title="Explorar documentos clínicos"
+        >
+          <FileText size={16} aria-hidden="true" />
+          <span className="hidden sm:inline">Explorar documentos clínicos</span>
         </button>
       </Dialog.Trigger>
       <Dialog.Portal>
@@ -20,7 +26,7 @@ export default function ClinicalDocumentsExplorer() {
           aria-describedby={undefined}
           className="fixed inset-2 z-50 mx-auto flex max-w-5xl flex-col overflow-hidden rounded-panel border border-line bg-surface shadow-lg sm:inset-4"
         >
-          <header className="flex shrink-0 items-center justify-between gap-2 border-b border-line p-4">
+          <header className="flex shrink-0 items-center justify-between gap-2 border-b border-line p-5 sm:p-6">
             <Dialog.Title className="text-lg font-semibold text-primary">Explorar documentos clínicos</Dialog.Title>
             <Dialog.Close className="btn btn-ghost size-8 min-h-8 shrink-0 p-0" aria-label="Cerrar explorador">
               <X size={16} aria-hidden="true" />

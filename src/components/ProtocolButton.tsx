@@ -70,7 +70,7 @@ export default function ProtocolButton() {
   return (
     <>
       <button type="button" className="btn border-brand-accent text-brand-accent" onClick={() => setOpen(true)} aria-haspopup="dialog">
-        <BookOpen size={16} />
+        <BookOpen size={16} aria-hidden="true" />
         Protocolo
       </button>
       {open && <ProtocolDialog onClose={() => setOpen(false)} />}

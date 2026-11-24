@@ -204,14 +204,10 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
     <section aria-label="Cohorte de pacientes">
       {/* Cabecera */}
       <div className="table-heading">
-        <h2 className="text-base font-semibold text-content-heading">
+        <h2 className="text-base font-semibold text-content-heading mr-3">
           Cohorte de pacientes
         </h2>
-
-        <p className="mt-1 text-sm text-content-subtle">
-          {dataset.fileName} · {dataset.rows.length} registros ·{" "}
-          {dataset.columns.length} columnas originales
-        </p>
+        <ClinicalDocumentsExplorer />
       </div>
 
       <div>
@@ -225,62 +221,90 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
               Buscar registros
             </label>
 
-            <div className="search-control">
-              <Search size={16} />
-              <input
-                id="patient-search"
-                type="search"
-                value={table.state.globalFilter ?? ""}
-                onChange={(event) => {
-                  table.setGlobalFilter(event.target.value);
-                  table.setPageIndex(0);
-                }}
-                placeholder="Buscar en los registros…"
-                className="text-input"
-              />
+            <div className="flex items-end gap-2">
+              <div className="search-control min-w-0 flex-1">
+                <Search size={16} />
+                <input
+                  id="patient-search"
+                  type="search"
+                  value={table.state.globalFilter ?? ""}
+                  onChange={(event) => {
+                    table.setGlobalFilter(event.target.value);
+                    table.setPageIndex(0);
+                  }}
+                  placeholder="Buscar en los registros…"
+                  className="text-input h-10"
+                />
+              </div>
+              <button
+                type="button"
+                className="btn size-10 shrink-0 p-0"
+                aria-label="Restablecer vista"
+                title="Restablecer vista"
+                onClick={resetView}
+              >
+                <RotateCcw size={14} aria-hidden="true" />
+              </button>
             </div>
           </div>
-          <button type="button" onClick={resetView} className="btn ml-auto">
-            <RotateCcw size={14} />
-            Restablecer vista
-          </button>
         </div>
 
-        {/* Selector de columnas */}
-        <details className="column-options">
-          <summary>
-            <Columns3 size={14} className="mr-1 inline" /> Columnas visibles ·{" "}
-            {
-              table
-                .getVisibleLeafColumns()
-                .filter((column) => column.getCanHide()).length
-            }{" "}
-            de {dataset.columns.length}
-          </summary>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {table
-              .getAllLeafColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => (
-                <label
-                  key={column.id}
-                  className="flex items-center gap-2 text-sm text-content-muted"
-                >
-                  <input
-                    type="checkbox"
-                    checked={column.getIsVisible()}
-                    onChange={column.getToggleVisibilityHandler()}
-                    className="accent-interactive"
-                  />
+        <div className="column-options flex items-start justify-between gap-2">
+          <details className="min-w-0 flex-1">
+            <summary className="leading-8">
+              <Columns3 size={14} className="mr-1 inline" /> Columnas visibles ·{" "}
+              {
+                table
+                  .getVisibleLeafColumns()
+                  .filter((column) => column.getCanHide()).length
+              }{" "}
+              de {dataset.columns.length}
+            </summary>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {table
+                .getAllLeafColumns()
+                .filter((column) => column.getCanHide())
+                .map((column) => (
+                  <label
+                    key={column.id}
+                    className="flex items-center gap-2 text-sm text-content-muted"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={column.getIsVisible()}
+                      onChange={column.getToggleVisibilityHandler()}
+                      className="accent-interactive"
+                    />
 
-                  {columnInfo.get(column.id)?.readable_name ?? column.id}
-                </label>
-              ))}
-          </div>
-        </details>
-
-        <div className="border-b border-line px-4 py-3">
-          <ClinicalDocumentsExplorer />
+                    {columnInfo.get(column.id)?.readable_name ?? column.id}
+                  </label>
+                ))}
+            </div>
+          </details>
+          <nav aria-label="Paginación de pacientes" className="flex shrink-0 items-center gap-1">
+            <button
+              type="button"
+              className="btn btn-ghost size-8 min-h-8 p-0"
+              aria-label="Página anterior"
+              disabled={!table.getCanPreviousPage()}
+              onClick={() => table.previousPage()}
+            >
+              <ChevronLeft size={16} aria-hidden="true" />
+            </button>
+            <span role="status" className="whitespace-nowrap text-sm tabular-nums text-content-muted">
+              <span className="sr-only">Página </span>
+              {table.state.pagination.pageIndex + 1}/{Math.max(totalPages, 1)}
+            </span>
+            <button
+              type="button"
+              className="btn btn-ghost size-8 min-h-8 p-0"
+              aria-label="Página siguiente"
+              disabled={!table.getCanNextPage()}
+              onClick={() => table.nextPage()}
+            >
+              <ChevronRight size={16} aria-hidden="true" />
+            </button>
+          </nav>
         </div>
 
         {/* Tabla */}
@@ -365,36 +389,10 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
           )}
         </div>
 
-        {/* Paginación */}
         <div className="table-footer">
           <p className="text-sm text-content-subtle">
             {filteredCount} registros encontrados
           </p>
-
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-              className="btn"
-            >
-              <ChevronLeft size={14} /> Anterior
-            </button>
-
-            <span className="text-sm text-content-muted">
-              Página {table.state.pagination.pageIndex + 1} de{" "}
-              {Math.max(totalPages, 1)}
-            </span>
-
-            <button
-              type="button"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-              className="btn"
-            >
-              Siguiente <ChevronRight size={14} />
-            </button>
-          </div>
         </div>
       </div>
     </section>

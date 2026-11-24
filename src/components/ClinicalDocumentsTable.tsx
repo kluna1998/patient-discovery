@@ -45,25 +45,38 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
   const totalPages = Math.max(table.getPageCount(), 1);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3 p-4">
-      <label className="block w-full max-w-sm">
-        <span className="mb-1 block font-medium">Buscar por identificador de paciente</span>
+    <div className="flex min-h-0 flex-1 flex-col gap-4 p-5 sm:p-6">
+      <div className="flex shrink-0 items-center justify-between gap-3">
         <input
           type="search"
-          className="text-input"
+          className="text-input min-w-0 max-w-sm"
+          aria-label="Buscar por identificador de paciente"
+          placeholder="Buscar por identificador…"
           value={table.state.globalFilter ?? ""}
           onChange={(event) => {
             table.setGlobalFilter(event.target.value);
             table.setPageIndex(0);
           }}
         />
-      </label>
+        <nav aria-label="Paginación del explorador" className="flex shrink-0 items-center gap-1">
+          <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Página anterior" disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}>
+            <ChevronLeft size={16} aria-hidden="true" />
+          </button>
+          <span role="status" className="whitespace-nowrap text-sm tabular-nums text-content-muted">
+            <span className="sr-only">Página </span>
+            {table.state.pagination.pageIndex + 1}/{totalPages}
+          </span>
+          <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Página siguiente" disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}>
+            <ChevronRight size={16} aria-hidden="true" />
+          </button>
+        </nav>
+      </div>
       <div className="min-h-0 flex-1 overflow-auto rounded-panel border border-line">
         <table className="w-full text-left text-sm">
           <thead className="bg-surface-muted">
             <tr>
               <th scope="col" aria-sort={descending ? "descending" : "ascending"} className="px-3 py-2">
-                <button type="button" className="btn btn-ghost min-h-8 px-2 py-1 text-left" onClick={() => idColumn?.toggleSorting(!descending)}>
+                <button type="button" className="btn btn-ghost min-h-8 px-2 py-1 text-left text-sm" onClick={() => idColumn?.toggleSorting(!descending)}>
                   Identificador del paciente
                   {descending ? <ArrowDown size={14} aria-hidden="true" /> : <ArrowUp size={14} aria-hidden="true" />}
                 </button>
@@ -82,7 +95,7 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
                         <button
                           type="button"
                           aria-current={selected?.patientId === patient.patientId && selected.document.id === document.id}
-                          className="btn min-h-8 border-document-row-selected-border bg-document-row-selected px-2 py-1 text-left text-content-strong hover:bg-document-row-hover aria-[current=true]:border-primary motion-safe:transition-colors motion-safe:duration-150"
+                          className="btn min-h-8 border-document-row-selected-border bg-document-row-selected px-2 py-1 text-left text-sm text-content-strong hover:bg-document-row-hover aria-[current=true]:border-primary motion-safe:transition-colors motion-safe:duration-150"
                           onClick={(event) => onSelect(patient.patientId, document, event.currentTarget)}
                         >
                           <FileText size={14} aria-hidden="true" className="shrink-0 text-primary" />
@@ -100,17 +113,6 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
           </tbody>
         </table>
       </div>
-      <nav aria-label="Paginación del explorador" className="flex shrink-0 flex-wrap items-center gap-2">
-        <button type="button" className="btn min-h-8 px-2 py-1" disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}>
-          <ChevronLeft size={14} aria-hidden="true" /> Anterior
-        </button>
-        <span role="status" className="text-xs text-content-muted">
-          Página {table.state.pagination.pageIndex + 1} de {totalPages}
-        </span>
-        <button type="button" className="btn min-h-8 px-2 py-1" disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}>
-          Siguiente <ChevronRight size={14} aria-hidden="true" />
-        </button>
-      </nav>
     </div>
   );
 }

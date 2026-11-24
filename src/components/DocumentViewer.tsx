@@ -1,6 +1,6 @@
 import DocumentSearchToolbar from "./DocumentSearchToolbar";
 import { useDocumentSearch } from "../hooks/useDocumentSearch";
-import { FileText, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { getClinicalDocumentText } from "../services/clinicalDocuments";
 import type { ClinicalDocument } from "../services/clinicalDocuments";
@@ -46,9 +46,11 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
 
   return (
     <section className="flex min-h-0 flex-1 flex-col bg-document-workspace text-sm" aria-label="Contenido del informe">
-      <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-line bg-surface py-4 pl-4 pr-14 lg:pr-4">
+      <header className={`relative flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-line bg-surface py-4 pl-4 lg:pr-4 ${onShowList ? "pr-24" : "pr-14"}`}>
         <div className="flex min-w-0 items-start gap-2">
-          <FileText size={20} aria-hidden="true" className="mt-1 shrink-0 text-primary" />
+          <span className="relative mt-1 size-6 shrink-0 text-primary sm:mt-0 sm:h-auto sm:w-11 sm:self-stretch">
+            <FileText aria-hidden="true" className="absolute inset-0 size-full" />
+          </span>
           <div className="min-w-0">
             <h3 className="wrap-break-word text-lg font-semibold text-primary">
               {document.type || "Informe clínico"}
@@ -61,17 +63,27 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
         </div>
         <div className="flex flex-wrap gap-2">
           {onShowList && (
-            <button type="button" className="btn btn-ghost min-h-8 px-3 py-1 lg:hidden" onClick={onShowList}>
-              Ver lista
+            <button
+              type="button"
+              className="btn btn-ghost absolute top-4 right-14 size-8 min-h-8 p-0 lg:hidden"
+              aria-label="Volver al listado de documentos"
+              onClick={onShowList}
+            >
+              <ArrowLeft size={16} aria-hidden="true" />
             </button>
           )}
           <button
             type="button"
-            className={closeLabel ? "btn btn-ghost min-h-8 px-3 py-1" : "btn btn-ghost size-8 min-h-8 p-0"}
+            className={closeLabel ? "btn btn-ghost size-8 min-h-8 p-0 sm:w-auto sm:px-3 sm:py-1" : `btn btn-ghost size-8 min-h-8 p-0 ${onShowList ? "hidden lg:inline-flex" : ""}`}
             aria-label={closeLabel ?? "Cerrar visor"}
             onClick={onClose}
           >
-            {closeLabel ?? <X size={16} aria-hidden="true" />}
+            {closeLabel ? (
+              <>
+                <ArrowLeft size={16} aria-hidden="true" className="sm:hidden" />
+                <span className="hidden sm:inline">{closeLabel}</span>
+              </>
+            ) : <ArrowRight size={16} aria-hidden="true" />}
           </button>
         </div>
       </header>
