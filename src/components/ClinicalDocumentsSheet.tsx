@@ -1,7 +1,8 @@
 import type { ComponentProps, ReactElement } from "react";
 import { useEffect, useState } from "react";
-import { getClinicalDocuments, getClinicalDocumentText } from "../services/clinicalDocuments";
+import { getClinicalDocuments } from "../services/clinicalDocuments";
 import type { ClinicalDocument } from "../services/clinicalDocuments";
+import DocumentViewer from "./DocumentViewer";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 
 type Props = Pick<ComponentProps<typeof Sheet>, "open" | "onOpenChange"> & {
@@ -65,31 +66,7 @@ function PatientDocuments({ patientId }: { patientId: string }) {
           </li>
         ))}
       </ul>
-      {selected && <DocumentText key={selected.id} document={selected} />}
+      {selected && <DocumentViewer key={selected.id} document={selected} />}
     </>
-  );
-}
-
-function DocumentText({ document }: { document: ClinicalDocument }) {
-  const [text, setText] = useState<string>();
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    getClinicalDocumentText(document.textPath, controller.signal).then(
-      (result) => { if (!controller.signal.aborted) setText(result); },
-      () => { if (!controller.signal.aborted) setError(true); },
-    );
-    return () => controller.abort();
-  }, [document.textPath]);
-
-  return (
-    <section className="mt-4 border-t border-line pt-4" aria-label="Contenido del informe">
-      {error ? <p role="alert">No se pudo cargar el informe.</p> : text === undefined ? (
-        <p role="status">Cargando informe…</p>
-      ) : (
-        <pre className="whitespace-pre-wrap break-words font-sans leading-relaxed">{text || "El informe está vacío."}</pre>
-      )}
-    </section>
   );
 }
