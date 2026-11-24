@@ -97,7 +97,7 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
                 <ClinicalDocumentsSheet open={documentsOpen} onOpenChange={setDocumentsOpen} container={dialog} patientId={row.nhc}>
-                  <button type="button" className="btn min-h-8 px-3 py-1 text-sm">Ver documentos</button>
+                  <button type="button" className="btn min-h-8 px-3 py-1 text-sm text-primary hover:bg-surface-accent">Ver documentos</button>
                 </ClinicalDocumentsSheet>
               </div>
             </div>

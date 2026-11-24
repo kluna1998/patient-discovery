@@ -117,7 +117,7 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
                 <button
                   type="button"
                   aria-label={`Abrir documentos del registro #${recordNumber}`}
-                  className="btn min-h-8 gap-1.5 whitespace-nowrap px-3 py-1"
+                  className="btn min-h-8 gap-1.5 whitespace-nowrap px-3 py-1 text-primary hover:bg-surface-accent"
                 >
                   <FileText size={14} aria-hidden="true" />
                 </button>

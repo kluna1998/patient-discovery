@@ -9,6 +9,7 @@ const SheetTitle = SheetPrimitive.Title;
 function SheetContent({
   container,
   children,
+  className,
   ...props
 }: ComponentProps<typeof SheetPrimitive.Content> & { container?: HTMLElement | null }) {
   return (
@@ -17,11 +18,11 @@ function SheetContent({
       <SheetPrimitive.Content
         {...props}
         data-slot="sheet-content"
-        className="fixed inset-y-0 right-0 z-50 flex w-3/4 max-w-sm flex-col border-l border-line bg-surface text-content shadow-lg"
+        className={`fixed inset-y-0 right-0 z-50 flex w-3/4 max-w-sm border-l border-line bg-surface text-content shadow-lg ${className ?? ""}`}
       >
         {children}
-        <SheetPrimitive.Close className="btn absolute right-3 top-3 min-h-8 p-2" aria-label="Cerrar documentos">
-          <X size={16} />
+        <SheetPrimitive.Close className="btn btn-ghost absolute right-4 top-4 size-8 min-h-8 p-0" aria-label="Cerrar documentos">
+          <X size={16} aria-hidden="true" />
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>
     </SheetPrimitive.Portal>
