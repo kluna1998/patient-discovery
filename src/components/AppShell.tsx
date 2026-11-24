@@ -9,7 +9,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <header className="topbar">
         <div className="topbar-brand">
           <img
-            src={`${import.meta.env.BASE_URL}clinic_logo.svg`}
+            src={`${import.meta.env.BASE_URL}assets/clinic_logo.svg`}
             alt="Clínic Barcelona"
             width={332}
             height={142}
