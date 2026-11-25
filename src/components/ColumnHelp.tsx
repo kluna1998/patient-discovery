@@ -1,5 +1,5 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import type { KeyboardEvent as ReactKeyboardEvent, ReactNode } from "react";
+import type { PointerEvent as ReactPointerEvent, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { CircleCheck, TriangleAlert, CircleHelp, Info } from "lucide-react";
 import type { ColumnInfo } from "../services/columnDictionary";
@@ -24,7 +24,8 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
   const buttonRef = useRef<HTMLButtonElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [open, setOpen] = useState(false);
+  const [openMode, setOpenMode] = useState<"hover" | "activation">();
+  const open = openMode !== undefined;
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const [position, setPosition] = useState({ left: 0, top: 0 });
 
@@ -36,43 +37,70 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
     cancelClose();
     // Keep modal tooltips in the dialog's top layer.
     setPortalTarget(buttonRef.current?.closest("dialog") ?? document.body);
-    setOpen(true);
+    setOpenMode("hover");
   }
 
   function scheduleClose() {
     cancelClose();
-    closeTimer.current = setTimeout(() => setOpen(false), 150);
+    closeTimer.current = setTimeout(() => {
+      if (interactive && tooltipRef.current?.contains(document.activeElement)) return;
+      setOpenMode((mode) => interactive && mode === "activation" ? mode : undefined);
+    }, 150);
+  }
+
+  function showOnHover(event: ReactPointerEvent) {
+    if (event.pointerType !== "mouse" || documentsOpen) return;
+    cancelClose();
+    setOpenMode((mode) => mode ?? "hover");
+  }
+
+  function leaveOnHover(event: ReactPointerEvent) {
+    if (event.pointerType === "mouse" && !documentsOpen) scheduleClose();
+  }
+
+  function togglePopover() {
+    cancelClose();
+    setOpenMode((mode) => mode === "activation" ? undefined : "activation");
   }
 
   useEffect(() => () => cancelClose(), []);
 
   useEffect(() => {
-    if (!interactive || !open || documentsOpen) return;
+    if (!interactive || !open) return;
+    if (documentsOpen) {
+      cancelClose();
+      return;
+    }
     function dismissOutside(event: Event) {
       if (!(event.target instanceof Node) || buttonRef.current?.contains(event.target) ||
           tooltipRef.current?.contains(event.target) || (event.target instanceof Element &&
           event.target.closest('[data-slot="sheet-content"], [data-slot="sheet-overlay"]'))) return;
-      setOpen(false);
+      cancelClose();
+      setOpenMode(undefined);
+    }
+    function dismissPopover(event: KeyboardEvent) {
+      if (event.key !== "Escape" || event.defaultPrevented || (event.target instanceof Element &&
+          event.target.closest('[data-slot="sheet-content"]'))) return;
+      event.preventDefault();
+      cancelClose();
+      if (tooltipRef.current?.contains(document.activeElement)) {
+        buttonRef.current?.focus({ preventScroll: true });
+      }
+      setOpenMode(undefined);
     }
     document.addEventListener("pointerdown", dismissOutside);
     document.addEventListener("focusin", dismissOutside);
+    document.addEventListener("keydown", dismissPopover);
     return () => {
       document.removeEventListener("pointerdown", dismissOutside);
       document.removeEventListener("focusin", dismissOutside);
+      document.removeEventListener("keydown", dismissPopover);
     };
   }, [interactive, open, documentsOpen]);
 
   useLayoutEffect(() => {
-    if (interactive && open) tooltipRef.current?.focus({ preventScroll: true });
-  }, [interactive, open]);
-
-  function dismissPopover(event: ReactKeyboardEvent) {
-    if (event.key !== "Escape" || !open || documentsOpen) return;
-    event.preventDefault();
-    event.stopPropagation();
-    setOpen(false);
-    buttonRef.current?.focus({ preventScroll: true });
-  }
+    if (interactive && openMode === "activation") tooltipRef.current?.focus({ preventScroll: true });
+  }, [interactive, openMode]);
 
   useLayoutEffect(() => {
     if (!open) return;
@@ -90,7 +118,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
     function dismiss(event: KeyboardEvent) {
       if (event.key === "Escape") {
         cancelClose();
-        setOpen(false);
+        setOpenMode(undefined);
       }
     }
     place();
@@ -115,7 +143,8 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
       style={position}
       onMouseEnter={interactive ? undefined : cancelClose}
       onMouseLeave={interactive ? undefined : scheduleClose}
-      onKeyDown={interactive ? dismissPopover : undefined}
+      onPointerEnter={interactive ? showOnHover : undefined}
+      onPointerLeave={interactive ? leaveOnHover : undefined}
     >
       <div className="column-help-content">
         <strong id={`${id}-title`}>{title}</strong>
@@ -169,8 +198,9 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
         onMouseLeave={interactive ? undefined : scheduleClose}
         onFocus={interactive ? undefined : show}
         onBlur={interactive ? undefined : scheduleClose}
-        onClick={interactive ? () => setOpen(!open) : show}
-        onKeyDown={interactive ? dismissPopover : undefined}
+        onPointerEnter={interactive ? showOnHover : undefined}
+        onPointerLeave={interactive ? leaveOnHover : undefined}
+        onClick={interactive ? togglePopover : show}
         className={`column-help-button${status ? ` result-help-${status}` : ""}`}
       ><Icon size={status ? 16 : 15} /></button>
       {interactive ? help : help && createPortal(help, portalTarget ?? document.body)}

@@ -65,21 +65,25 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
     const report = evidenceState.status === "complete" ? evidenceState.report : undefined;
     const count = report?.results.get(column)?.references.length ?? 0;
     const partial = !!report?.failedDocuments;
-    const showCount = report && (count > 0 || !partial);
-    const detail = evidenceState.status === "error" ? "Error de búsqueda"
-      : partial ? partialEvidenceLabel : "";
+    const showCount = !!report && (count > 0 || !partial);
+    const inactive = loading || (showCount && count === 0);
+    const error = evidenceState.status === "error";
+    const detail = error ? "Error de búsqueda" : partial ? partialEvidenceLabel : "";
+    const colors = error ? "border-error/20 bg-error-bg text-error hover:bg-error/10 hover:text-error"
+      : count > 0 ? "bg-document-row-selected hover:bg-brand-accent hover:text-white text-primary"
+      : loading ? "text-content-muted"
+      : "bg-surface-hover text-primary hover:bg-line-soft";
 
     return (
       <button
         type="button"
-        className={`btn btn-ghost min-h-8 gap-1 px-2 py-1 text-xs ${count ? "text-primary" : "text-content-muted"}`}
-        aria-haspopup="dialog"
-        aria-disabled={loading || undefined}
-        tabIndex={loading ? -1 : undefined}
+        className={`btn btn-ghost min-h-8 gap-1 px-2 py-0 text-xs aria-disabled:cursor-default aria-disabled:hover:bg-surface-hover ${colors}`}
+        aria-haspopup={inactive ? undefined : "dialog"}
+        aria-disabled={inactive || undefined}
+        tabIndex={inactive ? -1 : undefined}
         aria-label={loading ? loadingLabel : [`Referencias de ${info.readable_name}`,
           showCount ? `${count} ${count === 1 ? "documento" : "documentos"}` : "", detail].filter(Boolean).join(" · ")}
-        onClick={(event) => {
-          if (loading) return;
+        onClick={inactive ? undefined : (event) => {
           referenceTrigger.current = event.currentTarget;
           setReferenceColumn(column);
           setDocumentsOpen(true);
