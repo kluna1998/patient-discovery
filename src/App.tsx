@@ -344,12 +344,13 @@ function App() {
         </div>
       </dialog>
 
-      {selectedRowId !== null && dataset && (
+      {selectedRowId !== null && dataset && sourceDataset && (
         <DecisionDialog
           key={selectedRowId}
           rowId={selectedRowId}
           decision={decisions[selectedRowId]}
           row={dataset.rows[selectedRowId]}
+          cohort={sourceDataset}
           columns={dataset.columns}
           dictionary={dictionary.entries}
           onSave={handleSaveDecision}

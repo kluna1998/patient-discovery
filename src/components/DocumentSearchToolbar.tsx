@@ -9,6 +9,25 @@ interface Props {
   onNavigate: (direction: -1 | 1) => void;
 }
 
+export function DocumentMatchNavigation({ count, activeIndex, onNavigate, evidence = false, emptyLabel = "" }: Pick<Props, "count" | "activeIndex" | "onNavigate"> & {
+  evidence?: boolean;
+  emptyLabel?: string;
+}) {
+  return (
+    <>
+      <p role="status" className="px-1 text-xs text-content-muted tabular-nums">
+        {count ? `${evidence ? "Evidencia " : ""}${activeIndex + 1} de ${count}` : emptyLabel}
+      </p>
+      <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label={evidence ? "Evidencia anterior" : "Coincidencia anterior"} disabled={!count} onClick={() => onNavigate(-1)}>
+        <ChevronUp size={16} aria-hidden="true" />
+      </button>
+      <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label={evidence ? "Evidencia siguiente" : "Coincidencia siguiente"} disabled={!count} onClick={() => onNavigate(1)}>
+        <ChevronDown size={16} aria-hidden="true" />
+      </button>
+    </>
+  );
+}
+
 export default function DocumentSearchToolbar({ query, count, activeIndex, onQueryChange, onNavigate }: Props) {
   const input = useRef<HTMLInputElement>(null);
 
@@ -32,15 +51,8 @@ export default function DocumentSearchToolbar({ query, count, activeIndex, onQue
         />
       </label>
       <div className="flex flex-wrap items-center gap-1">
-        <p role="status" className="px-1 text-xs text-content-muted tabular-nums">
-          {count ? `${activeIndex + 1} de ${count}` : query.trim() ? "Sin coincidencias" : ""}
-        </p>
-        <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Coincidencia anterior" disabled={!count} onClick={() => onNavigate(-1)}>
-          <ChevronUp size={16} aria-hidden="true" />
-        </button>
-        <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Coincidencia siguiente" disabled={!count} onClick={() => onNavigate(1)}>
-          <ChevronDown size={16} aria-hidden="true" />
-        </button>
+        <DocumentMatchNavigation count={count} activeIndex={activeIndex} onNavigate={onNavigate}
+          emptyLabel={query.trim() ? "Sin coincidencias" : ""} />
         <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Limpiar búsqueda" disabled={!query} onClick={() => {
           onQueryChange("");
           input.current?.focus();

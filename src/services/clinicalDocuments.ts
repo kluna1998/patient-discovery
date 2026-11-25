@@ -16,8 +16,9 @@ function dateKey(date: string) {
   return year && month && day ? `${year}${month}${day}` : "";
 }
 
-async function loadIndex(): Promise<DocumentIndex> {
-  const response = await fetch(`${import.meta.env.BASE_URL}indice_pacientes.csv`);
+async function loadIndex(signal?: AbortSignal): Promise<DocumentIndex> {
+  const response = await fetch(`${import.meta.env.BASE_URL}indice_pacientes.csv`,
+    signal ? { signal, cache: "no-cache" } : undefined);
   if (!response.ok) throw new Error("No se pudo cargar el índice.");
 
   const { data, errors } = Papa.parse<Record<string, string>>(await response.text(), {
@@ -56,8 +57,8 @@ function getIndex() {
   return indexRequest;
 }
 
-export async function getClinicalDocuments(patientId: string) {
-  return (await getIndex()).get(patientId) ?? [];
+export async function getClinicalDocuments(patientId: string, signal?: AbortSignal) {
+  return (await (signal ? loadIndex(signal) : getIndex())).get(patientId) ?? [];
 }
 
 export interface ClinicalDocumentsPatient {

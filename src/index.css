@@ -423,6 +423,9 @@
   width: min(420px, calc(100vw - 32px));
   max-height: calc(100dvh - 16px);
 }
+.column-help-tooltip[role="dialog"] {
+  z-index: 40;
+}
 .column-help-content {
   max-height: calc(100dvh - 28px);
   overflow: auto;
@@ -500,15 +503,15 @@
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
-.patient-field dt,
-.patient-field dd {
+.patient-field > dt,
+.patient-field > dd {
   display: inline;
 }
-.patient-field dt {
+.patient-field > dt {
   font-weight: 600;
   color: var(--color-document-label);
 }
-.patient-field dd {
+.patient-field > dd {
   margin: 0;
   color: var(--color-document-value);
   white-space: pre-wrap;

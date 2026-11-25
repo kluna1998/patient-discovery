@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Check, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Check, LoaderCircle, Search, X } from "lucide-react";
 import ColumnHelp from "./ColumnHelp";
 import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
 import type { PatientRow } from "../types/patient";
@@ -7,20 +7,27 @@ import { groupPatientFieldsForDialog } from "../services/columnDictionary";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { reviewStatusLabels } from "../types/review";
 import type { ReviewDecision } from "../types/review";
+import { useEvidenceMatching } from "../hooks/useEvidenceMatching";
+import { partialEvidenceLabel } from "../utils/evidenceLabels";
 
 interface Props {
   rowId: number;
   decision?: ReviewDecision;
   row: PatientRow;
+  cohort: object;
   columns: string[];
   dictionary: ColumnInfo[];
   onSave: (rowId: number, decision: ReviewDecision) => void;
   onClose: () => void;
 }
 
-export default function DecisionDialog({ rowId, row, columns, dictionary, decision, onSave, onClose }: Props) {
+export default function DecisionDialog({ rowId, row, cohort, columns, dictionary, decision, onSave, onClose }: Props) {
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
   const [documentsOpen, setDocumentsOpen] = useState(false);
+  const [referenceColumn, setReferenceColumn] = useState<string>();
+  const referenceTrigger = useRef<HTMLButtonElement>(null);
+  const { queries, state: evidenceState, retry } = useEvidenceMatching(cohort, row, dictionary, dialog !== null);
+  const referenceField = referenceColumn ? queries.get(referenceColumn)?.field : undefined;
   useEffect(() => {
     if (!dialog) return;
     const previousFocus =
@@ -49,6 +56,45 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
     : row[info.column_name]?.trim() ? row[info.column_name] : "Sin datos";
   const [reason, setReason] = useState(decision?.reason ?? "");
   const [status, setStatus] = useState<ReviewDecision["status"]>(decision?.status ?? "accepted");
+
+  function evidenceAction(info: ColumnInfo) {
+    const column = info.column_name;
+    if (!queries.has(column)) return;
+    const loading = evidenceState.status === "loading";
+    const loadingLabel = `Buscando referencias de ${info.readable_name}`;
+    const report = evidenceState.status === "complete" ? evidenceState.report : undefined;
+    const count = report?.results.get(column)?.references.length ?? 0;
+    const partial = !!report?.failedDocuments;
+    const showCount = report && (count > 0 || !partial);
+    const detail = evidenceState.status === "error" ? "Error de búsqueda"
+      : partial ? partialEvidenceLabel : "";
+
+    return (
+      <button
+        type="button"
+        className={`btn btn-ghost min-h-8 gap-1 px-2 py-1 text-xs ${count ? "text-primary" : "text-content-muted"}`}
+        aria-haspopup="dialog"
+        aria-disabled={loading || undefined}
+        tabIndex={loading ? -1 : undefined}
+        aria-label={loading ? loadingLabel : [`Referencias de ${info.readable_name}`,
+          showCount ? `${count} ${count === 1 ? "documento" : "documentos"}` : "", detail].filter(Boolean).join(" · ")}
+        onClick={(event) => {
+          if (loading) return;
+          referenceTrigger.current = event.currentTarget;
+          setReferenceColumn(column);
+          setDocumentsOpen(true);
+        }}
+      >
+        {loading ? (
+          <span role="status" aria-label={loadingLabel}>
+            <LoaderCircle size={14} aria-hidden="true" className="motion-safe:animate-spin" />
+          </span>
+        ) : <Search size={14} aria-hidden="true" />}
+        {showCount && count}
+        {detail && <span>{partial ? "Parcial" : "Error"}</span>}
+      </button>
+    );
+  }
 
   function handleSave(status: "accepted" | "rejected") {
     const cleanReason = reason.trim();
@@ -96,8 +142,23 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
               <p className="eyebrow mt-5">{decision ? "MODIFICAR DECISIÓN" : "FICHA DE REVISIÓN"}</p>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
-                <ClinicalDocumentsSheet open={documentsOpen} onOpenChange={setDocumentsOpen} container={dialog} patientId={row.nhc}>
-                  <button type="button" className="btn min-h-8 px-3 py-1 text-sm text-primary hover:bg-surface-accent">Ver documentos</button>
+                <ClinicalDocumentsSheet
+                  open={documentsOpen}
+                  onOpenChange={setDocumentsOpen}
+                  container={dialog}
+                  patientId={row.nhc}
+                  evidence={referenceField && { field: referenceField, state: evidenceState, retry }}
+                  onCloseAutoFocus={(event) => {
+                    if (referenceTrigger.current?.isConnected) {
+                      event.preventDefault();
+                      referenceTrigger.current.focus({ preventScroll: true });
+                    }
+                  }}
+                >
+                  <button type="button" className="btn min-h-8 px-3 py-1 text-sm text-primary hover:bg-surface-accent" onClick={() => {
+                    referenceTrigger.current = null;
+                    setReferenceColumn(undefined);
+                  }}>Ver documentos</button>
                 </ClinicalDocumentsSheet>
               </div>
             </div>
@@ -121,7 +182,9 @@ export default function DecisionDialog({ rowId, row, columns, dictionary, decisi
                       info={primary}
                       variant="dialog"
                       status={status}
-                      evidences={evidences.map((info) => ({ info, value: displayValue(info) }))}
+                      documentsOpen={documentsOpen}
+                      evidences={(primary.tipo === "Evidencia" ? [primary] : evidences)
+                        .map((info) => ({ info, value: displayValue(info), action: evidenceAction(info) }))}
                     />
                   ) : null;
                   return (

@@ -1,33 +1,46 @@
-import DocumentSearchToolbar from "./DocumentSearchToolbar";
+import DocumentSearchToolbar, { DocumentMatchNavigation } from "./DocumentSearchToolbar";
 import { useDocumentSearch } from "../hooks/useDocumentSearch";
 import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { getClinicalDocumentText } from "../services/clinicalDocuments";
 import type { ClinicalDocument } from "../services/clinicalDocuments";
+import type { DocumentEvidenceReference, EvidenceMatch } from "../types/evidence";
+import { documentHighlights } from "../utils/documentHighlights";
+import { metadataMatchLabel, partialEvidenceLabel } from "../utils/evidenceLabels";
+
+const emptyMatches: readonly EvidenceMatch[] = [];
 
 interface Props {
   document: ClinicalDocument;
   onClose: () => void;
   onShowList?: () => void;
   closeLabel?: string;
+  evidence?: DocumentEvidenceReference;
+  partialEvidence?: boolean;
 }
 
-export default function DocumentViewer({ document, onClose, onShowList, closeLabel }: Props) {
-  const [text, setText] = useState<string>();
+export default function DocumentViewer({ document, onClose, onShowList, closeLabel, evidence, partialEvidence }: Props) {
+  const [fetchedText, setFetchedText] = useState<string>();
+  const text = evidence?.text ?? fetchedText;
   const [error, setError] = useState(false);
   const { query, changeQuery, matches, activeIndex, navigate } = useDocumentSearch(text ?? "");
+  const evidenceMatches = evidence?.matches ?? emptyMatches;
+  const [evidenceIndex, setEvidenceIndex] = useState(0);
+  const [navigation, setNavigation] = useState<"evidence" | "manual">("evidence");
   const readingArea = useRef<HTMLDivElement>(null);
   const activeMark = useRef<HTMLElement>(null);
-  const activeMatch = matches[activeIndex];
+  const activeMatch = navigation === "manual" ? matches[activeIndex] : evidenceMatches[evidenceIndex];
+  const highlights = useMemo(() => documentHighlights(text?.length ?? 0, matches, evidenceMatches), [text, matches, evidenceMatches]);
 
   useEffect(() => {
+    if (evidence?.text !== undefined) return;
     const controller = new AbortController();
     getClinicalDocumentText(document.textPath, controller.signal).then(
-      (result) => { if (!controller.signal.aborted) setText(result); },
+      (result) => { if (!controller.signal.aborted) setFetchedText(result); },
       () => { if (!controller.signal.aborted) setError(true); },
     );
     return () => controller.abort();
-  }, [document.textPath]);
+  }, [document.textPath, evidence?.text]);
 
   useEffect(() => {
     const area = readingArea.current;
@@ -42,7 +55,7 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
       const offset = match.top - top - Math.max(0, (area.clientHeight - match.height) / 2);
       area.scrollTo({ top: area.scrollTop + offset });
     }
-  }, [activeMatch, query]);
+  }, [activeMatch, query, highlights]);
 
   return (
     <section className="flex min-h-0 flex-1 flex-col bg-document-workspace text-sm" aria-label="Contenido del informe">
@@ -58,6 +71,8 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
             <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-content-muted">
               {document.date && <span>{document.date}</span>}
               <span className="rounded-md border border-line bg-surface-muted px-2">Solo lectura</span>
+              {evidence?.metadataMatch && <span>{metadataMatchLabel}</span>}
+              {partialEvidence && <span role="status">{partialEvidenceLabel}. Algunos informes no se pudieron leer.</span>}
             </div>
           </div>
         </div>
@@ -87,13 +102,27 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
           </button>
         </div>
       </header>
+      {evidenceMatches.length > 0 && (
+        <div className="flex shrink-0 flex-wrap items-center gap-1 border-b border-line bg-surface px-4 py-2">
+          <DocumentMatchNavigation evidence count={evidenceMatches.length} activeIndex={evidenceIndex} onNavigate={(direction) => {
+            setNavigation("evidence");
+            setEvidenceIndex((index) => (index + direction + evidenceMatches.length) % evidenceMatches.length);
+          }} />
+        </div>
+      )}
       {!error && text && (
         <DocumentSearchToolbar
           query={query}
           count={matches.length}
           activeIndex={activeIndex}
-          onQueryChange={changeQuery}
-          onNavigate={navigate}
+          onQueryChange={(value) => {
+            setNavigation(value.trim() ? "manual" : "evidence");
+            changeQuery(value);
+          }}
+          onNavigate={(direction) => {
+            if (matches.length) setNavigation("manual");
+            navigate(direction);
+          }}
         />
       )}
       <div className="flex min-h-0 flex-1 flex-col bg-document-workspace p-4">
@@ -102,22 +131,28 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
             <p role="status">Cargando informe…</p>
           ) : text ? (
             <pre className="whitespace-pre-wrap break-words font-sans text-clinical-body text-document-content">
-              {matches.map((match, index) => {
-                const start = matches[index - 1]?.end ?? 0;
-                const active = index === activeIndex;
+              {highlights.map(({ start, end, manualIndex, evidenceIndex: segmentEvidence }) => {
+                const piece = text.slice(start, end);
+                const manual = manualIndex >= 0;
+                const automatic = segmentEvidence >= 0;
+                if (!manual && !automatic) return <Fragment key={start}>{piece}</Fragment>;
+                const manualActive = manualIndex === activeIndex;
+                const background = automatic
+                  ? segmentEvidence === evidenceIndex ? "bg-brand-accent" : "bg-document-evidence-positive"
+                  : manualActive ? "bg-document-search-match-active" : "bg-document-search-match";
+                const overlap = automatic && manual
+                  ? manualActive ? "underline decoration-2 decoration-document-search-match-active" : "underline decoration-2 decoration-document-search-match"
+                  : "";
                 return (
-                  <Fragment key={match.start}>
-                    {text.slice(start, match.start)}
-                    <mark
-                    ref={active ? activeMark : undefined}
-                    className={`rounded-sm text-content-strong ${active ? "bg-document-search-match-active" : "bg-document-search-match"}`}
+                  <mark
+                    key={start}
+                    ref={start === activeMatch?.start ? activeMark : undefined}
+                    className={`rounded-sm text-content-strong ${background} ${overlap}`}
                   >
-                    {text.slice(match.start, match.end)}
+                    {piece}
                   </mark>
-                  </Fragment>
                 );
               })}
-              {text.slice(matches.at(-1)?.end ?? 0)}
             </pre>
           ) : (
             <pre className="whitespace-pre-wrap break-words font-sans text-clinical-body text-document-content">El informe está vacío.</pre>
