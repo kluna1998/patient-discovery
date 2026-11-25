@@ -6,10 +6,12 @@ import type { EvidenceField, EvidenceSearchState } from "../types/evidence";
 import { formatMatchCount, partialEvidenceLabel } from "../utils/evidenceLabels";
 import ClinicalDocumentsList from "./ClinicalDocumentsList";
 import DocumentViewer from "./DocumentViewer";
+import EvidenceRegexField from "./EvidenceRegexField";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "./ui/sheet";
 
 interface EvidenceMode {
   field: EvidenceField;
+  pattern: string;
   state: EvidenceSearchState;
   retry: () => void;
 }
@@ -42,8 +44,9 @@ export default function ClinicalDocumentsSheet({ children, container, patientId,
 function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; evidence?: EvidenceMode }) {
   const report = evidence?.state.status === "complete" ? evidence.state.report : undefined;
   const references = evidence && report?.results.get(evidence.field.columnName)?.references;
+  const unmatchedDocuments = references?.length === 0 && report?.failedDocuments === 0 ? report.documents : undefined;
   const byId = references && new Map(references.map((reference) => [reference.document.id, reference]));
-  const direct = references?.length === 1 ? references[0].document : undefined;
+  const direct = references?.length === 1 ? references[0].document : unmatchedDocuments?.[0];
   const [selected, setSelected] = useState<ClinicalDocument | undefined>(direct);
   const [reading, setReading] = useState(!!direct);
   const selectedButton = useRef<HTMLButtonElement>(null);
@@ -111,7 +114,9 @@ function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; 
               <p className="whitespace-pre-wrap break-words text-sm text-content-muted">{evidence.field.value}</p>
               {references && (references.length > 0 || !report?.failedDocuments) && (
                 <p className="mt-1 text-xs text-content-muted">
-                  {references.length} {references.length === 1 ? "documento" : "documentos"} · {formatMatchCount(references.reduce((total, ref) => total + ref.matches.length, 0))}
+                  {unmatchedDocuments
+                    ? "0 documentos con coincidencias"
+                    : `${references.length} ${references.length === 1 ? "documento" : "documentos"} · ${formatMatchCount(references.reduce((total, ref) => total + ref.matches.length, 0))}`}
                 </p>
               )}
             </>
@@ -150,10 +155,20 @@ function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; 
                   {!references?.length && <button type="button" className="btn mt-2" onClick={retryEvidence}>Reintentar búsqueda</button>}
                 </div>
               )}
-              {references && (references.length ? (
+              {!!references?.length && (
                 <ClinicalDocumentsList documents={references.map((ref) => ref.document)} references={byId}
                   indexError={false} selected={selected} onSelect={selectDocument} />
-              ) : !report?.failedDocuments && <p>No se encontraron referencias documentales para esta evidencia.</p>)}
+              )}
+              {unmatchedDocuments && (
+                <>
+                  <h3 className="mb-2 font-medium text-primary">Documentos del paciente</h3>
+                  <ClinicalDocumentsList documents={unmatchedDocuments} indexError={false}
+                    selected={selected} onSelect={selectDocument} />
+                  {unmatchedDocuments.length === 0 && (
+                    <div className="mt-4"><EvidenceRegexField pattern={evidence.pattern} /></div>
+                  )}
+                </>
+              )}
             </>
           ) : patientId ? (
             <ClinicalDocumentsList documents={documents} indexError={indexError} selected={selected} onSelect={selectDocument} />
@@ -172,7 +187,7 @@ function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; 
           className={`min-h-0 min-w-0 flex-1 flex-col ${reading ? "flex" : "hidden lg:flex"}`}
         >
           <DocumentViewer key={selected.id} document={selected} onClose={closeViewer} onShowList={showList}
-            evidence={byId?.get(selected.id)} partialEvidence={!!report?.failedDocuments} />
+            evidence={byId?.get(selected.id)} evidencePattern={evidence?.pattern} partialEvidence={!!report?.failedDocuments} />
         </div>
       )}
     </>

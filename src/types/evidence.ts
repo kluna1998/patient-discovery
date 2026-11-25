@@ -25,6 +25,7 @@ export interface EvidenceSearchResult extends EvidenceField {
 
 export interface EvidenceReport {
   results: ReadonlyMap<string, EvidenceSearchResult>;
+  documents: readonly ClinicalDocument[];
   failedDocuments: number;
 }
 

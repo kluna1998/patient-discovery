@@ -133,7 +133,7 @@ async function matchDocuments(
   for (const { references } of strategies.values()) {
     references.sort((a, b) => order.get(a.document.id)! - order.get(b.document.id)!);
   }
-  return { results, failedDocuments };
+  return { results, documents, failedDocuments };
 }
 
 export async function searchPatientEvidence(
@@ -144,7 +144,7 @@ export async function searchPatientEvidence(
   signal: AbortSignal,
 ): Promise<EvidenceReport> {
   signal.throwIfAborted();
-  if (!queries.size) return { results: new Map(), failedDocuments: 0 };
+  if (!queries.size) return { results: new Map(), documents: [], failedDocuments: 0 };
   if (!patientId) throw new Error("Este registro no tiene un identificador de paciente (nhc).");
 
   const uniqueDocuments = new Map<string, ClinicalDocument>();

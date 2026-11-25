@@ -1,4 +1,5 @@
 import DocumentSearchToolbar, { DocumentMatchNavigation } from "./DocumentSearchToolbar";
+import EvidenceRegexField from "./EvidenceRegexField";
 import { useDocumentSearch } from "../hooks/useDocumentSearch";
 import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
 import { Fragment, useEffect, useMemo, useRef, useState } from "react";
@@ -16,10 +17,11 @@ interface Props {
   onShowList?: () => void;
   closeLabel?: string;
   evidence?: DocumentEvidenceReference;
+  evidencePattern?: string;
   partialEvidence?: boolean;
 }
 
-export default function DocumentViewer({ document, onClose, onShowList, closeLabel, evidence, partialEvidence }: Props) {
+export default function DocumentViewer({ document, onClose, onShowList, closeLabel, evidence, evidencePattern, partialEvidence }: Props) {
   const [fetchedText, setFetchedText] = useState<string>();
   const text = evidence?.text ?? fetchedText;
   const [error, setError] = useState(false);
@@ -102,12 +104,19 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
           </button>
         </div>
       </header>
-      {evidenceMatches.length > 0 && (
-        <div className="flex shrink-0 flex-wrap items-center gap-1 border-b border-line bg-surface px-4 py-2">
-          <DocumentMatchNavigation evidence count={evidenceMatches.length} activeIndex={evidenceIndex} onNavigate={(direction) => {
-            setNavigation("evidence");
-            setEvidenceIndex((index) => (index + direction + evidenceMatches.length) % evidenceMatches.length);
-          }} />
+      {evidencePattern && (
+        <div className="flex shrink-0 flex-wrap items-end gap-2 border-b border-line bg-surface px-4 py-2">
+          <div className="min-w-0 flex-1 basis-48">
+            <EvidenceRegexField pattern={evidencePattern} />
+          </div>
+          {evidenceMatches.length > 0 ? (
+            <div className="flex flex-wrap items-center gap-1">
+              <DocumentMatchNavigation evidence count={evidenceMatches.length} activeIndex={evidenceIndex} onNavigate={(direction) => {
+                setNavigation("evidence");
+                setEvidenceIndex((index) => (index + direction + evidenceMatches.length) % evidenceMatches.length);
+              }} />
+            </div>
+          ) : !evidence && <span className="flex min-h-8 items-center text-xs text-content-muted">0 coincidencias</span>}
         </div>
       )}
       {!error && text && (

@@ -64,8 +64,9 @@ function prepare(t) {
 
 test("groups text and metadata by document and shares scans across equivalent evidence", async (t) => {
   const { run, reads } = prepare(t);
-  const { results, failedDocuments } = await run();
+  const { results, documents, failedDocuments } = await run();
   assert.equal(failedDocuments, 0);
+  assert.deepEqual(documents.map(({ id }) => id), ["beta", "alpha", "gamma", "emptyDoc"]);
   assert.deepEqual([...results.keys()], ["extraction", "code", "sameCode", "absent"]);
   const dates = results.get("extraction").references;
   assert.deepEqual(dates.map(({ document, metadataMatch, matches }) =>

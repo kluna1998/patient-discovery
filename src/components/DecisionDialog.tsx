@@ -27,7 +27,7 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
   const [referenceColumn, setReferenceColumn] = useState<string>();
   const referenceTrigger = useRef<HTMLButtonElement>(null);
   const { queries, state: evidenceState, retry } = useEvidenceMatching(cohort, row, dictionary, dialog !== null);
-  const referenceField = referenceColumn ? queries.get(referenceColumn)?.field : undefined;
+  const referenceQuery = referenceColumn ? queries.get(referenceColumn) : undefined;
   useEffect(() => {
     if (!dialog) return;
     const previousFocus =
@@ -66,7 +66,6 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
     const count = report?.results.get(column)?.references.length ?? 0;
     const partial = !!report?.failedDocuments;
     const showCount = !!report && (count > 0 || !partial);
-    const inactive = loading || (showCount && count === 0);
     const error = evidenceState.status === "error";
     const detail = error ? "Error de búsqueda" : partial ? partialEvidenceLabel : "";
     const colors = error ? "border-error/20 bg-error-bg text-error hover:bg-error/10 hover:text-error"
@@ -78,12 +77,12 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
       <button
         type="button"
         className={`btn btn-ghost min-h-8 gap-1 px-2 py-0 text-xs aria-disabled:cursor-default aria-disabled:hover:bg-surface-hover ${colors}`}
-        aria-haspopup={inactive ? undefined : "dialog"}
-        aria-disabled={inactive || undefined}
-        tabIndex={inactive ? -1 : undefined}
+        aria-haspopup={loading ? undefined : "dialog"}
+        aria-disabled={loading || undefined}
+        tabIndex={loading ? -1 : undefined}
         aria-label={loading ? loadingLabel : [`Referencias de ${info.readable_name}`,
           showCount ? `${count} ${count === 1 ? "documento" : "documentos"}` : "", detail].filter(Boolean).join(" · ")}
-        onClick={inactive ? undefined : (event) => {
+        onClick={loading ? undefined : (event) => {
           referenceTrigger.current = event.currentTarget;
           setReferenceColumn(column);
           setDocumentsOpen(true);
@@ -151,7 +150,12 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
                   onOpenChange={setDocumentsOpen}
                   container={dialog}
                   patientId={row.nhc}
-                  evidence={referenceField && { field: referenceField, state: evidenceState, retry }}
+                  evidence={referenceQuery && {
+                    field: referenceQuery.field,
+                    pattern: referenceQuery.regex.toString(),
+                    state: evidenceState,
+                    retry,
+                  }}
                   onCloseAutoFocus={(event) => {
                     if (referenceTrigger.current?.isConnected) {
                       event.preventDefault();

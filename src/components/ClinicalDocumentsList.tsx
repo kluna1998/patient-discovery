@@ -4,7 +4,7 @@ import type { DocumentEvidenceReference } from "../types/evidence";
 import { formatMatchCount, metadataMatchLabel } from "../utils/evidenceLabels";
 
 interface Props {
-  documents?: ClinicalDocument[];
+  documents?: readonly ClinicalDocument[];
   indexError: boolean;
   selected?: ClinicalDocument;
   onSelect: (document: ClinicalDocument, button: HTMLButtonElement) => void;
