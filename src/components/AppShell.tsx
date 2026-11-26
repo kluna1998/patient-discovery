@@ -17,7 +17,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           />
         </div>
         <a
-          className="btn topbar-collaborate"
+          className="btn topbar-collaborate text-white"
           href="https://www.clinicbarcelona.org/colabora/amics-del-clinic"
         >
           COLABORA

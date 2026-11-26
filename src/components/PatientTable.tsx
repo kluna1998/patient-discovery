@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import {
   Search,
   RotateCcw,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Columns3,
@@ -81,6 +82,7 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
   }, [dataset.columns, columnInfo]);
   const [visibilityOverride, setVisibilityOverride] = useState<Record<string, boolean> | null>(null);
   const [documentsOpen, setDocumentsOpen] = useState(false);
+  const [columnsOpen, setColumnsOpen] = useState(false);
   // Generamos las columnas dinámicamente a partir del CSV.
   const columns = useMemo<ColumnDef<typeof features, PatientRow>[]>(
     () => [
@@ -213,92 +215,63 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
       </div>
 
       <div>
-        {/* Búsqueda global */}
-        <div className="table-tools">
-          <div className="w-full max-w-md">
-            <label
-              htmlFor="patient-search"
-              className="block text-xs font-medium text-content"
-            >
-              Buscar registros
-            </label>
-
-            <div className="flex items-end gap-2">
-              <div className="search-control min-w-0 flex-1">
-                <Search size={16} />
-                <input
-                  id="patient-search"
-                  type="search"
-                  value={table.state.globalFilter ?? ""}
-                  onChange={(event) => {
-                    table.setGlobalFilter(event.target.value);
-                    table.setPageIndex(0);
-                  }}
-                  placeholder="Buscar en los registros…"
-                  className="text-input h-10"
-                />
-              </div>
-              <button
-                type="button"
-                className="btn size-10 shrink-0 p-0"
-                aria-label="Restablecer vista"
-                title="Restablecer vista"
-                onClick={resetView}
-              >
-                <RotateCcw size={14} aria-hidden="true" />
-              </button>
-            </div>
-          </div>
-        </div>
 
         <details
-          className="column-options px-0 open:pb-0"
+          className="border-b border-documents-panel"
           open={documentsOpen}
           onToggle={(event) => setDocumentsOpen(event.currentTarget.open)}
         >
-          <summary className="ml-4 leading-8">
+          <summary className="list-inside border border-documents-panel bg-documents-panel px-4 py-3 text-xs leading-8 font-semibold text-primary hover:border-documents-panel-border-hover focus:outline-none">
             <FileText size={14} aria-hidden="true" className="mr-1 inline" /> Todos los documentos
           </summary>
           {documentsOpen && (
-            <div className="mt-3 flex h-[65dvh] min-w-0 flex-col overflow-hidden border-t border-line bg-surface">
-              <ClinicalDocumentsBrowser closeLabel="Volver a todos los documentos" cohort={cohort} dictionary={dictionary} />
+            <div className="all-documents-panel flex h-[65dvh] min-w-0 flex-col overflow-hidden bg-documents-panel">
+              <ClinicalDocumentsBrowser openDocumentInDialog cohort={cohort} dictionary={dictionary} />
             </div>
           )}
         </details>
 
-        <div className="column-options flex items-start justify-between gap-2">
-          <details className="min-w-0 flex-1">
-            <summary className="leading-8">
-              <Columns3 size={14} className="mr-1 inline" /> Columnas visibles ·{" "}
-              {
-                table
-                  .getVisibleLeafColumns()
-                  .filter((column) => column.getCanHide()).length
-              }{" "}
-              de {dataset.columns.length}
-            </summary>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {table
-                .getAllLeafColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => (
-                  <label
-                    key={column.id}
-                    className="flex items-center gap-2 text-sm text-content-muted"
-                  >
-                    <input
-                      type="checkbox"
-                      checked={column.getIsVisible()}
-                      onChange={column.getToggleVisibilityHandler()}
-                      className="accent-interactive"
-                    />
-
-                    {columnInfo.get(column.id)?.readable_name ?? column.id}
-                  </label>
-                ))}
+        <div className="column-options grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 border-primary/50 bg-table-header sm:grid-cols-[auto_minmax(0,1fr)_auto]">
+          <button
+            type="button"
+            aria-expanded={columnsOpen}
+            aria-controls="patient-column-options"
+            onClick={() => setColumnsOpen((open) => !open)}
+            className="group col-span-2 flex h-10 w-fit items-center gap-1.5 text-left text-xs font-semibold text-primary sm:col-span-1"
+          >
+            <ChevronDown size={14} aria-hidden="true" className="-rotate-90 group-aria-expanded:rotate-0" />
+            <Columns3 size={14} aria-hidden="true" />
+            <span>
+              Columnas visibles · {table.getVisibleLeafColumns().filter((column) => column.getCanHide()).length} de {dataset.columns.length}
+            </span>
+          </button>
+          <div className="flex w-full min-w-0 max-w-md items-center gap-2 justify-self-end">
+            <div className="search-control mt-0 min-w-0 flex-1">
+              <Search size={16} aria-hidden="true" />
+              <input
+                id="patient-search"
+                type="search"
+                aria-label="Buscar registros"
+                value={table.state.globalFilter ?? ""}
+                onChange={(event) => {
+                  table.setGlobalFilter(event.target.value);
+                  table.setPageIndex(0);
+                }}
+                placeholder="Buscar en los registros…"
+                className="text-input h-10"
+              />
             </div>
-          </details>
-          <nav aria-label="Paginación de pacientes" className="flex shrink-0 items-center gap-1">
+            <button
+              type="button"
+              className="btn size-10 shrink-0 p-0"
+              aria-label="Restablecer vista"
+              title="Restablecer vista"
+              onClick={resetView}
+            >
+              <RotateCcw size={14} aria-hidden="true" />
+            </button>
+          </div>
+          <nav aria-label="Paginación de pacientes" className="flex h-10 shrink-0 items-center gap-1">
             <button
               type="button"
               className="btn btn-ghost size-8 min-h-8 p-0"
@@ -322,7 +295,29 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
               <ChevronRight size={16} aria-hidden="true" />
             </button>
           </nav>
+          <div id="patient-column-options" className={columnsOpen ? "col-span-full flex flex-wrap gap-2" : "hidden"}>
+            {table
+              .getAllLeafColumns()
+              .filter((column) => column.getCanHide())
+              .map((column) => (
+                <label
+                  key={column.id}
+                  className="flex items-center gap-2 text-sm text-content-muted"
+                >
+                  <input
+                    type="checkbox"
+                    checked={column.getIsVisible()}
+                    onChange={column.getToggleVisibilityHandler()}
+                    className="accent-interactive"
+                  />
+
+                  {columnInfo.get(column.id)?.readable_name ?? column.id}
+                </label>
+              ))}
+          </div>
         </div>
+
+
 
         {/* Tabla */}
         <div

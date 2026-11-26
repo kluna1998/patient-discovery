@@ -168,9 +168,7 @@ function App() {
         <div>
           <p className="eyebrow">PATIENT DISCOVERY</p>
           <h1>Revisión de cohorte</h1>
-          <p className="mt-2 text-sm text-content-muted">
-            Revisa los registros de la cohorte y documenta las decisiones sobre cada candidato.
-          </p>
+
         </div>
         <div className="flex flex-wrap items-start gap-3">
           <ProtocolButton />

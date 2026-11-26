@@ -24,6 +24,8 @@
   --color-surface-muted: var(--color-slate-50);
   --color-surface-hover: var(--color-slate-100);
   --color-surface-accent: #edf3f8;
+  --color-documents-panel: #D3E9CC;
+  --color-documents-panel-border-hover: color-mix(in oklab, var(--color-brand-accent-hover) 65%, var(--color-primary));
   --color-table-header: #e9eff5;
   --color-table-row-hover: #f3f7fb;
   --color-progress-track: #e5ebef;
@@ -246,7 +248,7 @@
     background: var(--color-secondary);
   }
   .review-tabs {
-    @apply relative z-10 isolate ml-0.5 mr-0 mt-0 -mb-px grid w-[calc(100%-2rem)] max-w-[510px] grid-cols-3 pt-1;
+    @apply relative z-10 isolate ml-0.5 mr-0 mt-0 mb-0 grid w-[calc(100%-2rem)] max-w-[510px] grid-cols-3 pt-1;
   }
   .review-tab {
     @apply relative z-0 -mx-0.5 inline-flex h-12 min-w-0 items-center justify-center gap-2 whitespace-nowrap rounded-md border border-line-soft bg-surface-muted px-3 text-sm font-medium text-content-muted transition-[transform,box-shadow,background-color,border-color,color] duration-150 hover:bg-surface-hover;
@@ -259,6 +261,9 @@
   }
   .review-tab[aria-selected="true"] {
     @apply relative z-10 rounded-b-none border-x-line border-t-line  border-b-surface bg-surface font-semibold text-content-strong shadow-none;
+  }
+  .review-tab[aria-selected="true"]::after {
+    @apply pointer-events-none absolute inset-x-3 -bottom-px h-[3.5px] rounded-full bg-primary content-[''];
   }
   .review-tab-pending[aria-selected="true"] svg { @apply text-review-pending; }
   .review-tab-accepted[aria-selected="true"] svg { @apply text-review-accepted; }
@@ -365,6 +370,26 @@
   .skip-link {
     @apply fixed -top-20 left-4 z-[100] rounded bg-primary px-4 py-3 text-content-inverse focus:top-4;
   }
+}
+.all-documents-panel .table-tools {
+  background-color: var(--color-documents-panel);
+}
+.all-documents-panel .cohort-table tbody tr {
+  background-color: var(--color-surface);
+}
+.all-documents-panel .cohort-table tbody tr:nth-child(even) {
+  background-color: var(--color-canvas);
+}
+.all-documents-panel .cohort-table tbody tr:hover {
+  background-color: var(--color-table-row-hover);
+}
+.all-documents-panel .table-tools nav :is(button, [role="status"]),
+.all-documents-panel .table-scroll > p,
+.all-documents-panel > div:first-child > p {
+  color: var(--color-primary);
+}
+.all-documents-panel .table-tools nav button:not(:disabled):hover {
+  background-color: var(--color-surface-accent);
 }
 @media (max-width: 1023px) {
   .workspace {

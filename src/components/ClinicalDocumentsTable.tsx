@@ -118,7 +118,8 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect, c
                       <li>
                         <ClinicalDocumentsSheet patientId={patient.patientId} cohortEvidence={{ cohort, dictionary, indexes: recordsByPatient.get(patient.patientId) ?? [] }}>
                           <button type="button" className="btn min-h-8 px-2 py-1 text-primary" aria-label="Buscar evidencias" title="Buscar evidencias">
-                            <Search size={14} aria-hidden="true" />
+                            
+                            <Search size={14} aria-hidden="true" /> Buscar Evidencias
                           </button>
                         </ClinicalDocumentsSheet>
                       </li>

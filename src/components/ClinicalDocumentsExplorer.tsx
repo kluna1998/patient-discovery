@@ -14,7 +14,7 @@ export default function ClinicalDocumentsExplorer() {
       <Dialog.Trigger asChild>
         <button
           type="button"
-          className="btn btn-primary size-10 shrink-0 p-0 sm:w-auto sm:px-4 sm:py-2"
+          className="hidden btn btn-primary size-10 shrink-0 p-0 sm:w-auto sm:px-4 sm:py-2"
           aria-label="Explorar documentos clínicos"
           title="Explorar documentos clínicos"
         >
@@ -41,7 +41,11 @@ export default function ClinicalDocumentsExplorer() {
   );
 }
 
-export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador", cohort, dictionary }: { closeLabel?: string; cohort?: CsvDataset; dictionary?: ColumnInfo[] }) {
+export function ClinicalDocumentsBrowser({ openDocumentInDialog = false, cohort, dictionary }: {
+  openDocumentInDialog?: boolean;
+  cohort?: CsvDataset;
+  dictionary?: ColumnInfo[];
+}) {
   const [patients, setPatients] = useState<ClinicalDocumentsPatient[]>();
   const [error, setError] = useState(false);
   const [selected, setSelected] = useState<{ patientId: string; document: ClinicalDocument }>();
@@ -59,9 +63,10 @@ export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador", 
   }, []);
 
   useLayoutEffect(() => {
+    if (openDocumentInDialog) return;
     if (reading) viewer.current?.focus({ preventScroll: true });
     else sourceButton.current?.focus({ preventScroll: true });
-  }, [reading]);
+  }, [openDocumentInDialog, reading]);
 
   function selectDocument(patientId: string, document: ClinicalDocument, button: HTMLButtonElement) {
     sourceButton.current = button;
@@ -69,15 +74,37 @@ export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador", 
     setReading(true);
   }
 
+  const readingInline = reading && !openDocumentInDialog;
+
   return (
     <>
-      <div hidden={reading} className={reading ? "" : "flex min-h-0 flex-1 flex-col"}>
+      <div hidden={readingInline} className={readingInline ? "" : "flex min-h-0 flex-1 flex-col"}>
         {error ? <p className="p-4" role="alert">No se pudo cargar el índice de documentos.</p>
           : !patients ? <p className="p-4" role="status">Cargando documentos…</p>
           : patients.length ? <ClinicalDocumentsTable patients={patients} selected={selected} onSelect={selectDocument} cohort={cohort} dictionary={dictionary} />
           : <p className="p-4">No hay documentos disponibles.</p>}
       </div>
-      {reading && selected && (
+      {openDocumentInDialog && (
+        <Dialog.Root open={reading} onOpenChange={setReading}>
+          <Dialog.Portal>
+            <Dialog.Overlay className="fixed inset-0 z-50 bg-backdrop" />
+            <Dialog.Content
+              aria-describedby={undefined}
+              className="fixed inset-2 z-50 mx-auto flex max-w-5xl flex-col overflow-hidden rounded-panel border border-line bg-surface shadow-lg sm:inset-4"
+              onCloseAutoFocus={(event) => {
+                event.preventDefault();
+                sourceButton.current?.focus({ preventScroll: true });
+              }}
+            >
+              <Dialog.Title className="sr-only">Visor de documentos clínicos</Dialog.Title>
+              {selected && (
+                <DocumentViewer key={selected.document.id} document={selected.document} onClose={() => setReading(false)} closeLabel="Cerrar visor" />
+              )}
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      )}
+      {readingInline && selected && (
         <div
           ref={viewer}
           tabIndex={-1}
@@ -85,7 +112,7 @@ export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador", 
           aria-label={`Informe del paciente ${selected.patientId}`}
           className="flex min-h-0 min-w-0 flex-1 flex-col"
         >
-          <DocumentViewer document={selected.document} onClose={() => setReading(false)} closeLabel={closeLabel} />
+          <DocumentViewer document={selected.document} onClose={() => setReading(false)} closeLabel="Volver al explorador" />
         </div>
       )}
     </>
