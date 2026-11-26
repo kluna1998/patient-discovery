@@ -1,5 +1,8 @@
-import type { ComponentProps, MouseEvent, ReactElement } from "react";
+import type { ComponentProps, MouseEvent, ReactElement, ReactNode } from "react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEvidenceMatching } from "../hooks/useEvidenceMatching";
+import type { CsvDataset } from "../types/patient";
+import type { ColumnInfo } from "../services/columnDictionary";
 import { getClinicalDocuments } from "../services/clinicalDocuments";
 import type { ClinicalDocument } from "../services/clinicalDocuments";
 import type { EvidenceField, EvidenceSearchState } from "../types/evidence";
@@ -16,39 +19,150 @@ interface EvidenceMode {
   retry: () => void;
 }
 
+type EvidenceSearch = ReturnType<typeof useEvidenceMatching>;
+
+interface CohortEvidence {
+  cohort: CsvDataset;
+  dictionary: ColumnInfo[];
+  indexes: number[];
+}
+
 type Props = Pick<ComponentProps<typeof Sheet>, "open" | "onOpenChange"> & {
   children: ReactElement;
   container?: HTMLElement | null;
   patientId: string | undefined;
   evidence?: EvidenceMode;
+  evidenceSearch?: EvidenceSearch;
+  cohortEvidence?: CohortEvidence;
   onCloseAutoFocus?: ComponentProps<typeof SheetContent>["onCloseAutoFocus"];
 };
 
-export default function ClinicalDocumentsSheet({ children, container, patientId, evidence, onCloseAutoFocus, ...props }: Props) {
+export default function ClinicalDocumentsSheet({ children, container, patientId, evidence, evidenceSearch, cohortEvidence, onCloseAutoFocus, ...props }: Props) {
   const id = patientId?.trim();
 
   return (
     <Sheet {...props}>
       <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent container={container} className="clinical-documents-sheet" aria-describedby={undefined} onCloseAutoFocus={onCloseAutoFocus}>
-        <ClinicalDocumentsPanels
-          key={evidence ? `evidence:${evidence.field.columnName}:${evidence.state.status}` : `patient:${id}`}
-          patientId={id}
-          evidence={evidence}
-        />
+        {cohortEvidence ? (
+          <CohortEvidencePanel patientId={id} {...cohortEvidence} />
+        ) : evidenceSearch ? (
+          <EvidencePanels patientId={id} search={evidenceSearch} />
+        ) : (
+          <ClinicalDocumentsPanels
+            key={evidence ? `evidence:${evidence.field.columnName}:${evidence.state.status}` : `patient:${id}`}
+            patientId={id}
+            evidence={evidence}
+          />
+        )}
       </SheetContent>
     </Sheet>
   );
 }
 
-function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; evidence?: EvidenceMode }) {
+function CohortEvidencePanel({ patientId, cohort, dictionary, indexes }: CohortEvidence & { patientId?: string }) {
+  const [recordIndex, setRecordIndex] = useState<number>();
+  const index = recordIndex ?? indexes[0];
+  const [expanded, setExpanded] = useState(true);
+  const chooser = indexes.length > 1 && (
+    <label className="mb-3 block text-sm">
+      Registro de la cohorte
+      <select className="text-input mt-1" value={index} onChange={(event) => setRecordIndex(Number(event.target.value))}>
+        {indexes.map((item) => <option key={item} value={item}>Registro #{item + 1}</option>)}
+      </select>
+    </label>
+  );
+
+  if (index === undefined) {
+    return <ClinicalDocumentsPanels patientId={patientId} controls={<p role="status" className="mb-3">Sin registro en la cohorte</p>} />;
+  }
+  return <RecordEvidencePanels key={index} patientId={patientId} cohort={cohort} dictionary={dictionary} index={index}
+    chooser={chooser} expanded={expanded} onExpandedChange={setExpanded} />;
+}
+
+function RecordEvidencePanels({ patientId, cohort, dictionary, index, chooser, expanded, onExpandedChange }: {
+  patientId?: string;
+  cohort: CsvDataset;
+  dictionary: ColumnInfo[];
+  index: number;
+  chooser: ReactNode;
+  expanded: boolean;
+  onExpandedChange: (expanded: boolean) => void;
+}) {
+  const search = useEvidenceMatching(cohort, cohort.rows[index], dictionary, expanded);
+  return <EvidencePanels patientId={patientId} search={search} chooser={chooser} expanded={expanded} onExpandedChange={onExpandedChange} />;
+}
+
+function EvidencePanels({ patientId, search, chooser, expanded: controlledExpanded, onExpandedChange }: {
+  patientId?: string;
+  search: EvidenceSearch;
+  chooser?: ReactNode;
+  expanded?: boolean;
+  onExpandedChange?: (expanded: boolean) => void;
+}) {
+  const [localExpanded, setExpanded] = useState(false);
+  const expanded = controlledExpanded ?? localExpanded;
+  const [column, setColumn] = useState("");
+  const { queries, state, retry } = search;
+  const query = expanded ? queries.get(column) : undefined;
+  const report = state.status === "complete" ? state.report : undefined;
+  const controls = (
+    <>
+      {chooser}
+      <details className="mb-3 rounded-panel border border-line p-3" open={expanded}
+        onToggle={(event) => (onExpandedChange ?? setExpanded)(event.currentTarget.open)}>
+        <summary className="font-semibold text-primary">Evidencias</summary>
+        {expanded && <div className="mt-2 space-y-2">
+          {queries.size === 0 ? <p role="status">Sin evidencias configuradas</p>
+            : state.status === "loading" ? <p role="status">Buscando referencias documentales…</p>
+            : state.status === "error" ? (
+              <>
+                <p role="alert">{state.message}</p>
+                <button type="button" className="btn" onClick={retry}>Reintentar búsqueda</button>
+              </>
+            ) : report && (
+              <>
+                <p role="status" className="hidden">{report.failedDocuments ? partialEvidenceLabel
+                  : [...report.results.values()].some((result) => result.references.length)
+                    ? "Se han encontrado evidencias" : "No se han encontrado evidencias"}</p>
+                {report.failedDocuments > 0 && <button type="button" className="btn" onClick={retry}>Reintentar búsqueda</button>}
+                <label className="block">
+                  <select className="text-input mt-1" value={column} onChange={(event) => setColumn(event.target.value)}>
+                    <option value="">Todos los documentos</option>
+                    {[...report.results].map(([key, result]) => {
+                      const count = result.references.length;
+                      if (count === 0) return null;
+                      const label = `${count}`;
+                      return <option key={key} value={key}>({label}) - {result.name}</option>;
+                    })}
+                  </select>
+                </label>
+              </>
+            )}
+        </div>}
+      </details>
+    </>
+  );
+
+  return <ClinicalDocumentsPanels patientId={patientId} controls={controls}
+    evidence={query && report ? { field: query.field, pattern: query.regex.toString(), state, retry } : undefined} />;
+}
+
+function ClinicalDocumentsPanels({ patientId, evidence, controls }: { patientId?: string; evidence?: EvidenceMode; controls?: ReactNode }) {
   const report = evidence?.state.status === "complete" ? evidence.state.report : undefined;
   const references = evidence && report?.results.get(evidence.field.columnName)?.references;
-  const unmatchedDocuments = references?.length === 0 && report?.failedDocuments === 0 ? report.documents : undefined;
+  const unmatchedDocuments = !controls && references?.length === 0 && report?.failedDocuments === 0 ? report.documents : undefined;
   const byId = references && new Map(references.map((reference) => [reference.document.id, reference]));
-  const direct = references?.length === 1 ? references[0].document : unmatchedDocuments?.[0];
+  const direct = !controls && references?.length === 1 ? references[0].document : unmatchedDocuments?.[0];
   const [selected, setSelected] = useState<ClinicalDocument | undefined>(direct);
   const [reading, setReading] = useState(!!direct);
+  const columnName = evidence?.field.columnName;
+  const [previousColumn, setPreviousColumn] = useState(columnName);
+  if (previousColumn !== columnName) {
+    setPreviousColumn(columnName);
+    setSelected(undefined);
+    setReading(false);
+  }
   const selectedButton = useRef<HTMLButtonElement>(null);
   const list = useRef<HTMLElement>(null);
   const viewer = useRef<HTMLDivElement>(null);
@@ -140,6 +254,7 @@ function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; 
           )}
         </header>
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 text-sm">
+          {controls}
           {evidence ? (
             <>
               {evidence.state.status === "loading" && <p role="status">Buscando referencias documentales…</p>}
@@ -149,7 +264,7 @@ function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; 
                   <button type="button" className="btn mt-2" onClick={retryEvidence}>Reintentar búsqueda</button>
                 </>
               )}
-              {!!report?.failedDocuments && (
+              {!controls && !!report?.failedDocuments && (
                 <div className="mb-3">
                   <p role="status">{partialEvidenceLabel}. Algunos informes no se pudieron leer.</p>
                   {!references?.length && <button type="button" className="btn mt-2" onClick={retryEvidence}>Reintentar búsqueda</button>}
@@ -159,6 +274,7 @@ function ClinicalDocumentsPanels({ patientId, evidence }: { patientId?: string; 
                 <ClinicalDocumentsList documents={references.map((ref) => ref.document)} references={byId}
                   indexError={false} selected={selected} onSelect={selectDocument} />
               )}
+              {controls && references?.length === 0 && <p>Sin referencias en los documentos leídos.</p>}
               {unmatchedDocuments && (
                 <>
                   <h3 className="mb-2 font-medium text-primary">Documentos del paciente</h3>

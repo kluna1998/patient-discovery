@@ -1,4 +1,7 @@
 import { ChevronLeft, ChevronRight, FileText, Search } from "lucide-react";
+import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
+import type { CsvDataset } from "../types/patient";
+import type { ColumnInfo } from "../services/columnDictionary";
 import { useId, useMemo } from "react";
 import {
   columnFilteringFeature, createFilteredRowModel, createPaginatedRowModel, createSortedRowModel,
@@ -22,12 +25,25 @@ const features = tableFeatures({
 
 interface Props {
   patients: ClinicalDocumentsPatient[];
+  cohort?: CsvDataset;
+  dictionary?: ColumnInfo[];
   selected?: { patientId: string; document: ClinicalDocument };
   onSelect: (patientId: string, document: ClinicalDocument, button: HTMLButtonElement) => void;
 }
 
-export default function ClinicalDocumentsTable({ patients, selected, onSelect }: Props) {
+export default function ClinicalDocumentsTable({ patients, selected, onSelect, cohort, dictionary }: Props) {
   const searchId = useId();
+  const recordsByPatient = useMemo(() => {
+    const records = new Map<string, number[]>();
+    cohort?.rows.forEach((record, index) => {
+      const id = record.nhc?.trim();
+      if (!id) return;
+      const indexes = records.get(id) ?? [];
+      indexes.push(index);
+      records.set(id, indexes);
+    });
+    return records;
+  }, [cohort]);
   const columns = useMemo<ColumnDef<typeof features, ClinicalDocumentsPatient>[]>(() => [
     { accessorKey: "patientId", header: "Identificador del paciente", sortingFn: "alphanumeric" },
     { id: "documents", header: "Documentos clínicos", enableSorting: false, enableGlobalFilter: false },
@@ -98,6 +114,15 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
                 <th scope="row" className="font-medium">{patient.patientId}</th>
                 <td>
                   <ul className="flex flex-wrap gap-2">
+                    {cohort && dictionary && (
+                      <li>
+                        <ClinicalDocumentsSheet patientId={patient.patientId} cohortEvidence={{ cohort, dictionary, indexes: recordsByPatient.get(patient.patientId) ?? [] }}>
+                          <button type="button" className="btn min-h-8 px-2 py-1 text-primary" aria-label="Buscar evidencias" title="Buscar evidencias">
+                            <Search size={14} aria-hidden="true" />
+                          </button>
+                        </ClinicalDocumentsSheet>
+                      </li>
+                    )}
                     {patient.documents.map((document) => (
                       <li key={document.id}>
                         <button

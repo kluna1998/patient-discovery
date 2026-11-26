@@ -280,6 +280,7 @@ function App() {
             <PatientTable
               key={`${dataset.fileName}-${activeTab}`}
               dataset={visibleDataset}
+              cohort={sourceDataset ?? dataset}
               dictionary={dictionary.entries}
               decisions={visibleDecisions}
               originalRowIndices={visibleIndices}

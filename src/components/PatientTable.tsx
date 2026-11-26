@@ -36,6 +36,7 @@ import type { ReviewDecisions } from "../types/review";
 
 interface Props {
   dataset: CsvDataset;
+  cohort: CsvDataset;
   dictionary: ColumnInfo[];
   decisions: ReviewDecisions;
   originalRowIndices: number[];
@@ -65,7 +66,7 @@ const features = tableFeatures({
   },
 });
 
-export default function PatientTable({ dataset, dictionary, decisions, originalRowIndices, onReview }: Props) {
+export default function PatientTable({ dataset, cohort, dictionary, decisions, originalRowIndices, onReview }: Props) {
   const columnInfo = useMemo(() => new Map(dictionary.map((entry) => [entry.column_name, entry])), [dictionary]);
   const defaultVisibility = useMemo(() => {
     const visible = new Set(dataset.columns.filter((name) => {
@@ -260,7 +261,7 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
           </summary>
           {documentsOpen && (
             <div className="mt-3 flex h-[65dvh] min-w-0 flex-col overflow-hidden border-t border-line bg-surface">
-              <ClinicalDocumentsBrowser closeLabel="Volver a todos los documentos" />
+              <ClinicalDocumentsBrowser closeLabel="Volver a todos los documentos" cohort={cohort} dictionary={dictionary} />
             </div>
           )}
         </details>

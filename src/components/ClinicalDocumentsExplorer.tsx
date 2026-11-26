@@ -3,6 +3,8 @@ import { FileText, X } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { listClinicalDocumentsPatients } from "../services/clinicalDocuments";
 import type { ClinicalDocument, ClinicalDocumentsPatient } from "../services/clinicalDocuments";
+import type { CsvDataset } from "../types/patient";
+import type { ColumnInfo } from "../services/columnDictionary";
 import ClinicalDocumentsTable from "./ClinicalDocumentsTable";
 import DocumentViewer from "./DocumentViewer";
 
@@ -39,7 +41,7 @@ export default function ClinicalDocumentsExplorer() {
   );
 }
 
-export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador" }: { closeLabel?: string }) {
+export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador", cohort, dictionary }: { closeLabel?: string; cohort?: CsvDataset; dictionary?: ColumnInfo[] }) {
   const [patients, setPatients] = useState<ClinicalDocumentsPatient[]>();
   const [error, setError] = useState(false);
   const [selected, setSelected] = useState<{ patientId: string; document: ClinicalDocument }>();
@@ -72,7 +74,7 @@ export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador" }
       <div hidden={reading} className={reading ? "" : "flex min-h-0 flex-1 flex-col"}>
         {error ? <p className="p-4" role="alert">No se pudo cargar el índice de documentos.</p>
           : !patients ? <p className="p-4" role="status">Cargando documentos…</p>
-          : patients.length ? <ClinicalDocumentsTable patients={patients} selected={selected} onSelect={selectDocument} />
+          : patients.length ? <ClinicalDocumentsTable patients={patients} selected={selected} onSelect={selectDocument} cohort={cohort} dictionary={dictionary} />
           : <p className="p-4">No hay documentos disponibles.</p>}
       </div>
       {reading && selected && (

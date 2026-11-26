@@ -150,6 +150,7 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
                   onOpenChange={setDocumentsOpen}
                   container={dialog}
                   patientId={row.nhc}
+                  evidenceSearch={referenceQuery ? undefined : { queries, state: evidenceState, retry }}
                   evidence={referenceQuery && {
                     field: referenceQuery.field,
                     pattern: referenceQuery.regex.toString(),

@@ -311,8 +311,9 @@
   .text-input {
     @apply w-full rounded-md border border-line-input bg-surface px-3 py-2 text-sm placeholder:text-content-faint;
   }
-  .text-input[type="search"]:focus {
-    @apply border-slate-400 outline-none;
+  .text-input[type="search"]:focus,
+  select.text-input:focus {
+    @apply border-focus outline-none;
   }
   .search-control input {
     @apply pl-9;
