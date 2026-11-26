@@ -40,3 +40,13 @@ test("text is literal, case insensitive and bounded", () => {
     assert.equal(generateEvidenceRegex(value, type), null);
   }
 });
+
+test("text synonyms are literal alternatives and prefer the longest match", () => {
+  const regex = generateEvidenceRegex("Lipoproteína(a)", "text", " Lp(a); ; lp (a); LPA; lpa; Lp(a) libre; A+B ");
+  const text = "Lipoproteína(a), LP(A) libre, lp\t(a), lpa, palpar, LPA2, x-LPA, A+B, AAB";
+  assert.deepEqual([...text.matchAll(regex)].map((match) => match[0]), [
+    "Lipoproteína(a)", "LP(A) libre", "lp\t(a)", "lpa", "A+B",
+  ]);
+  assert.equal(generateEvidenceRegex("", "text", "LPA"), null);
+  assert.equal(generateEvidenceRegex("5", "number", "LPA").source, generateEvidenceRegex("5", "number").source);
+});

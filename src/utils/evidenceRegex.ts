@@ -44,22 +44,31 @@ function numberRegex(value: string) {
   );
 }
 
-function textRegex(value: string) {
-  const literal = value.split(/\s+/u)
-    .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
-    .join("\\s+");
+function textRegex(value: string, synonyms: string) {
+  const terms = new Map<string, string>();
+  for (const variant of [value, ...synonyms.split(";")]) {
+    const term = variant.trim().replace(/\s+/gu, " ");
+    const key = term.toLowerCase();
+    if (term && !terms.has(key)) terms.set(key, term);
+  }
+  const alternatives = [...terms.values()]
+    .sort((a, b) => b.length - a.length)
+    .map((term) => term.split(" ")
+      .map((part) => part.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+      .join("\\s+"));
+  const literal = alternatives.length === 1 ? alternatives[0] : `(?:${alternatives.join("|")})`;
   const word = "[\\p{L}\\p{M}\\p{N}_]";
   const connector = "[.+/−-]";
   return new RegExp(`(?<!${word}|${word}${connector})${literal}(?!${word}|${connector}${word})`, "giu");
 }
 
-export function generateEvidenceRegex(value: string | null | undefined, valueType: string | undefined): RegExp | null {
+export function generateEvidenceRegex(value: string | null | undefined, valueType: string | undefined, synonyms = ""): RegExp | null {
   const trimmed = value?.trim();
   if (!trimmed) return null;
   switch (valueType) {
     case "date": return dateRegex(trimmed);
     case "number": return numberRegex(trimmed);
-    case "text": return textRegex(trimmed);
+    case "text": return textRegex(trimmed, synonyms);
     default: return null;
   }
 }

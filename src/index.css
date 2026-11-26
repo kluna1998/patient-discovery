@@ -338,10 +338,10 @@
   .cohort-table thead {
     @apply sticky top-0 z-10 bg-table-header;
   }
-  .cohort-table th {
+  .cohort-table thead th {
     @apply whitespace-nowrap border-b border-line px-4 py-3 text-[11px] font-semibold text-content-muted;
   }
-  .cohort-table th button {
+  .cohort-table thead button {
     @apply flex items-center gap-2 hover:text-primary;
   }
   .cohort-table tbody tr {
@@ -350,7 +350,8 @@
   .cohort-table tbody tr:nth-child(even) {
     @apply bg-surface-muted/50;
   }
-  .cohort-table td {
+  .cohort-table td,
+  .cohort-table tbody th {
     @apply min-w-36 max-w-80 px-4 py-3 align-top leading-relaxed text-content-muted;
     overflow-wrap: anywhere;
   }

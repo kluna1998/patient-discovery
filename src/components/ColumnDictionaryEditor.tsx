@@ -25,6 +25,7 @@ export default function ColumnDictionaryEditor({ entries, columns, onSave }: Pro
     <details className="panel my-5 p-5">
       <summary className="font-semibold text-primary"><BookOpen size={16} className="mr-2 inline" />Diccionario de columnas · {entries.length} definiciones</summary>
       <p className="my-3 text-sm text-content-muted">Edita los títulos, las descripciones, las secciones, los criterios y los tipos de dato. Los cambios se aplican solo durante esta sesión y se pierden al recargar. Descarga el CSV y sustituye public/info_columns_dict.csv para conservarlos en el proyecto. Las filas de una misma sección deben compartir el mismo orden.</p>
+      <p id="dictionary-synonyms-help" className="my-3 text-sm text-content-muted">En las evidencias de texto, separa los sinónimos con punto y coma (;).</p>
       <div className="mb-4 flex flex-wrap gap-2">
         <button type="button" className="btn" onClick={() => { setDraft([...rows, { column_name: "", readable_name: "", meaning: "", section: "", section_order: "", criterion_id: "", criterio: "", tipo: "", value_type: "", explicacion: "" }]); setMessage(""); }}><Plus size={14} />Añadir columna</button>
         <button type="button" className="btn" disabled={draft !== null} onClick={() => downloadDictionary(entries)}><Download size={14} />Descargar diccionario CSV</button>
@@ -32,8 +33,8 @@ export default function ColumnDictionaryEditor({ entries, columns, onSave }: Pro
       <datalist id="dictionary-column-names">{columns.map((name) => <option key={name} value={name} />)}</datalist>
       <div className="dictionary-scroll">
         <table className="dictionary-table">
-          <caption className="sr-only">Editar los diez campos del diccionario de columnas</caption>
-          <thead><tr><th scope="col">Nombre original</th><th scope="col">Título legible</th><th scope="col">Descripción / ayuda</th><th scope="col">Sección</th><th scope="col">Orden de sección</th><th scope="col">Identificador del criterio</th><th scope="col">Criterio</th><th scope="col">Tipo</th><th scope="col">Tipo de dato</th><th scope="col">Explicación</th><th scope="col">Acciones</th></tr></thead>
+          <caption className="sr-only">Editar el diccionario de columnas</caption>
+          <thead><tr><th scope="col">Nombre original</th><th scope="col">Título legible</th><th scope="col">Descripción / ayuda</th><th scope="col">Sección</th><th scope="col">Orden de sección</th><th scope="col">Identificador del criterio</th><th scope="col">Criterio</th><th scope="col">Tipo</th><th scope="col">Tipo de dato</th><th scope="col">Explicación</th><th scope="col">Sinónimos</th><th scope="col">Acciones</th></tr></thead>
           <tbody>{rows.map((row, index) => (
             <tr key={index}>
               <td><input className="text-input" aria-label={`Nombre original, fila ${index + 1}`} list="dictionary-column-names" value={row.column_name} onChange={(event) => update(index, "column_name", event.target.value)} /></td>
@@ -61,6 +62,16 @@ export default function ColumnDictionaryEditor({ entries, columns, onSave }: Pro
                 </select>
               </td>
               <td><textarea className="text-input" rows={2} aria-label={`Explicación, fila ${index + 1}`} value={row.explicacion ?? ""} onChange={(event) => update(index, "explicacion", event.target.value)} /></td>
+              <td>
+                <input
+                  className="text-input"
+                  aria-label={`Sinónimos, fila ${index + 1}`}
+                  aria-describedby="dictionary-synonyms-help"
+                  disabled={row.tipo !== "Evidencia" || row.value_type !== "text"}
+                  value={row.Sinonimos ?? ""}
+                  onChange={(event) => update(index, "Sinonimos", event.target.value)}
+                />
+              </td>
               <td><button type="button" className="btn" aria-label={`Eliminar ${row.column_name || `fila ${index + 1}`}`} onClick={() => { setDraft(rows.filter((_, i) => i !== index)); setError(""); setMessage(""); }}><Trash2 size={14} /></button></td>
             </tr>
           ))}</tbody>

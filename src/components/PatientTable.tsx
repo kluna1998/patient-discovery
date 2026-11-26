@@ -1,5 +1,5 @@
 import ColumnHelp from "./ColumnHelp";
-import ClinicalDocumentsExplorer from "./ClinicalDocumentsExplorer";
+import ClinicalDocumentsExplorer, { ClinicalDocumentsBrowser } from "./ClinicalDocumentsExplorer";
 import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { useMemo, useState } from "react";
@@ -79,6 +79,7 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
     return Object.fromEntries(dataset.columns.map((name) => [name, visible.has(name)]));
   }, [dataset.columns, columnInfo]);
   const [visibilityOverride, setVisibilityOverride] = useState<Record<string, boolean> | null>(null);
+  const [documentsOpen, setDocumentsOpen] = useState(false);
   // Generamos las columnas dinámicamente a partir del CSV.
   const columns = useMemo<ColumnDef<typeof features, PatientRow>[]>(
     () => [
@@ -248,6 +249,21 @@ export default function PatientTable({ dataset, dictionary, decisions, originalR
             </div>
           </div>
         </div>
+
+        <details
+          className="column-options px-0 open:pb-0"
+          open={documentsOpen}
+          onToggle={(event) => setDocumentsOpen(event.currentTarget.open)}
+        >
+          <summary className="ml-4 leading-8">
+            <FileText size={14} aria-hidden="true" className="mr-1 inline" /> Todos los documentos
+          </summary>
+          {documentsOpen && (
+            <div className="mt-3 flex h-[65dvh] min-w-0 flex-col overflow-hidden border-t border-line bg-surface">
+              <ClinicalDocumentsBrowser closeLabel="Volver a todos los documentos" />
+            </div>
+          )}
+        </details>
 
         <div className="column-options flex items-start justify-between gap-2">
           <details className="min-w-0 flex-1">

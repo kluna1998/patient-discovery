@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { runnerImport } from "vite";
 import { documentHighlights } from "../src/utils/documentHighlights.ts";
+import { parseDictionary } from "../src/services/columnDictionary.ts";
 
 const { module: { collectEvidenceQueries, searchPatientEvidence } } =
   await runnerImport("./src/services/evidenceMatching.ts");
@@ -42,6 +43,27 @@ const fixtures = new Map([
   ["empty", ""],
   ["other", "Otro paciente DEMO+1"],
 ]);
+
+test("CSV synonyms scope matching to the configured textual evidence column", async (t) => {
+  const { run } = prepare(t);
+  const config = parseDictionary([
+    "column_name,readable_name,meaning,section,section_order,tipo,value_type,Sinonimos",
+    "withAlias,Con sinónimos,Descripción,Prueba,1,Evidencia,text,DEMO+1; demo+1",
+    "withoutAlias,Sin sinónimos,Descripción,Prueba,1,Evidencia,text,",
+    "date,Fecha,Descripción,Prueba,1,Evidencia,date,DEMO+1",
+    "value,Valor,Descripción,Prueba,1,Valor,text,DEMO+1",
+  ].join("\n"));
+  const { results } = await run({
+    config, data: { withAlias: "Nombre original", withoutAlias: "Nombre original", date: "2025-10-01", value: "Nombre original" },
+  });
+  assert.equal(results.get("withAlias").value, "Nombre original");
+  assert.deepEqual(results.get("withAlias").references.flatMap(({ matches }) => matches.map(({ matchedText }) => matchedText)), [
+    "DEMO+1", "DEMO+1", "demo+1",
+  ]);
+  assert.deepEqual(results.get("withoutAlias").references, []);
+  assert.deepEqual(results.get("date").references, []);
+  assert.equal(results.has("value"), false);
+});
 
 function prepare(t) {
   let index = [indexHeader, ...indexRows].join("\n");

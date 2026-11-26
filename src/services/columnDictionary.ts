@@ -11,10 +11,11 @@ export interface ColumnInfo {
   tipo?: "Evidencia" | "Valor" | "Unidades" | "";
   value_type?: "boolean" | "date" | "number" | "text" | "";
   explicacion?: string;
+  Sinonimos?: string;
 }
 
 const dictionaryFields = ["column_name", "readable_name", "meaning", "section", "section_order"];
-const metadataFields = ["criterion_id", "criterio", "tipo", "value_type", "explicacion"] as const;
+const metadataFields = ["criterion_id", "criterio", "tipo", "value_type", "explicacion", "Sinonimos"] as const;
 
 export function validateDictionary(value: unknown): ColumnInfo[] {
   if (!Array.isArray(value)) throw new Error("El diccionario debe contener una lista de columnas.");

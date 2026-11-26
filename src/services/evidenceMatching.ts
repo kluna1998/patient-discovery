@@ -17,10 +17,11 @@ export function collectEvidenceQueries(row: PatientRow, dictionary: ColumnInfo[]
   for (const column of dictionary) {
     if (column.tipo !== "Evidencia") continue;
     const value = row[column.column_name];
-    const key = JSON.stringify([column.value_type, value?.trim()]);
+    const synonyms = column.value_type === "text" ? column.Sinonimos : undefined;
+    const key = JSON.stringify([column.value_type, value?.trim(), synonyms ?? ""]);
     let strategy = compiled.get(key);
     if (!strategy) {
-      const regex = generateEvidenceRegex(value, column.value_type);
+      const regex = generateEvidenceRegex(value, column.value_type, synonyms);
       if (!regex) continue;
       strategy = { regex, date: column.value_type === "date" ? parseEvidenceDate(value) : null };
       compiled.set(key, strategy);

@@ -1,5 +1,5 @@
-import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight, FileText } from "lucide-react";
-import { useMemo } from "react";
+import { ChevronLeft, ChevronRight, FileText, Search } from "lucide-react";
+import { useId, useMemo } from "react";
 import {
   columnFilteringFeature, createFilteredRowModel, createPaginatedRowModel, createSortedRowModel,
   filterFn_includesString, globalFilteringFeature, rowPaginationFeature,
@@ -27,6 +27,7 @@ interface Props {
 }
 
 export default function ClinicalDocumentsTable({ patients, selected, onSelect }: Props) {
+  const searchId = useId();
   const columns = useMemo<ColumnDef<typeof features, ClinicalDocumentsPatient>[]>(() => [
     { accessorKey: "patientId", header: "Identificador del paciente", sortingFn: "alphanumeric" },
     { id: "documents", header: "Documentos clínicos", enableSorting: false, enableGlobalFilter: false },
@@ -45,19 +46,25 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
   const totalPages = Math.max(table.getPageCount(), 1);
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-4 p-5 sm:p-6">
-      <div className="flex shrink-0 items-center justify-between gap-3">
-        <input
-          type="search"
-          className="text-input min-w-0 max-w-sm"
-          aria-label="Buscar por identificador de paciente"
-          placeholder="Buscar por identificador…"
-          value={table.state.globalFilter ?? ""}
-          onChange={(event) => {
-            table.setGlobalFilter(event.target.value);
-            table.setPageIndex(0);
-          }}
-        />
+    <div className="flex min-h-0 flex-1 flex-col">
+      <div className="table-tools shrink-0 justify-between">
+        <div className="min-w-0 max-w-md flex-1 basis-36">
+
+          <div className="search-control">
+            <Search size={16} aria-hidden="true" />
+            <input
+              id={searchId}
+              type="search"
+              className="text-input h-10"
+              placeholder="Buscar por identificador…"
+              value={table.state.globalFilter ?? ""}
+              onChange={(event) => {
+                table.setGlobalFilter(event.target.value);
+                table.setPageIndex(0);
+              }}
+            />
+          </div>
+        </div>
         <nav aria-label="Paginación del explorador" className="flex shrink-0 items-center gap-1">
           <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Página anterior" disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}>
             <ChevronLeft size={16} aria-hidden="true" />
@@ -71,24 +78,25 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
           </button>
         </nav>
       </div>
-      <div className="min-h-0 flex-1 overflow-auto rounded-panel border border-line">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-surface-muted">
+      <div className="table-scroll min-h-0 flex-1" tabIndex={0} role="region" aria-label="Tabla de documentos clínicos">
+        <table className="cohort-table">
+          <caption>Documentos clínicos por paciente</caption>
+          <thead>
             <tr>
-              <th scope="col" aria-sort={descending ? "descending" : "ascending"} className="px-3 py-2">
-                <button type="button" className="btn btn-ghost min-h-8 px-2 py-1 text-left text-sm" onClick={() => idColumn?.toggleSorting(!descending)}>
+              <th scope="col" aria-sort={descending ? "descending" : "ascending"} className="w-1/4">
+                <button type="button" onClick={() => idColumn?.toggleSorting(!descending)}>
                   Identificador del paciente
-                  {descending ? <ArrowDown size={14} aria-hidden="true" /> : <ArrowUp size={14} aria-hidden="true" />}
+                  <span aria-hidden="true" className="text-content-faint">{descending ? "↓" : "↑"}</span>
                 </button>
               </th>
-              <th scope="col" className="px-3 py-2">Documentos clínicos</th>
+              <th scope="col">Documentos clínicos</th>
             </tr>
           </thead>
           <tbody>
             {rows.map(({ original: patient }) => (
-              <tr key={patient.patientId} className="border-t border-line align-top">
-                <th scope="row" className="px-3 py-3 font-medium">{patient.patientId}</th>
-                <td className="px-3 py-3">
+              <tr key={patient.patientId}>
+                <th scope="row" className="font-medium">{patient.patientId}</th>
+                <td>
                   <ul className="flex flex-wrap gap-2">
                     {patient.documents.map((document) => (
                       <li key={document.id}>
@@ -99,7 +107,9 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
                           onClick={(event) => onSelect(patient.patientId, document, event.currentTarget)}
                         >
                           <FileText size={14} aria-hidden="true" className="shrink-0 text-primary" />
-                          <span>{document.type || document.id} · {document.date || "Sin fecha"}</span>
+                          <span className={`wrap-anywhere text-xs ${document.type ? "capitalize" : "normal-case"}`}>
+                            {document.type.toLocaleLowerCase("es") || document.id}
+                          </span>
                         </button>
                       </li>
                     ))}
@@ -107,11 +117,11 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect }:
                 </td>
               </tr>
             ))}
-            {!rows.length && (
-              <tr><td colSpan={2} className="p-4">No se encontraron pacientes con ese identificador.</td></tr>
-            )}
           </tbody>
         </table>
+        {!rows.length && (
+          <p className="p-8 text-center text-content-subtle">No se encontraron pacientes con ese identificador.</p>
+        )}
       </div>
     </div>
   );

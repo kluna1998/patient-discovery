@@ -32,14 +32,14 @@ export default function ClinicalDocumentsExplorer() {
               <X size={16} aria-hidden="true" />
             </Dialog.Close>
           </header>
-          <ExplorerViews />
+          <ClinicalDocumentsBrowser />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
   );
 }
 
-function ExplorerViews() {
+export function ClinicalDocumentsBrowser({ closeLabel = "Volver al explorador" }: { closeLabel?: string }) {
   const [patients, setPatients] = useState<ClinicalDocumentsPatient[]>();
   const [error, setError] = useState(false);
   const [selected, setSelected] = useState<{ patientId: string; document: ClinicalDocument }>();
@@ -83,7 +83,7 @@ function ExplorerViews() {
           aria-label={`Informe del paciente ${selected.patientId}`}
           className="flex min-h-0 min-w-0 flex-1 flex-col"
         >
-          <DocumentViewer document={selected.document} onClose={() => setReading(false)} closeLabel="Volver al explorador" />
+          <DocumentViewer document={selected.document} onClose={() => setReading(false)} closeLabel={closeLabel} />
         </div>
       )}
     </>
