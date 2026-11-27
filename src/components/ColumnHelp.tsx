@@ -106,12 +106,17 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
 
   useLayoutEffect(() => {
     if (!open) return;
+    const recordDialog = interactive ? buttonRef.current?.closest("dialog") : null;
     function place() {
       const button = buttonRef.current?.getBoundingClientRect();
       const tooltip = tooltipRef.current?.getBoundingClientRect();
       if (!button || !tooltip) return;
+      const sheet = recordDialog?.querySelector('[data-slot="sheet-content"][data-state="open"]');
+      const recordBounds = sheet ? recordDialog?.getBoundingClientRect() : undefined;
+      const leftEdge = (recordBounds?.left ?? 0) + 8;
+      const rightEdge = (recordBounds?.right ?? window.innerWidth) - 8;
       setPosition({
-        left: Math.max(8, Math.min(button.left, window.innerWidth - tooltip.width - 8)),
+        left: Math.max(leftEdge, Math.min(button.left, rightEdge - tooltip.width)),
         top: button.bottom + tooltip.height <= window.innerHeight - 8
           ? button.bottom
           : Math.max(8, button.top - tooltip.height),
@@ -124,10 +129,13 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
       }
     }
     place();
+    const observer = recordDialog && new ResizeObserver(place);
+    if (recordDialog) observer?.observe(recordDialog);
     window.addEventListener("resize", place);
     window.addEventListener("scroll", place, true);
     if (!interactive) window.addEventListener("keydown", dismiss);
     return () => {
+      observer?.disconnect();
       window.removeEventListener("resize", place);
       window.removeEventListener("scroll", place, true);
       window.removeEventListener("keydown", dismiss);
