@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight, FileText, Search } from "lucide-react";
 import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
+import DocumentTitle from "./DocumentTitle";
 import type { CsvDataset } from "../types/patient";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { useId, useMemo } from "react";
@@ -133,8 +134,8 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect, c
                           onClick={(event) => onSelect(patient.patientId, document, event.currentTarget)}
                         >
                           <FileText size={14} aria-hidden="true" className="shrink-0 text-primary" />
-                          <span className={`wrap-anywhere text-xs ${document.type ? "capitalize" : "normal-case"}`}>
-                            {document.type.toLocaleLowerCase("es") || document.id}
+                          <span className="wrap-anywhere text-xs">
+                            <DocumentTitle document={document} />
                           </span>
                         </button>
                       </li>

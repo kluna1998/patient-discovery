@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BookOpen, Download, Plus, Trash2 } from "lucide-react";
+import { BookOpen, ChevronDown, Download, Plus, Trash2 } from "lucide-react";
 import { downloadDictionary, validateDictionary } from "../services/columnDictionary";
 import type { ColumnInfo } from "../services/columnDictionary";
 
@@ -23,7 +23,11 @@ export default function ColumnDictionaryEditor({ entries, columns, onSave }: Pro
 
   return (
     <details className="panel my-5 p-5">
-      <summary className="font-semibold text-primary"><BookOpen size={16} className="mr-2 inline" />Diccionario de columnas · {entries.length} definiciones</summary>
+      <summary className="disclosure-summary font-semibold text-primary">
+        <ChevronDown size={14} aria-hidden="true" className="disclosure-chevron" />
+        <BookOpen size={16} aria-hidden="true" className="shrink-0" />
+        Diccionario de columnas · {entries.length} definiciones
+      </summary>
       <p className="my-3 text-sm text-content-muted">Edita los títulos, las descripciones, las secciones, los criterios y los tipos de dato. Los cambios se aplican solo durante esta sesión y se pierden al recargar. Descarga el CSV y sustituye public/info_columns_dict.csv para conservarlos en el proyecto. Las filas de una misma sección deben compartir el mismo orden.</p>
       <p id="dictionary-synonyms-help" className="my-3 text-sm text-content-muted">En las evidencias de texto, separa los sinónimos con punto y coma (;).</p>
       <div className="mb-4 flex flex-wrap gap-2">

@@ -24,10 +24,27 @@ interface Props {
 export default function DecisionDialog({ rowId, row, cohort, columns, dictionary, decision, onSave, onClose }: Props) {
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
   const [documentsOpen, setDocumentsOpen] = useState(false);
+  const [readingDocument, setReadingDocument] = useState(false);
+  const [desktop, setDesktop] = useState(() => window.matchMedia("(min-width: 64rem)").matches);
   const [referenceColumn, setReferenceColumn] = useState<string>();
+  const [referenceVisit, setReferenceVisit] = useState(0);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const { queries, state: evidenceState, retry } = useEvidenceMatching(cohort, row, dictionary, dialog !== null);
   const referenceQuery = referenceColumn ? queries.get(referenceColumn) : undefined;
+  const blockRecord = documentsOpen && (!desktop || readingDocument);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 64rem)");
+    const update = () => setDesktop(media.matches);
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  function changeDocumentsOpen(open: boolean) {
+    if (!open) setReadingDocument(false);
+    setDocumentsOpen(open);
+  }
+
   useEffect(() => {
     if (!dialog) return;
     const previousFocus =
@@ -84,6 +101,7 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
           showCount ? `${count} ${count === 1 ? "documento" : "documentos"}` : "", detail].filter(Boolean).join(" · ")}
         onClick={loading ? undefined : () => {
           setReferenceColumn(column);
+          setReferenceVisit((visit) => visit + 1);
           setDocumentsOpen(true);
         }}
       >
@@ -132,12 +150,12 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
       aria-describedby="decision-description"
       onCancel={(event) => {
         event.preventDefault();
-        if (documentsOpen) setDocumentsOpen(false);
+        if (documentsOpen) changeDocumentsOpen(false);
         else onClose();
       }}
       className="decision-dialog patient-document"
     >
-      <article>
+      <article inert={desktop && blockRecord}>
         <header className="document-header">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -146,8 +164,11 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
                 <h2 ref={titleRef} id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
                 <ClinicalDocumentsSheet
                   open={documentsOpen}
-                  onOpenChange={setDocumentsOpen}
+                  onOpenChange={changeDocumentsOpen}
                   container={dialog}
+                  embedded={desktop}
+                  referenceVisit={referenceVisit}
+                  onReadingChange={desktop ? setReadingDocument : undefined}
                   patientId={row.nhc}
                   evidenceSearch={referenceQuery ? undefined : { queries, state: evidenceState, retry }}
                   evidence={referenceQuery && {
@@ -186,10 +207,11 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
                   const displayedValue = displayValue(primary);
                   const helper = knownColumns.has(primary.column_name) ? (
                     <ColumnHelp
+                      key={referenceVisit}
                       info={primary}
                       variant="dialog"
                       status={status}
-                      documentsOpen={documentsOpen}
+                      documentsOpen={blockRecord}
                       evidences={(primary.tipo === "Evidencia" ? [primary] : evidences)
                         .map((info) => ({ info, value: displayValue(info), action: evidenceAction(info) }))}
                     />
@@ -246,8 +268,16 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
               <button type="button" onClick={() => handleSave(status)} className="btn btn-primary">Guardar cambios</button>
             ) : (
               <>
-                <button type="button" onClick={() => handleSave("rejected")}  className="btn border-review-rejected-action bg-review-rejected-bg text-review-rejected hover:bg-review-rejected-hover"><X size={16} />Rechazar</button>
-                <button type="button" onClick={() => handleSave("accepted")} className="btn border-review-accepted-action bg-review-accepted-action text-content-inverse hover:bg-review-accepted"><Check size={16} />Aceptar</button>
+                <button type="button" onClick={() => handleSave("rejected")} aria-label="Rechazar"
+                  className="btn border-review-rejected-action bg-review-rejected-bg text-review-rejected hover:bg-review-rejected-hover max-sm:size-11 max-sm:p-0">
+                  <X size={16} aria-hidden="true" />
+                  <span className="hidden sm:inline">Rechazar</span>
+                </button>
+                <button type="button" onClick={() => handleSave("accepted")} aria-label="Aceptar"
+                  className="btn border-review-accepted-action bg-review-accepted-bg text-review-accepted max-sm:size-11 max-sm:p-0 hover:bg-review-accepted-hover sm:bg-review-accepted-action sm:text-content-inverse sm:hover:bg-review-accepted">
+                  <Check size={16} aria-hidden="true" />
+                  <span className="hidden sm:inline">Aceptar</span>
+                </button>
               </>
             )}
           </div>

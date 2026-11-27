@@ -1,4 +1,5 @@
 import type { ComponentProps, MouseEvent, ReactElement, ReactNode } from "react";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useEvidenceMatching } from "../hooks/useEvidenceMatching";
 import type { CsvDataset } from "../types/patient";
@@ -34,25 +35,30 @@ type Props = Pick<ComponentProps<typeof Sheet>, "open" | "onOpenChange"> & {
   evidence?: EvidenceMode;
   evidenceSearch?: EvidenceSearch;
   cohortEvidence?: CohortEvidence;
+  embedded?: boolean;
+  referenceVisit?: number;
+  onReadingChange?: (reading: boolean) => void;
   onCloseAutoFocus?: ComponentProps<typeof SheetContent>["onCloseAutoFocus"];
 };
 
-export default function ClinicalDocumentsSheet({ children, container, patientId, evidence, evidenceSearch, cohortEvidence, onCloseAutoFocus, ...props }: Props) {
+export default function ClinicalDocumentsSheet({ children, container, patientId, evidence, evidenceSearch, cohortEvidence, embedded = false, referenceVisit, onReadingChange, onCloseAutoFocus, ...props }: Props) {
   const id = patientId?.trim();
 
   return (
-    <Sheet {...props}>
+    <Sheet {...props} modal={!embedded}>
       <SheetTrigger asChild>{children}</SheetTrigger>
-      <SheetContent container={container} className="clinical-documents-sheet" aria-describedby={undefined} onCloseAutoFocus={onCloseAutoFocus}>
+      <SheetContent container={container} showOverlay={!embedded} className="clinical-documents-sheet" aria-describedby={undefined}
+        onInteractOutside={embedded ? (event) => event.preventDefault() : undefined} onCloseAutoFocus={onCloseAutoFocus}>
         {cohortEvidence ? (
           <CohortEvidencePanel patientId={id} {...cohortEvidence} />
         ) : evidenceSearch ? (
-          <EvidencePanels patientId={id} search={evidenceSearch} />
+          <EvidencePanels patientId={id} search={evidenceSearch} onReadingChange={onReadingChange} />
         ) : (
           <ClinicalDocumentsPanels
-            key={evidence ? `evidence:${evidence.field.columnName}:${evidence.state.status}` : `patient:${id}`}
+            key={evidence ? `evidence:${evidence.field.columnName}:${evidence.state.status}:${referenceVisit}` : `patient:${id}`}
             patientId={id}
             evidence={evidence}
+            onReadingChange={onReadingChange}
           />
         )}
       </SheetContent>
@@ -93,12 +99,13 @@ function RecordEvidencePanels({ patientId, cohort, dictionary, index, chooser, e
   return <EvidencePanels patientId={patientId} search={search} chooser={chooser} expanded={expanded} onExpandedChange={onExpandedChange} />;
 }
 
-function EvidencePanels({ patientId, search, chooser, expanded: controlledExpanded, onExpandedChange }: {
+function EvidencePanels({ patientId, search, chooser, expanded: controlledExpanded, onExpandedChange, onReadingChange }: {
   patientId?: string;
   search: EvidenceSearch;
   chooser?: ReactNode;
   expanded?: boolean;
   onExpandedChange?: (expanded: boolean) => void;
+  onReadingChange?: (reading: boolean) => void;
 }) {
   const [localExpanded, setExpanded] = useState(false);
   const expanded = controlledExpanded ?? localExpanded;
@@ -111,7 +118,10 @@ function EvidencePanels({ patientId, search, chooser, expanded: controlledExpand
       {chooser}
       <details className="mb-3 rounded-panel border border-line p-3" open={expanded}
         onToggle={(event) => (onExpandedChange ?? setExpanded)(event.currentTarget.open)}>
-        <summary className="font-semibold text-primary">Evidencias</summary>
+        <summary className="disclosure-summary font-semibold text-primary">
+          <ChevronDown size={14} aria-hidden="true" className="disclosure-chevron" />
+          Evidencias
+        </summary>
         {expanded && <div className="mt-2 space-y-2">
           {queries.size === 0 ? <p role="status">Sin evidencias configuradas</p>
             : state.status === "loading" ? <p role="status">Buscando referencias documentales…</p>
@@ -144,11 +154,16 @@ function EvidencePanels({ patientId, search, chooser, expanded: controlledExpand
     </>
   );
 
-  return <ClinicalDocumentsPanels patientId={patientId} controls={controls}
+  return <ClinicalDocumentsPanels patientId={patientId} controls={controls} onReadingChange={onReadingChange}
     evidence={query && report ? { field: query.field, pattern: query.regex.toString(), state, retry } : undefined} />;
 }
 
-function ClinicalDocumentsPanels({ patientId, evidence, controls }: { patientId?: string; evidence?: EvidenceMode; controls?: ReactNode }) {
+function ClinicalDocumentsPanels({ patientId, evidence, controls, onReadingChange }: {
+  patientId?: string;
+  evidence?: EvidenceMode;
+  controls?: ReactNode;
+  onReadingChange?: (reading: boolean) => void;
+}) {
   const report = evidence?.state.status === "complete" ? evidence.state.report : undefined;
   const references = evidence && report?.results.get(evidence.field.columnName)?.references;
   const unmatchedDocuments = !controls && references?.length === 0 && report?.failedDocuments === 0 ? report.documents : undefined;
@@ -166,7 +181,11 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls }: { patientId?
   const selectedButton = useRef<HTMLButtonElement>(null);
   const list = useRef<HTMLElement>(null);
   const viewer = useRef<HTMLDivElement>(null);
-  const focusAfterChange = useRef<"list" | "viewer" | null>(null);
+  const focusAfterChange = useRef<"list" | "viewer" | null>(direct && onReadingChange ? "viewer" : null);
+
+  useLayoutEffect(() => {
+    onReadingChange?.(reading);
+  }, [onReadingChange, reading]);
 
   useLayoutEffect(() => {
     const target = focusAfterChange.current;
@@ -193,7 +212,7 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls }: { patientId?
 
   function selectDocument(document: ClinicalDocument, button: HTMLButtonElement) {
     selectedButton.current = button;
-    if (window.matchMedia("(width < 64rem)").matches) focusAfterChange.current = "viewer";
+    if (onReadingChange || window.matchMedia("(width < 64rem)").matches) focusAfterChange.current = "viewer";
     setSelected(document);
     setReading(true);
   }

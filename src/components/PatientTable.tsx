@@ -221,8 +221,9 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
           open={documentsOpen}
           onToggle={(event) => setDocumentsOpen(event.currentTarget.open)}
         >
-          <summary className="list-inside border border-documents-panel bg-documents-panel px-4 py-3 text-xs leading-8 font-semibold text-primary hover:border-documents-panel-border-hover focus:outline-none">
-            <FileText size={14} aria-hidden="true" className="mr-1 inline" /> Todos los documentos
+          <summary className="disclosure-summary border border-documents-panel bg-documents-panel px-4 py-3 text-xs leading-8 font-semibold text-primary hover:border-documents-panel-border-hover focus:outline-none">
+            <ChevronDown size={14} aria-hidden="true" className="disclosure-chevron" />
+            <FileText size={14} aria-hidden="true" /> Todos los documentos
           </summary>
           {documentsOpen && (
             <div className="all-documents-panel flex h-[65dvh] min-w-0 flex-col overflow-hidden bg-documents-panel">
@@ -237,9 +238,9 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
             aria-expanded={columnsOpen}
             aria-controls="patient-column-options"
             onClick={() => setColumnsOpen((open) => !open)}
-            className="group col-span-2 flex h-10 w-fit items-center gap-1.5 text-left text-xs font-semibold text-primary sm:col-span-1"
+            className="col-span-2 flex h-10 w-fit items-center gap-1.5 text-left text-xs font-semibold text-primary sm:col-span-1"
           >
-            <ChevronDown size={14} aria-hidden="true" className="-rotate-90 group-aria-expanded:rotate-0" />
+            <ChevronDown size={14} aria-hidden="true" className="disclosure-chevron" />
             <Columns3 size={14} aria-hidden="true" />
             <span>
               Columnas visibles · {table.getVisibleLeafColumns().filter((column) => column.getCanHide()).length} de {dataset.columns.length}

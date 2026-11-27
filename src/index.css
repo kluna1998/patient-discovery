@@ -137,6 +137,19 @@
   }
 }
 @layer components {
+  .disclosure-summary {
+    @apply flex items-center gap-1.5;
+  }
+  .disclosure-summary::-webkit-details-marker {
+    display: none;
+  }
+  .disclosure-chevron {
+    @apply shrink-0 -rotate-90;
+  }
+  details[open] > summary > .disclosure-chevron,
+  button[aria-expanded="true"] > .disclosure-chevron {
+    @apply rotate-0;
+  }
   .app-shell {
     display: flex;
     flex-direction: column;

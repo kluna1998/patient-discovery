@@ -1,4 +1,5 @@
 import DocumentSearchToolbar, { DocumentMatchNavigation } from "./DocumentSearchToolbar";
+import DocumentTitle from "./DocumentTitle";
 import EvidenceRegexField from "./EvidenceRegexField";
 import { useDocumentSearch } from "../hooks/useDocumentSearch";
 import { ArrowLeft, ArrowRight, FileText } from "lucide-react";
@@ -61,14 +62,14 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
 
   return (
     <section className="flex min-h-0 flex-1 flex-col bg-document-workspace text-sm" aria-label="Contenido del informe">
-      <header className={`relative flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-line bg-surface py-4 pl-4 lg:pr-4 ${onShowList ? "pr-24" : "pr-14"}`}>
-        <div className="flex min-w-0 items-start gap-2">
+      <header className={`relative flex shrink-0 items-start justify-between gap-2 border-b border-line bg-surface py-4 pl-4 ${onShowList ? "pr-24 lg:pr-4" : "pr-14 sm:pr-4"}`}>
+        <div className="flex min-w-0 flex-1 items-start gap-2">
           <span className="relative mt-1 size-6 shrink-0 text-primary sm:mt-0 sm:h-auto sm:w-11 sm:self-stretch">
             <FileText aria-hidden="true" className="absolute inset-0 size-full" />
           </span>
           <div className="min-w-0">
-            <h3 className="wrap-break-word text-lg font-semibold text-primary">
-              {document.type || "Informe clínico"}
+            <h3 className="wrap-anywhere text-lg font-semibold text-primary">
+              <DocumentTitle document={document} fallback="Informe clínico" />
             </h3>
             <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-content-muted">
               {document.date && <span>{document.date}</span>}
@@ -78,11 +79,11 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap gap-2">
+        <div className={`absolute top-4 flex shrink-0 items-center gap-2 ${onShowList ? "right-14 lg:static" : "right-4 sm:static"}`}>
           {onShowList && (
             <button
               type="button"
-              className="btn btn-ghost absolute top-4 right-14 size-8 min-h-8 p-0 lg:hidden"
+              className="btn btn-ghost size-8 min-h-8 p-0 lg:hidden"
               aria-label="Volver al listado de documentos"
               onClick={onShowList}
             >

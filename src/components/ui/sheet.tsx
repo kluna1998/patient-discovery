@@ -8,13 +8,14 @@ const SheetTitle = SheetPrimitive.Title;
 
 function SheetContent({
   container,
+  showOverlay = true,
   children,
   className,
   ...props
-}: ComponentProps<typeof SheetPrimitive.Content> & { container?: HTMLElement | null }) {
+}: ComponentProps<typeof SheetPrimitive.Content> & { container?: HTMLElement | null; showOverlay?: boolean }) {
   return (
     <SheetPrimitive.Portal container={container}>
-      <SheetPrimitive.Overlay data-slot="sheet-overlay" className="fixed inset-0 z-50" />
+      {showOverlay && <SheetPrimitive.Overlay data-slot="sheet-overlay" className="fixed inset-0 z-50" />}
       <SheetPrimitive.Content
         {...props}
         data-slot="sheet-content"
