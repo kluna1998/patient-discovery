@@ -25,6 +25,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
   const tooltipRef = useRef<HTMLDivElement>(null);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [openMode, setOpenMode] = useState<"hover" | "activation">();
+  if (interactive && documentsOpen && openMode !== undefined) setOpenMode(undefined);
   const open = openMode !== undefined;
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
   const [position, setPosition] = useState({ left: 0, top: 0 });
@@ -66,11 +67,12 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
   useEffect(() => () => cancelClose(), []);
 
   useEffect(() => {
-    if (!interactive || !open) return;
+    if (!interactive) return;
     if (documentsOpen) {
       cancelClose();
       return;
     }
+    if (!open) return;
     function dismissOutside(event: Event) {
       if (!(event.target instanceof Node) || buttonRef.current?.contains(event.target) ||
           tooltipRef.current?.contains(event.target) || (event.target instanceof Element &&

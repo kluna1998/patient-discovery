@@ -25,7 +25,7 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
   const [dialog, setDialog] = useState<HTMLDialogElement | null>(null);
   const [documentsOpen, setDocumentsOpen] = useState(false);
   const [referenceColumn, setReferenceColumn] = useState<string>();
-  const referenceTrigger = useRef<HTMLButtonElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const { queries, state: evidenceState, retry } = useEvidenceMatching(cohort, row, dictionary, dialog !== null);
   const referenceQuery = referenceColumn ? queries.get(referenceColumn) : undefined;
   useEffect(() => {
@@ -82,8 +82,7 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
         tabIndex={loading ? -1 : undefined}
         aria-label={loading ? loadingLabel : [`Referencias de ${info.readable_name}`,
           showCount ? `${count} ${count === 1 ? "documento" : "documentos"}` : "", detail].filter(Boolean).join(" · ")}
-        onClick={loading ? undefined : (event) => {
-          referenceTrigger.current = event.currentTarget;
+        onClick={loading ? undefined : () => {
           setReferenceColumn(column);
           setDocumentsOpen(true);
         }}
@@ -144,7 +143,7 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
             <div>
               <p className="eyebrow mt-5">{decision ? "MODIFICAR DECISIÓN" : "FICHA DE REVISIÓN"}</p>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <h2 id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
+                <h2 ref={titleRef} id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
                 <ClinicalDocumentsSheet
                   open={documentsOpen}
                   onOpenChange={setDocumentsOpen}
@@ -158,14 +157,13 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
                     retry,
                   }}
                   onCloseAutoFocus={(event) => {
-                    if (referenceTrigger.current?.isConnected) {
+                    if (referenceColumn && titleRef.current?.isConnected) {
                       event.preventDefault();
-                      referenceTrigger.current.focus({ preventScroll: true });
+                      titleRef.current.focus({ preventScroll: true });
                     }
                   }}
                 >
                   <button type="button" className="btn min-h-8 px-3 py-1 text-sm text-primary hover:bg-surface-accent" onClick={() => {
-                    referenceTrigger.current = null;
                     setReferenceColumn(undefined);
                   }}>Ver documentos</button>
                 </ClinicalDocumentsSheet>
