@@ -23,8 +23,8 @@ export function useEvidenceMatching(cohort: object, row: PatientRow, dictionary:
       () => {
         if (signal.aborted) return;
         const message = request.patientId
-          ? "No se pudo completar la búsqueda documental."
-          : "Este registro no tiene un identificador de paciente (nhc).";
+          ? "No s’ha pogut completar la cerca documental."
+          : "Aquest registre no té cap identificador de pacient (nhc).";
         setOutcome({ request, state: { status: "error", message } });
       },
     );

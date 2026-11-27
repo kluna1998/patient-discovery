@@ -4,7 +4,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
   return (
     <div className="app-shell">
       <a className="skip-link" href="#workspace">
-        Ir al contenido principal
+        Ves al contingut principal
       </a>
       <header className="topbar">
         <div className="topbar-brand">
@@ -20,13 +20,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
           className="btn topbar-collaborate text-white"
           href="https://www.clinicbarcelona.org/colabora/amics-del-clinic"
         >
-          COLABORA
+          COL·LABORA
         </a>
       </header>
       <main id="workspace" className="workspace" tabIndex={-1}>
         {children}
       </main>
-      <footer className="app-footer" aria-label="Contacto institucional">
+      <footer className="app-footer" aria-label="Contacte institucional">
         <div className="footer-contacts">
           <address>
             <a className="font-semibold text-content-inverse" href="https://www.clinicbarcelona.org/ubicacion-y-contacto/investigacion">IDIBAPS</a>
@@ -43,7 +43,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         </div>
         <div className="footer-bottom">
           <small>© Clínic Barcelona 2026</small>
-          <span lang="es">Español</span>
+          <span>Català</span>
         </div>
       </footer>
     </div>

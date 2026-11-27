@@ -19,7 +19,7 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
     try {
       onLoad(await parseCsv(file));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se ha podido cargar el archivo.");
+      setError(err instanceof Error ? err.message : "No s’ha pogut carregar el fitxer.");
     } finally {
       setLoading(false);
     }
@@ -33,7 +33,7 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
           type="file"
           accept=".csv,text/csv"
           disabled={loading}
-          aria-label="Cargar otro CSV"
+          aria-label="Carrega un altre CSV"
           hidden
           onChange={(event) => {
             void handleFile(event.target.files?.[0]);
@@ -44,8 +44,8 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
           type="button"
           className="btn max-sm:size-10 max-sm:p-0"
           disabled={loading}
-          aria-label={loading ? "Procesando archivo…" : "Cargar otro CSV"}
-          title="Cargar otro CSV"
+          aria-label={loading ? "S’està processant el fitxer…" : "Carrega un altre CSV"}
+          title="Carrega un altre CSV"
           onClick={() => inputRef.current?.click()}
         >
           {loading ? (
@@ -57,13 +57,13 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
           ) : (
             <Upload size={16} aria-hidden="true" />
           )}
-          <span className="hidden sm:inline">{loading ? "Procesando archivo..." : "Cargar otro CSV"}</span>
+          <span className="hidden sm:inline">{loading ? "S’està processant el fitxer…" : "Carrega un altre CSV"}</span>
         </button>
         <div aria-live="polite">
           {error && (
             <p role="alert" className="error-message mt-2 max-w-sm">
               <AlertCircle size={16} />
-              {error} Selecciona otro archivo e inténtalo de nuevo.
+              {error} Selecciona un altre fitxer i torna-ho a provar.
             </p>
           )}
         </div>
@@ -82,10 +82,10 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
         </span>
         <div>
           <h2 id="upload-title" className="font-semibold text-content-strong">
-            Cargar resultados
+            Carrega els resultats
           </h2>
           <p id="upload-help" className="mt-1 text-sm text-content-muted">
-            Selecciona un archivo CSV con los registros de la cohorte.
+            Selecciona un fitxer CSV amb els registres de la cohort.
           </p>
         </div>
       </div>
@@ -94,7 +94,7 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
           htmlFor="cohort-file"
           className="mb-2 block text-xs font-medium text-content-muted"
         >
-          <FileUp size={14} className="mr-1 inline" /> Archivo de resultados ·
+          <FileUp size={14} className="mr-1 inline" /> Fitxer de resultats ·
           CSV
         </label>
         <input
@@ -121,13 +121,13 @@ export default function CsvUploader({ onLoad, compact = false }: Props) {
               size={16}
               className="animate-spin motion-reduce:animate-none"
             />
-            Procesando archivo...
+            S’està processant el fitxer…
           </p>
         )}
         {error && (
           <p role="alert" className="error-message">
             <AlertCircle size={16} />
-            {error} Selecciona otro archivo e inténtalo de nuevo.
+            {error} Selecciona un altre fitxer i torna-ho a provar.
           </p>
         )}
       </div>

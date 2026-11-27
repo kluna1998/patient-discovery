@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 export default function EvidenceRegexField({ pattern }: { pattern: string }) {
   return (
     <label className="block min-w-0 flex-1">
-      <span className="mb-1 block text-xs text-content-muted">Regex de la evidencia</span>
+      <span className="mb-1 block text-xs text-content-muted">Expressió regular de l’evidència</span>
       <span className="relative block">
         <Search size={16} aria-hidden="true" className="pointer-events-none absolute top-2 left-3 text-content-muted" />
         <input

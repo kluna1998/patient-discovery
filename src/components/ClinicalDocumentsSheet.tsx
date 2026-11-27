@@ -72,15 +72,15 @@ function CohortEvidencePanel({ patientId, cohort, dictionary, indexes }: CohortE
   const [expanded, setExpanded] = useState(true);
   const chooser = indexes.length > 1 && (
     <label className="mb-3 block text-sm">
-      Registro de la cohorte
+      Registre de la cohort
       <select className="text-input mt-1" value={index} onChange={(event) => setRecordIndex(Number(event.target.value))}>
-        {indexes.map((item) => <option key={item} value={item}>Registro #{item + 1}</option>)}
+        {indexes.map((item) => <option key={item} value={item}>Registre núm. {item + 1}</option>)}
       </select>
     </label>
   );
 
   if (index === undefined) {
-    return <ClinicalDocumentsPanels patientId={patientId} controls={<p role="status" className="mb-3">Sin registro en la cohorte</p>} />;
+    return <ClinicalDocumentsPanels patientId={patientId} controls={<p role="status" className="mb-3">Cap registre a la cohort</p>} />;
   }
   return <RecordEvidencePanels key={index} patientId={patientId} cohort={cohort} dictionary={dictionary} index={index}
     chooser={chooser} expanded={expanded} onExpandedChange={setExpanded} />;
@@ -120,25 +120,25 @@ function EvidencePanels({ patientId, search, chooser, expanded: controlledExpand
         onToggle={(event) => (onExpandedChange ?? setExpanded)(event.currentTarget.open)}>
         <summary className="disclosure-summary font-semibold text-primary">
           <ChevronDown size={14} aria-hidden="true" className="disclosure-chevron" />
-          Evidencias
+          Evidències
         </summary>
         {expanded && <div className="mt-2 space-y-2">
-          {queries.size === 0 ? <p role="status">Sin evidencias configuradas</p>
-            : state.status === "loading" ? <p role="status">Buscando referencias documentales…</p>
+          {queries.size === 0 ? <p role="status">No hi ha evidències configurades</p>
+            : state.status === "loading" ? <p role="status">S’estan cercant referències documentals…</p>
             : state.status === "error" ? (
               <>
                 <p role="alert">{state.message}</p>
-                <button type="button" className="btn" onClick={retry}>Reintentar búsqueda</button>
+                <button type="button" className="btn" onClick={retry}>Torna a provar la cerca</button>
               </>
             ) : report && (
               <>
                 <p role="status" className="hidden">{report.failedDocuments ? partialEvidenceLabel
                   : [...report.results.values()].some((result) => result.references.length)
-                    ? "Se han encontrado evidencias" : "No se han encontrado evidencias"}</p>
-                {report.failedDocuments > 0 && <button type="button" className="btn" onClick={retry}>Reintentar búsqueda</button>}
+                    ? "S’han trobat evidències" : "No s’han trobat evidències"}</p>
+                {report.failedDocuments > 0 && <button type="button" className="btn" onClick={retry}>Torna a provar la cerca</button>}
                 <label className="block">
                   <select className="text-input mt-1" value={column} onChange={(event) => setColumn(event.target.value)}>
-                    <option value="">Todos los documentos</option>
+                    <option value="">Tots els documents</option>
                     {[...report.results].map(([key, result]) => {
                       const count = result.references.length;
                       if (count === 0) return null;
@@ -236,11 +236,11 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls, onReadingChang
     <>
       <section
         ref={list}
-        aria-label="Listado de documentos"
+        aria-label="Llista de documents"
         className={`clinical-documents-drawer min-h-0 min-w-0 flex-1 flex-col bg-surface ${reading ? "hidden lg:flex" : "flex"}`}
       >
         <header className="shrink-0 border-b border-line bg-surface py-4 pl-4 pr-14">
-          <SheetTitle className="text-lg font-semibold text-primary">{evidence ? "Referencias documentales" : "Documentos clínicos"}</SheetTitle>
+          <SheetTitle className="text-lg font-semibold text-primary">{evidence ? "Referències documentals" : "Documents clínics"}</SheetTitle>
           {evidence && (
             <>
               <p className="mt-2 break-words text-sm font-semibold">{evidence.field.name}</p>
@@ -248,15 +248,15 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls, onReadingChang
               {references && (references.length > 0 || !report?.failedDocuments) && (
                 <p className="mt-1 text-xs text-content-muted">
                   {unmatchedDocuments
-                    ? "0 documentos con coincidencias"
-                    : `${references.length} ${references.length === 1 ? "documento" : "documentos"} · ${formatMatchCount(references.reduce((total, ref) => total + ref.matches.length, 0))}`}
+                    ? "0 documents amb coincidències"
+                    : `${references.length} ${references.length === 1 ? "document" : "documents"} · ${formatMatchCount(references.reduce((total, ref) => total + ref.matches.length, 0))}`}
                 </p>
               )}
             </>
           )}
           {!evidence && documents && (
             <p className="mt-1 text-xs text-content-muted">
-              {documents.length} {documents.length === 1 ? "documento" : "documentos"}
+              {documents.length} {documents.length === 1 ? "document" : "documents"}
             </p>
           )}
           {selected && !reading && (
@@ -268,7 +268,7 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls, onReadingChang
                 setReading(true);
               }}
             >
-              Volver a lectura
+              Torna a la lectura
             </button>
           )}
         </header>
@@ -276,27 +276,27 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls, onReadingChang
           {controls}
           {evidence ? (
             <>
-              {evidence.state.status === "loading" && <p role="status">Buscando referencias documentales…</p>}
+              {evidence.state.status === "loading" && <p role="status">S’estan cercant referències documentals…</p>}
               {evidence.state.status === "error" && (
                 <>
                   <p role="alert">{evidence.state.message}</p>
-                  <button type="button" className="btn mt-2" onClick={retryEvidence}>Reintentar búsqueda</button>
+                  <button type="button" className="btn mt-2" onClick={retryEvidence}>Torna a provar la cerca</button>
                 </>
               )}
               {!controls && !!report?.failedDocuments && (
                 <div className="mb-3">
-                  <p role="status">{partialEvidenceLabel}. Algunos informes no se pudieron leer.</p>
-                  {!references?.length && <button type="button" className="btn mt-2" onClick={retryEvidence}>Reintentar búsqueda</button>}
+                  <p role="status">{partialEvidenceLabel}. No s’han pogut llegir alguns informes.</p>
+                  {!references?.length && <button type="button" className="btn mt-2" onClick={retryEvidence}>Torna a provar la cerca</button>}
                 </div>
               )}
               {!!references?.length && (
                 <ClinicalDocumentsList documents={references.map((ref) => ref.document)} references={byId}
                   indexError={false} selected={selected} onSelect={selectDocument} />
               )}
-              {controls && references?.length === 0 && <p>Sin referencias en los documentos leídos.</p>}
+              {controls && references?.length === 0 && <p>No hi ha referències als documents llegits.</p>}
               {unmatchedDocuments && (
                 <>
-                  <h3 className="mb-2 font-medium text-primary">Documentos del paciente</h3>
+                  <h3 className="mb-2 font-medium text-primary">Documents del pacient</h3>
                   <ClinicalDocumentsList documents={unmatchedDocuments} indexError={false}
                     selected={selected} onSelect={selectDocument} />
                   {unmatchedDocuments.length === 0 && (
@@ -308,7 +308,7 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls, onReadingChang
           ) : patientId ? (
             <ClinicalDocumentsList documents={documents} indexError={indexError} selected={selected} onSelect={selectDocument} />
           ) : (
-            <p>Este registro no tiene un identificador de paciente (nhc).</p>
+            <p>Aquest registre no té cap identificador de pacient (nhc).</p>
           )}
         </div>
       </section>
@@ -317,7 +317,7 @@ function ClinicalDocumentsPanels({ patientId, evidence, controls, onReadingChang
           ref={viewer}
           tabIndex={-1}
           role="region"
-          aria-label="Lectura del informe"
+          aria-label="Lectura de l’informe"
           data-document-viewer=""
           className={`min-h-0 min-w-0 flex-1 flex-col ${reading ? "flex" : "hidden lg:flex"}`}
         >

@@ -18,11 +18,11 @@ export function useColumnDictionary() {
           signal: controller.signal,
           cache: "no-store",
         });
-        if (!response.ok) throw new Error("No se pudo cargar public/info_columns_dict.csv.");
+        if (!response.ok) throw new Error("No s’ha pogut carregar public/info_columns_dict.csv.");
         const initial = parseDictionary(await response.text());
         if (!controller.signal.aborted) setEntries(initial);
       } catch (cause) {
-        if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : "No se pudo cargar el diccionario.");
+        if (!controller.signal.aborted) setError(cause instanceof Error ? cause.message : "No s’ha pogut carregar el diccionari.");
       } finally {
         if (!controller.signal.aborted) setLoading(false);
       }

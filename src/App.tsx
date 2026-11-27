@@ -38,6 +38,7 @@ function App() {
   );
   const [decisions, setDecisions] = useState<ReviewDecisions>({});
   const [activeTab, setActiveTab] = useState<ReviewStatus>("pending");
+  const [visibilityOverride, setVisibilityOverride] = useState<Record<string, boolean> | null>(null);
 
   const [selectedRowId, setSelectedRowId] = useState<number | null>(null);
   const [incomingDataset, setIncomingDataset] = useState<CsvDataset | null>(null);
@@ -66,6 +67,7 @@ function App() {
     setExportedDecisions(null);
     setExportError("");
     setActiveTab("pending");
+    setVisibilityOverride(null);
   }
 
   if (incomingDataset && selectedRowId === null && !hasUnexportedDecisions) {
@@ -158,7 +160,7 @@ function App() {
       setExportedDecisions(decisions);
       setExportError("");
     } catch {
-      setExportError("No se ha podido iniciar la descarga. Intenta exportar de nuevo.");
+      setExportError("No s’ha pogut iniciar la baixada. Torna a provar d’exportar la revisió.");
     }
   }
 
@@ -167,7 +169,7 @@ function App() {
       <div className="page-heading">
         <div>
           <p className="eyebrow">PATIENT DISCOVERY</p>
-          <h1>Revisión de cohorte</h1>
+          <h1>Revisió de la cohort</h1>
 
         </div>
         <div className="flex flex-wrap items-start gap-3">
@@ -178,20 +180,20 @@ function App() {
             onClick={handleExport}
             disabled={!dataset}
             className="btn btn-primary max-sm:size-10 max-sm:p-0"
-            aria-label="Exportar revisión en CSV"
-            title="Exportar revisión en CSV"
+            aria-label="Exporta la revisió en CSV"
+            title="Exporta la revisió en CSV"
           >
             <Download size={16} aria-hidden="true" />
-            <span className="hidden sm:inline">Exportar revisión en CSV</span>
+            <span className="hidden sm:inline">Exporta la revisió en CSV</span>
           </button>
         </div>
       </div>
-      {dictionary.loading && <p role="status">Cargando diccionario de columnas…</p>}
-      {dictionary.error && <div role="alert" className="error-message my-3">{dictionary.error}<button type="button" className="btn" onClick={dictionary.retry}>Reintentar carga</button></div>}
+      {dictionary.loading && <p role="status">S’està carregant el diccionari de columnes…</p>}
+      {dictionary.error && <div role="alert" className="error-message my-3">{dictionary.error}<button type="button" className="btn" onClick={dictionary.retry}>Torna a provar de carregar-lo</button></div>}
       {showDictionaryEditor && !dictionary.loading && <ColumnDictionaryEditor entries={dictionary.entries} columns={dataset?.columns ?? []} onSave={dictionary.save} />}
       {!dataset && <CsvUploader onLoad={setIncomingDataset} />}
       {dataset && (
-        <section className="panel progress-panel" aria-label="Progreso de revisión">
+        <section className="panel progress-panel" aria-label="Progrés de la revisió">
           <div className="flex min-w-0 items-center gap-3">
             <span className="icon-tile">
               <FileSpreadsheet size={20} />
@@ -204,35 +206,35 @@ function App() {
                 {dataset.fileName}
               </p>
               <p className="mt-1 text-xs text-content-subtle">
-                {dataset.rows.length} registros · {sourceDataset?.columns.length}{" "}
-                columnas originales
+                {dataset.rows.length} registres · {sourceDataset?.columns.length}{" "}
+                columnes originals
               </p>
             </div>
           </div>
           <div className="progress-summary">
             <div className="mb-2 flex justify-between gap-6 text-xs">
               <span className="font-medium text-content">
-                Progreso de revisión
+                Progrés de la revisió
               </span>
               <span>
-                {reviewedCount} de {dataset.rows.length} revisados
+                {reviewedCount} de {dataset.rows.length} revisats
               </span>
             </div>
             <progress
               className="review-progress"
               value={reviewedCount}
               max={Math.max(dataset.rows.length, 1)}
-              aria-label="Registros revisados"
+              aria-label="Registres revisats"
             />
           </div>
         </section>
       )}
       {dataset && visibleDataset ? (
-        <section className="mt-5" aria-label="Revisión de pacientes">
+        <section className="mt-5" aria-label="Revisió de pacients">
           <div
             className="review-tabs"
             role="tablist"
-            aria-label="Estado de revisión"
+            aria-label="Estat de la revisió"
             onKeyDown={(event) => {
               const statuses = ["pending", "accepted", "rejected"] as const;
               const current = statuses.indexOf(activeTab);
@@ -248,7 +250,7 @@ function App() {
           >
             {(["pending", "accepted", "rejected"] as const).map((status) => {
               const StatusIcon = status === "pending" ? Clock3 : status === "accepted" ? CircleCheck : CircleX;
-              const label = status === "pending" ? "Pendientes" : status === "accepted" ? "Aceptados" : "Rechazados";
+              const label = status === "pending" ? "Pendents" : status === "accepted" ? "Acceptats" : "Rebutjats";
               return (
                 <button
                   key={status}
@@ -282,6 +284,8 @@ function App() {
               dictionary={dictionary.entries}
               decisions={visibleDecisions}
               originalRowIndices={visibleIndices}
+              visibilityOverride={visibilityOverride}
+              setVisibilityOverride={setVisibilityOverride}
               onReview={handleReview}
             />
           </div>
@@ -291,16 +295,16 @@ function App() {
           <span className="empty-icon">
             <ClipboardList size={28} />
           </span>
-          <h2>Carga una cohorte para iniciar la revisión</h2>
+          <h2>Carrega una cohort per començar la revisió</h2>
           <p>
-            Selecciona un archivo CSV para consultar los registros
-            <br className="hidden sm:block" /> y documentar las decisiones de
-            revisión.
+            Selecciona un fitxer CSV per consultar els registres
+            <br className="hidden sm:block" /> i documentar les decisions de
+            revisió.
           </p>
           <div className="workflow-steps">
-            <span>01 &nbsp; Cargar CSV</span>
-            <span>02 &nbsp; Revisar candidatos</span>
-            <span>03 &nbsp; Exportar decisiones</span>
+            <span>01 &nbsp; Carrega el CSV</span>
+            <span>02 &nbsp; Revisa els candidats</span>
+            <span>03 &nbsp; Exporta les decisions</span>
           </div>
         </section>
       )}
@@ -321,23 +325,23 @@ function App() {
       >
         <div className="p-5 sm:p-6">
           <h2 id="replace-cohort-title" className="text-lg font-semibold text-content-strong">
-            ¿Sustituir la cohorte actual?
+            Vols substituir la cohort actual?
           </h2>
           <p id="replace-cohort-description" className="mt-2 text-sm text-content">
-            Hay decisiones sin exportar. Si cargas el nuevo CSV sin exportarlas, se perderán.
+            Hi ha decisions pendents d’exportar. Si carregues el CSV nou sense exportar-les, es perdran.
           </p>
           {confirmReplacement && exportError && (
             <p role="alert" className="error-message mt-3">{exportError}</p>
           )}
           <div className="mt-5 flex flex-wrap gap-2">
             <button type="button" className="btn" autoFocus onClick={cancelReplacement}>
-              Volver a la revisión
+              Torna a la revisió
             </button>
             <button type="button" className="btn btn-primary" onClick={handleExport}>
-              Exportar y cargar CSV
+              Exporta i carrega el CSV
             </button>
             <button type="button" className="btn" onClick={discardReviewAndReplace}>
-              Cargar sin exportar
+              Carrega sense exportar
             </button>
           </div>
         </div>

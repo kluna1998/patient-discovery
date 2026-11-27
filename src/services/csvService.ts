@@ -14,7 +14,7 @@ export function parseCsv(file: File): Promise<CsvDataset> {
         if (results.errors.length > 0) {
           reject(
             new Error(
-              "No se ha podido interpretar el CSV. Comprueba el delimitador, las comillas y el número de campos de cada registro."
+              "No s’ha pogut interpretar el CSV. Comprova el separador, les cometes i el nombre de camps de cada registre."
             )
           );
           return;
@@ -23,7 +23,7 @@ export function parseCsv(file: File): Promise<CsvDataset> {
         const columns = results.meta.fields ?? [];
 
         if (columns.length === 0 || results.data.length === 0) {
-          reject(new Error("El CSV no contiene registros válidos."));
+          reject(new Error("El CSV no conté registres vàlids."));
           return;
         }
 
@@ -32,7 +32,7 @@ export function parseCsv(file: File): Promise<CsvDataset> {
           new Set(columns).size !== columns.length
         ) {
           reject(
-            new Error("Los encabezados están vacíos o duplicados.")
+            new Error("Les capçaleres són buides o duplicades.")
           );
           return;
         }
@@ -45,7 +45,7 @@ export function parseCsv(file: File): Promise<CsvDataset> {
       },
 
       error: () => {
-        reject(new Error("No se ha podido leer el archivo. Comprueba que esté disponible y que tengas permiso para abrirlo."));
+        reject(new Error("No s’ha pogut llegir el fitxer. Comprova que estigui disponible i que tinguis permís per obrir-lo."));
       },
     });
   });

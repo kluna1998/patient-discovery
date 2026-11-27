@@ -13,9 +13,9 @@ interface Props {
 }
 
 export default function ClinicalDocumentsList({ documents, indexError, selected, onSelect, references }: Props) {
-  if (indexError) return <p role="alert">No se pudo cargar la lista de documentos.</p>;
-  if (!documents) return <p role="status">Cargando documentos…</p>;
-  if (!documents.length) return <p>No hay documentos para este paciente.</p>;
+  if (indexError) return <p role="alert">No s’ha pogut carregar la llista de documents.</p>;
+  if (!documents) return <p role="status">S’estan carregant els documents…</p>;
+  if (!documents.length) return <p>No hi ha documents per a aquest pacient.</p>;
 
   return (
     <ul className="space-y-2">

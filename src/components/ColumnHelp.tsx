@@ -18,7 +18,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
   const title = variant === "dialog" ? info.criterio?.trim() || info.readable_name : info.readable_name;
   const explanation = info.explicacion?.trim();
   const meaning = info.meaning.trim();
-  const statusLabel = status === "yes" ? "SÍ" : status === "no" ? "NO" : "Sin datos";
+  const statusLabel = status === "yes" ? "SÍ" : status === "no" ? "NO" : "Sense dades";
   const showDefinition = meaning && !explanation;
   const id = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -155,7 +155,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
             {explanation && <p className="mt-2 text-sm font-normal leading-relaxed">{explanation}</p>}
             {showDefinition && (
               <div className="mt-3 text-sm font-normal leading-relaxed">
-                <p className="font-medium">Definición del dato</p>
+                <p className="font-medium">Definició de la dada</p>
                 <p>{meaning}</p>
               </div>
             )}
@@ -168,7 +168,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
         )}
         {!!evidences?.length && (
           <div className="mt-3 text-sm font-normal">
-            <p className="mb-2 font-medium">Evidencias</p>
+            <p className="mb-2 font-medium">Evidències</p>
             <dl className="space-y-2">
               {evidences.map(({ info: evidence, value, action }) => (
                 <div key={evidence.column_name}>
@@ -191,7 +191,7 @@ export default function ColumnHelp({ info, evidences, status, variant = "default
       <button
         ref={buttonRef}
         type="button"
-        aria-label={`Información sobre ${title}${status ? `: ${statusLabel}` : ""}`}
+        aria-label={`Informació sobre ${title}${status ? `: ${statusLabel}` : ""}`}
         aria-describedby={open && !interactive ? id : undefined}
         aria-haspopup={interactive ? "dialog" : undefined}
         aria-expanded={interactive ? open : undefined}

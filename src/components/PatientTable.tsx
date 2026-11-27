@@ -3,6 +3,7 @@ import ClinicalDocumentsExplorer, { ClinicalDocumentsBrowser } from "./ClinicalD
 import ClinicalDocumentsSheet from "./ClinicalDocumentsSheet";
 import type { ColumnInfo } from "../services/columnDictionary";
 import { useMemo, useState } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import {
   Search,
   RotateCcw,
@@ -36,6 +37,8 @@ import type { CsvDataset, PatientRow } from "../types/patient";
 import type { ReviewDecisions } from "../types/review";
 
 interface Props {
+  visibilityOverride: Record<string, boolean> | null;
+  setVisibilityOverride: Dispatch<SetStateAction<Record<string, boolean> | null>>;
   dataset: CsvDataset;
   cohort: CsvDataset;
   dictionary: ColumnInfo[];
@@ -67,7 +70,7 @@ const features = tableFeatures({
   },
 });
 
-export default function PatientTable({ dataset, cohort, dictionary, decisions, originalRowIndices, onReview }: Props) {
+export default function PatientTable({ dataset, cohort, dictionary, decisions, originalRowIndices, visibilityOverride, setVisibilityOverride, onReview }: Props) {
   const columnInfo = useMemo(() => new Map(dictionary.map((entry) => [entry.column_name, entry])), [dictionary]);
   const defaultVisibility = useMemo(() => {
     const visible = new Set(dataset.columns.filter((name) => {
@@ -80,7 +83,6 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
 
     return Object.fromEntries(dataset.columns.map((name) => [name, visible.has(name)]));
   }, [dataset.columns, columnInfo]);
-  const [visibilityOverride, setVisibilityOverride] = useState<Record<string, boolean> | null>(null);
   const [documentsOpen, setDocumentsOpen] = useState(false);
   const [columnsOpen, setColumnsOpen] = useState(false);
   // Generamos las columnas dinámicamente a partir del CSV.
@@ -89,7 +91,7 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
       // Columna de revisión.
       {
         id: "__review_actions",
-        header: "Revisión",
+        header: "Revisió",
         enableSorting: false,
         enableGlobalFilter: false,
         enableHiding: false,
@@ -112,16 +114,16 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
               <button
                 type="button"
                 onClick={() => onReview(rowId)}
-                aria-label={`${decision ? "Modificar" : "Revisar"} registro #${recordNumber}`}
+                aria-label={`${decision ? "Modifica" : "Revisa"} el registre #${recordNumber}`}
                 className={`btn min-h-8 min-w-18 gap-1.5 whitespace-nowrap px-3 py-1 ${buttonColor}`}
               >
                 <StatusIcon size={14} aria-hidden="true" />
-                {decision ? "Modificar" : "Revisar"}
+                {decision ? "Modifica" : "Revisa"}
               </button>
               <ClinicalDocumentsSheet patientId={row.original.nhc}>
                 <button
                   type="button"
-                  aria-label={`Abrir documentos del registro #${recordNumber}`}
+                  aria-label={`Obre els documents del registre #${recordNumber}`}
                   className="btn min-h-8 gap-1.5 whitespace-nowrap px-3 py-1 text-primary hover:bg-surface-accent"
                 >
                   <FileText size={14} aria-hidden="true" />
@@ -149,7 +151,7 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
       // Columna de justificación.
       {
         id: "__review_reason",
-        header: "Justificación",
+        header: "Justificació",
         enableSorting: false,
         enableGlobalFilter: false,
         enableHiding: false,
@@ -205,11 +207,11 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
   const totalPages = table.getPageCount();
 
   return (
-    <section aria-label="Cohorte de pacientes">
+    <section aria-label="Cohort de pacients">
       {/* Cabecera */}
       <div className="table-heading">
         <h2 className="text-base font-semibold text-content-heading mr-3">
-          Cohorte de pacientes
+          Cohort de pacients
         </h2>
         <ClinicalDocumentsExplorer />
       </div>
@@ -223,7 +225,7 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
         >
           <summary className="disclosure-summary border border-documents-panel bg-documents-panel px-4 py-3 text-xs leading-8 font-semibold text-primary hover:border-documents-panel-border-hover focus:outline-none">
             <ChevronDown size={14} aria-hidden="true" className="disclosure-chevron" />
-            <FileText size={14} aria-hidden="true" /> Todos los documentos
+            <FileText size={14} aria-hidden="true" /> Tots els documents
           </summary>
           {documentsOpen && (
             <div className="all-documents-panel flex h-[65dvh] min-w-0 flex-col overflow-hidden bg-documents-panel">
@@ -243,7 +245,7 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
             <ChevronDown size={14} aria-hidden="true" className="disclosure-chevron" />
             <Columns3 size={14} aria-hidden="true" />
             <span>
-              Columnas visibles · {table.getVisibleLeafColumns().filter((column) => column.getCanHide()).length} de {dataset.columns.length}
+              Columnes visibles · {table.getVisibleLeafColumns().filter((column) => column.getCanHide()).length} de {dataset.columns.length}
             </span>
           </button>
           <div className="flex w-full min-w-0 max-w-md items-center gap-2 justify-self-end">
@@ -252,44 +254,44 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
               <input
                 id="patient-search"
                 type="search"
-                aria-label="Buscar registros"
+                aria-label="Cerca registres"
                 value={table.state.globalFilter ?? ""}
                 onChange={(event) => {
                   table.setGlobalFilter(event.target.value);
                   table.setPageIndex(0);
                 }}
-                placeholder="Buscar en los registros…"
+                placeholder="Cerca als registres…"
                 className="text-input h-10"
               />
             </div>
             <button
               type="button"
               className="btn size-10 shrink-0 p-0"
-              aria-label="Restablecer vista"
-              title="Restablecer vista"
+              aria-label="Restableix la vista"
+              title="Restableix la vista"
               onClick={resetView}
             >
               <RotateCcw size={14} aria-hidden="true" />
             </button>
           </div>
-          <nav aria-label="Paginación de pacientes" className="flex h-10 shrink-0 items-center gap-1">
+          <nav aria-label="Paginació de pacients" className="flex h-10 shrink-0 items-center gap-1">
             <button
               type="button"
               className="btn btn-ghost size-8 min-h-8 p-0"
-              aria-label="Página anterior"
+              aria-label="Pàgina anterior"
               disabled={!table.getCanPreviousPage()}
               onClick={() => table.previousPage()}
             >
               <ChevronLeft size={16} aria-hidden="true" />
             </button>
             <span role="status" className="whitespace-nowrap text-sm tabular-nums text-content-muted">
-              <span className="sr-only">Página </span>
+              <span className="sr-only">Pàgina </span>
               {table.state.pagination.pageIndex + 1}/{Math.max(totalPages, 1)}
             </span>
             <button
               type="button"
               className="btn btn-ghost size-8 min-h-8 p-0"
-              aria-label="Página siguiente"
+              aria-label="Pàgina següent"
               disabled={!table.getCanNextPage()}
               onClick={() => table.nextPage()}
             >
@@ -325,10 +327,10 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
           className="table-scroll"
           tabIndex={0}
           role="region"
-          aria-label="Tabla de la cohorte de pacientes"
+          aria-label="Taula de la cohort de pacients"
         >
           <table className="cohort-table">
-            <caption>Cohorte de pacientes — {dataset.fileName}</caption>
+            <caption>Cohort de pacients — {dataset.fileName}</caption>
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -396,15 +398,15 @@ export default function PatientTable({ dataset, cohort, dictionary, decisions, o
 
           {table.getRowModel().rows.length === 0 && (
             <p className="p-8 text-center text-content-subtle">
-              No se encontraron registros. Cambia el estado de revisión o
-              restablece la búsqueda.
+              No s’han trobat registres. Canvia l’estat de la revisió o
+              restableix la cerca.
             </p>
           )}
         </div>
 
         <div className="table-footer">
           <p className="text-sm text-content-subtle">
-            {filteredCount} registros encontrados
+            {filteredCount} registres trobats
           </p>
         </div>
       </div>

@@ -46,8 +46,8 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect, c
     return records;
   }, [cohort]);
   const columns = useMemo<ColumnDef<typeof features, ClinicalDocumentsPatient>[]>(() => [
-    { accessorKey: "patientId", header: "Identificador del paciente", sortingFn: "alphanumeric" },
-    { id: "documents", header: "Documentos clínicos", enableSorting: false, enableGlobalFilter: false },
+    { accessorKey: "patientId", header: "Identificador del pacient", sortingFn: "alphanumeric" },
+    { id: "documents", header: "Documents clínics", enableSorting: false, enableGlobalFilter: false },
   ], []);
   const table = useTable({
     features,
@@ -73,7 +73,7 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect, c
               id={searchId}
               type="search"
               className="text-input h-10"
-              placeholder="Buscar por identificador…"
+              placeholder="Cerca per identificador…"
               value={table.state.globalFilter ?? ""}
               onChange={(event) => {
                 table.setGlobalFilter(event.target.value);
@@ -82,31 +82,31 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect, c
             />
           </div>
         </div>
-        <nav aria-label="Paginación del explorador" className="flex shrink-0 items-center gap-1">
-          <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Página anterior" disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}>
+        <nav aria-label="Paginació de l’explorador" className="flex shrink-0 items-center gap-1">
+          <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Pàgina anterior" disabled={!table.getCanPreviousPage()} onClick={() => table.previousPage()}>
             <ChevronLeft size={16} aria-hidden="true" />
           </button>
           <span role="status" className="whitespace-nowrap text-sm tabular-nums text-content-muted">
-            <span className="sr-only">Página </span>
+            <span className="sr-only">Pàgina </span>
             {table.state.pagination.pageIndex + 1}/{totalPages}
           </span>
-          <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Página siguiente" disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}>
+          <button type="button" className="btn btn-ghost size-8 min-h-8 p-0" aria-label="Pàgina següent" disabled={!table.getCanNextPage()} onClick={() => table.nextPage()}>
             <ChevronRight size={16} aria-hidden="true" />
           </button>
         </nav>
       </div>
-      <div className="table-scroll min-h-0 flex-1" tabIndex={0} role="region" aria-label="Tabla de documentos clínicos">
+      <div className="table-scroll min-h-0 flex-1" tabIndex={0} role="region" aria-label="Taula de documents clínics">
         <table className="cohort-table">
-          <caption>Documentos clínicos por paciente</caption>
+          <caption>Documents clínics per pacient</caption>
           <thead>
             <tr>
               <th scope="col" aria-sort={descending ? "descending" : "ascending"} className="w-1/4">
                 <button type="button" onClick={() => idColumn?.toggleSorting(!descending)}>
-                  Identificador del paciente
+                  Identificador del pacient
                   <span aria-hidden="true" className="text-content-faint">{descending ? "↓" : "↑"}</span>
                 </button>
               </th>
-              <th scope="col">Documentos clínicos</th>
+              <th scope="col">Documents clínics</th>
             </tr>
           </thead>
           <tbody>
@@ -118,9 +118,9 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect, c
                     {cohort && dictionary && (
                       <li>
                         <ClinicalDocumentsSheet patientId={patient.patientId} cohortEvidence={{ cohort, dictionary, indexes: recordsByPatient.get(patient.patientId) ?? [] }}>
-                          <button type="button" className="btn min-h-8 px-2 py-1 text-primary" aria-label="Buscar evidencias" title="Buscar evidencias">
+                          <button type="button" className="btn min-h-8 px-2 py-1 text-primary" aria-label="Cerca evidències" title="Cerca evidències">
                             
-                            <Search size={14} aria-hidden="true" /> Buscar Evidencias
+                            <Search size={14} aria-hidden="true" /> Cerca evidències
                           </button>
                         </ClinicalDocumentsSheet>
                       </li>
@@ -147,7 +147,7 @@ export default function ClinicalDocumentsTable({ patients, selected, onSelect, c
           </tbody>
         </table>
         {!rows.length && (
-          <p className="p-8 text-center text-content-subtle">No se encontraron pacientes con ese identificador.</p>
+          <p className="p-8 text-center text-content-subtle">No s’han trobat pacients amb aquest identificador.</p>
         )}
       </div>
     </div>

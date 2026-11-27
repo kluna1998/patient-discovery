@@ -61,7 +61,7 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
   }, [activeMatch, query, highlights]);
 
   return (
-    <section className="flex min-h-0 flex-1 flex-col bg-document-workspace text-sm" aria-label="Contenido del informe">
+    <section className="flex min-h-0 flex-1 flex-col bg-document-workspace text-sm" aria-label="Contingut de l’informe">
       <header className={`relative flex shrink-0 items-start justify-between gap-2 border-b border-line bg-surface py-4 pl-4 ${onShowList ? "pr-24 lg:pr-4" : "pr-14 sm:pr-4"}`}>
         <div className="flex min-w-0 flex-1 items-start gap-2">
           <span className="relative mt-1 size-6 shrink-0 text-primary sm:mt-0 sm:h-auto sm:w-11 sm:self-stretch">
@@ -69,13 +69,13 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
           </span>
           <div className="min-w-0">
             <h3 className="wrap-anywhere text-lg font-semibold text-primary">
-              <DocumentTitle document={document} fallback="Informe clínico" />
+              <DocumentTitle document={document} fallback="Informe clínic" />
             </h3>
             <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-content-muted">
               {document.date && <span>{document.date}</span>}
-              <span className="rounded-md border border-line bg-surface-muted px-2">Solo lectura</span>
+              <span className="rounded-md border border-line bg-surface-muted px-2">Només lectura</span>
               {evidence?.metadataMatch && <span>{metadataMatchLabel}</span>}
-              {partialEvidence && <span role="status">{partialEvidenceLabel}. Algunos informes no se pudieron leer.</span>}
+              {partialEvidence && <span role="status">{partialEvidenceLabel}. No s’han pogut llegir alguns informes.</span>}
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
             <button
               type="button"
               className="btn btn-ghost size-8 min-h-8 p-0 lg:hidden"
-              aria-label="Volver al listado de documentos"
+              aria-label="Torna a la llista de documents"
               onClick={onShowList}
             >
               <ArrowLeft size={16} aria-hidden="true" />
@@ -93,7 +93,7 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
           <button
             type="button"
             className={closeLabel ? "btn btn-ghost size-8 min-h-8 p-0 sm:w-auto sm:px-3 sm:py-1" : `btn btn-ghost size-8 min-h-8 p-0 ${onShowList ? "hidden lg:inline-flex" : ""}`}
-            aria-label={closeLabel ?? "Cerrar visor"}
+            aria-label={closeLabel ?? "Tanca el visor"}
             onClick={onClose}
           >
             {closeLabel ? (
@@ -117,7 +117,7 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
                 setEvidenceIndex((index) => (index + direction + evidenceMatches.length) % evidenceMatches.length);
               }} />
             </div>
-          ) : !evidence && <span className="flex min-h-8 items-center text-xs text-content-muted">0 coincidencias</span>}
+          ) : !evidence && <span className="flex min-h-8 items-center text-xs text-content-muted">0 coincidències</span>}
         </div>
       )}
       {!error && text && (
@@ -137,8 +137,8 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
       )}
       <div className="flex min-h-0 flex-1 flex-col bg-document-workspace p-4">
         <div ref={readingArea} className="min-h-0 flex-1 overflow-y-auto overscroll-contain rounded-panel border border-line bg-surface p-6 lg:p-8">
-          {error ? <p role="alert">No se pudo cargar el informe.</p> : text === undefined ? (
-            <p role="status">Cargando informe…</p>
+          {error ? <p role="alert">No s’ha pogut carregar l’informe.</p> : text === undefined ? (
+            <p role="status">S’està carregant l’informe…</p>
           ) : text ? (
             <pre className="whitespace-pre-wrap break-words font-sans text-clinical-body text-document-content">
               {highlights.map(({ start, end, manualIndex, evidenceIndex: segmentEvidence }) => {
@@ -165,7 +165,7 @@ export default function DocumentViewer({ document, onClose, onShowList, closeLab
               })}
             </pre>
           ) : (
-            <pre className="whitespace-pre-wrap break-words font-sans text-clinical-body text-document-content">El informe está vacío.</pre>
+            <pre className="whitespace-pre-wrap break-words font-sans text-clinical-body text-document-content">L’informe és buit.</pre>
           )}
         </div>
       </div>

@@ -67,10 +67,10 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
     if (value?.trim() === "0") return "no";
     return "unknown";
   };
-  const booleanLabels = { yes: "Sí", no: "Revisar", unknown: "Sin datos" };
+  const booleanLabels = { yes: "Sí", no: "Cal revisar", unknown: "Sense dades" };
   const displayValue = (info: ColumnInfo) => info.value_type === "boolean"
     ? booleanLabels[parseBooleanValue(row[info.column_name])]
-    : row[info.column_name]?.trim() ? row[info.column_name] : "Sin datos";
+    : row[info.column_name]?.trim() ? row[info.column_name] : "Sense dades";
   const [reason, setReason] = useState(decision?.reason ?? "");
   const [status, setStatus] = useState<ReviewDecision["status"]>(decision?.status ?? "accepted");
 
@@ -78,13 +78,13 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
     const column = info.column_name;
     if (!queries.has(column)) return;
     const loading = evidenceState.status === "loading";
-    const loadingLabel = `Buscando referencias de ${info.readable_name}`;
+    const loadingLabel = `S’estan cercant referències de ${info.readable_name}`;
     const report = evidenceState.status === "complete" ? evidenceState.report : undefined;
     const count = report?.results.get(column)?.references.length ?? 0;
     const partial = !!report?.failedDocuments;
     const showCount = !!report && (count > 0 || !partial);
     const error = evidenceState.status === "error";
-    const detail = error ? "Error de búsqueda" : partial ? partialEvidenceLabel : "";
+    const detail = error ? "Error de cerca" : partial ? partialEvidenceLabel : "";
     const colors = error ? "border-error/20 bg-error-bg text-error hover:bg-error/10 hover:text-error"
       : count > 0 ? "bg-document-row-selected hover:bg-brand-accent hover:text-white text-primary"
       : loading ? "text-content-muted"
@@ -97,8 +97,8 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
         aria-haspopup={loading ? undefined : "dialog"}
         aria-disabled={loading || undefined}
         tabIndex={loading ? -1 : undefined}
-        aria-label={loading ? loadingLabel : [`Referencias de ${info.readable_name}`,
-          showCount ? `${count} ${count === 1 ? "documento" : "documentos"}` : "", detail].filter(Boolean).join(" · ")}
+        aria-label={loading ? loadingLabel : [`Referències de ${info.readable_name}`,
+          showCount ? `${count} ${count === 1 ? "document" : "documents"}` : "", detail].filter(Boolean).join(" · ")}
         onClick={loading ? undefined : () => {
           setReferenceColumn(column);
           setReferenceVisit((visit) => visit + 1);
@@ -159,9 +159,9 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
         <header className="document-header">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="eyebrow mt-5">{decision ? "MODIFICAR DECISIÓN" : "FICHA DE REVISIÓN"}</p>
+              <p className="eyebrow mt-5">{decision ? "MODIFICA LA DECISIÓ" : "FITXA DE REVISIÓ"}</p>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-                <h2 ref={titleRef} id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">Registro #{rowId + 1}</h2>
+                <h2 ref={titleRef} id="decision-title" tabIndex={-1} autoFocus className="text-2xl font-semibold text-content-strong">{row.nhc?.trim() || "NHC no disponible"}</h2>
                 <ClinicalDocumentsSheet
                   open={documentsOpen}
                   onOpenChange={changeDocumentsOpen}
@@ -186,16 +186,16 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
                 >
                   <button type="button" className="btn min-h-8 px-3 py-1 text-sm text-primary hover:bg-surface-accent" onClick={() => {
                     setReferenceColumn(undefined);
-                  }}>Ver documentos</button>
+                  }}>Mostra els documents</button>
                 </ClinicalDocumentsSheet>
               </div>
             </div>
-            <button type="button" onClick={onClose} className="btn min-h-8 p-2" aria-label="Cerrar revisión"><X size={16} /></button>
+            <button type="button" onClick={onClose} className="btn min-h-8 p-2" aria-label="Tanca la revisió"><X size={16} /></button>
             </div>
           </header>
 
 
-        <section className="document-section" aria-label="Datos del paciente">
+        <section className="document-section" aria-label="Dades del pacient">
           {groupPatientFieldsForDialog(columns, dictionary).map((section, index) => (
             <section className="clinical-section" key={index} aria-labelledby={`clinical-section-${index}`}>
               <h3 id={`clinical-section-${index}`} className="clinical-section-title">{section.name}</h3>
@@ -239,18 +239,18 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
           {decision && (
             <>
               <dl className="mt-4 space-y-3 text-sm text-content">
-                <div><dt className="font-medium">Estado actual</dt><dd>{reviewStatusLabels[decision.status]}</dd></div>
-                <div><dt className="font-medium">Justificación registrada</dt><dd className="whitespace-pre-wrap break-words">{decision.reason}</dd></div>
-                <div><dt className="font-medium">Fecha de la última decisión</dt><dd><time dateTime={decision.reviewedAt}>{new Date(decision.reviewedAt).toLocaleString("es-ES")}</time></dd></div>
+                <div><dt className="font-medium">Estat actual</dt><dd>{reviewStatusLabels[decision.status]}</dd></div>
+                <div><dt className="font-medium">Justificació registrada</dt><dd className="whitespace-pre-wrap break-words">{decision.reason}</dd></div>
+                <div><dt className="font-medium">Data de l’última decisió</dt><dd><time dateTime={decision.reviewedAt}>{new Date(decision.reviewedAt).toLocaleString("ca-ES")}</time></dd></div>
               </dl>
-              <label htmlFor="decision-status" className="mt-5 block text-sm font-medium text-content">Estado de la decisión</label>
+              <label htmlFor="decision-status" className="mt-5 block text-sm font-medium text-content">Estat de la decisió</label>
               <select id="decision-status" value={status} onChange={(event) => setStatus(event.target.value as ReviewDecision["status"])} className="text-input mt-2">
-                <option value="accepted">Aceptado</option>
-                <option value="rejected">Rechazado</option>
+                <option value="accepted">Acceptat</option>
+                <option value="rejected">Rebutjat</option>
               </select>
             </>
           )}
-          <label htmlFor="decision-reason" className="mt-5 block text-sm font-medium text-content">Motivo de la decisión</label>
+          <label htmlFor="decision-reason" className="mt-5 block text-sm font-medium text-content">Motiu de la decisió</label>
           <textarea
             id="decision-reason"
             value={reason}
@@ -258,25 +258,25 @@ export default function DecisionDialog({ rowId, row, cohort, columns, dictionary
             aria-describedby="reason-help"
             rows={4}
             maxLength={2000}
-            placeholder="Escribe el motivo para aceptar o rechazar este candidato…"
+            placeholder="Escriu el motiu per acceptar o rebutjar aquest candidat…"
             className="text-input mt-2 resize-y"
           />
-          <p id="reason-help" className="mt-1 text-xs text-content-subtle">Opcional · {reason.length}/2000 caracteres</p>
+          <p id="reason-help" className="mt-1 text-xs text-content-subtle">Opcional · {reason.length}/2000 caràcters</p>
           <div className="mt-6 flex flex-wrap justify-end gap-3">
-            <button type="button" onClick={onClose} className="btn">Cancelar</button>
+            <button type="button" onClick={onClose} className="btn">Cancel·la</button>
             {decision ? (
-              <button type="button" onClick={() => handleSave(status)} className="btn btn-primary">Guardar cambios</button>
+              <button type="button" onClick={() => handleSave(status)} className="btn btn-primary">Desa els canvis</button>
             ) : (
               <>
-                <button type="button" onClick={() => handleSave("rejected")} aria-label="Rechazar"
+                <button type="button" onClick={() => handleSave("rejected")} aria-label="Rebutja"
                   className="btn border-review-rejected-action bg-review-rejected-bg text-review-rejected hover:bg-review-rejected-hover max-sm:size-11 max-sm:p-0">
                   <X size={16} aria-hidden="true" />
-                  <span className="hidden sm:inline">Rechazar</span>
+                  <span className="hidden sm:inline">Rebutja</span>
                 </button>
-                <button type="button" onClick={() => handleSave("accepted")} aria-label="Aceptar"
+                <button type="button" onClick={() => handleSave("accepted")} aria-label="Accepta"
                   className="btn border-review-accepted-action bg-review-accepted-bg text-review-accepted max-sm:size-11 max-sm:p-0 hover:bg-review-accepted-hover sm:bg-review-accepted-action sm:text-content-inverse sm:hover:bg-review-accepted">
                   <Check size={16} aria-hidden="true" />
-                  <span className="hidden sm:inline">Aceptar</span>
+                  <span className="hidden sm:inline">Accepta</span>
                 </button>
               </>
             )}

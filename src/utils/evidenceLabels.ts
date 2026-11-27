@@ -1,6 +1,6 @@
-export const metadataMatchLabel = "Coincidencia en fecha del informe";
-export const partialEvidenceLabel = "Búsqueda parcial";
+export const metadataMatchLabel = "Coincidència en la data de l’informe";
+export const partialEvidenceLabel = "Cerca parcial";
 
 export function formatMatchCount(count: number) {
-  return `${count} ${count === 1 ? "coincidencia" : "coincidencias"}`;
+  return `${count} ${count === 1 ? "coincidència" : "coincidències"}`;
 }

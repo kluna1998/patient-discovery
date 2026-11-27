@@ -18,15 +18,15 @@ const dictionaryFields = ["column_name", "readable_name", "meaning", "section", 
 const metadataFields = ["criterion_id", "criterio", "tipo", "value_type", "explicacion", "Sinonimos"] as const;
 
 export function validateDictionary(value: unknown): ColumnInfo[] {
-  if (!Array.isArray(value)) throw new Error("El diccionario debe contener una lista de columnas.");
+  if (!Array.isArray(value)) throw new Error("El diccionari ha de contenir una llista de columnes.");
   const names = new Set<string>();
   const sectionOrders = new Map<string, number>();
   return value.map((entry, index) => {
-    if (!entry || typeof entry !== "object") throw new Error(`La fila ${index + 1} no es válida.`);
+    if (!entry || typeof entry !== "object") throw new Error(`La fila ${index + 1} no és vàlida.`);
     const row = entry as Record<string, unknown>;
     const text = (field: string) => {
       if (typeof row[field] !== "string" || !row[field].trim()) {
-        throw new Error(`Completa ${field} en la fila ${index + 1}.`);
+        throw new Error(`Completa el camp ${field} a la fila ${index + 1}.`);
       }
       return row[field].trim();
     };
@@ -34,7 +34,7 @@ export function validateDictionary(value: unknown): ColumnInfo[] {
     if ((typeof order !== "number" && typeof order !== "string") ||
         (typeof order === "string" && !/^[+-]?\d+$/.test(order.trim())) ||
         !Number.isSafeInteger(Number(order))) {
-      throw new Error(`section_order debe ser un entero válido en la fila ${index + 1}.`);
+      throw new Error(`section_order ha de ser un enter vàlid a la fila ${index + 1}.`);
     }
     const clean: ColumnInfo = {
       column_name: text("column_name"),
@@ -46,26 +46,26 @@ export function validateDictionary(value: unknown): ColumnInfo[] {
     for (const field of metadataFields) {
       const value = row[field];
       if (value !== undefined && typeof value !== "string") {
-        throw new Error(`${field} debe ser texto en la fila ${index + 1}.`);
+        throw new Error(`${field} ha de ser de tipus text a la fila ${index + 1}.`);
       }
       const textValue = (value as string | undefined)?.trim() ?? "";
       if (field === "tipo") {
         if (!["", "Evidencia", "Valor", "Unidades"].includes(textValue)) {
-          throw new Error(`tipo no válido en la fila ${index + 1}.`);
+          throw new Error(`El camp tipo no és vàlid a la fila ${index + 1}.`);
         }
         clean.tipo = textValue as ColumnInfo["tipo"];
       } else if (field === "value_type") {
         if (!["", "boolean", "date", "number", "text"].includes(textValue)) {
-          throw new Error(`value_type no válido en la fila ${index + 1}.`);
+          throw new Error(`El camp value_type no és vàlid a la fila ${index + 1}.`);
         }
         clean.value_type = textValue as ColumnInfo["value_type"];
       } else {
         clean[field] = textValue;
       }
     }
-    if (names.has(clean.column_name)) throw new Error(`La columna «${clean.column_name}» está duplicada.`);
+    if (names.has(clean.column_name)) throw new Error(`La columna «${clean.column_name}» està duplicada.`);
     if (sectionOrders.has(clean.section) && sectionOrders.get(clean.section) !== clean.section_order) {
-      throw new Error(`Las filas de la sección «${clean.section}» deben compartir section_order.`);
+      throw new Error(`Les files de la secció «${clean.section}» han de compartir el valor de section_order.`);
     }
     names.add(clean.column_name);
     sectionOrders.set(clean.section, clean.section_order);
@@ -80,7 +80,7 @@ export function parseDictionary(csv: string): ColumnInfo[] {
     transformHeader: (header) => header.replace(/^\uFEFF/, "").trim(),
   });
   if (result.errors.length || !dictionaryFields.every((field) => result.meta.fields?.includes(field))) {
-    throw new Error("El CSV del diccionario debe contener column_name, readable_name, meaning, section y section_order y filas válidas.");
+    throw new Error("El CSV del diccionari ha de contenir les columnes column_name, readable_name, meaning, section i section_order, i les files han de ser vàlides.");
   }
   return validateDictionary(result.data);
 }
@@ -103,7 +103,7 @@ export function groupColumnsBySection(columns: string[], dictionary: ColumnInfo[
   const grouped = [...sections.values()].filter((section) => section.columns.length > 0)
     .sort((a, b) => a.order - b.order);
   // Unknown columns always follow all defined sections, even one named Sin clasificar.
-  if (unclassified.length) grouped.push({ name: "Sin clasificar", order: Infinity, columns: unclassified });
+  if (unclassified.length) grouped.push({ name: "Sense classificar", order: Infinity, columns: unclassified });
   return grouped;
 }
 
